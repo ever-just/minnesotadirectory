@@ -1,5 +1,14 @@
 import { Company } from '../lib/types';
 import { Link } from 'react-router-dom';
+import {
+  Building2,
+  Factory,
+  MapPin,
+  Users,
+  DollarSign,
+  Phone,
+  Globe,
+} from 'lucide-react';
 import './CompanyDetail.css';
 
 interface CompanyDetailProps {
@@ -24,7 +33,11 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
         <div className="company-header">
           <h2 className="company-name">{company.name}</h2>
           <div className="badges">
-            {company.isHeadquarters && <span className="badge headquarters-badge">Headquarters</span>}
+            {company.isHeadquarters && (
+              <span className="badge headquarters-badge flex items-center gap-1">
+                <Building2 size={16} aria-hidden="true" /> Headquarters
+              </span>
+            )}
             {company.ownership && <span className="badge ownership-badge">{company.ownership}</span>}
           </div>
         </div>
@@ -33,7 +46,9 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
           <div className="info-section">
             <h3>Company Information</h3>
             <div className="info-grid">
-              <div className="info-label">Industry:</div>
+              <div className="info-label flex items-center gap-1">
+                <Factory size={16} aria-hidden="true" /> Industry:
+              </div>
               <div className="info-value">{company.industry}</div>
               
               <div className="info-label">Ownership:</div>
@@ -46,13 +61,19 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
                 </>
               )}
               
-              <div className="info-label">Employees (Site):</div>
+              <div className="info-label flex items-center gap-1">
+                <Users size={16} aria-hidden="true" /> Employees (Site):
+              </div>
               <div className="info-value">{company.employeesSite || 'N/A'}</div>
               
-              <div className="info-label">Employees (Total):</div>
+              <div className="info-label flex items-center gap-1">
+                <Users size={16} aria-hidden="true" /> Employees (Total):
+              </div>
               <div className="info-value">{company.employees || 'N/A'}</div>
               
-              <div className="info-label">Annual Sales:</div>
+              <div className="info-label flex items-center gap-1">
+                <DollarSign size={16} aria-hidden="true" /> Annual Sales:
+              </div>
               <div className="info-value">{company.sales || 'N/A'}</div>
             </div>
           </div>
@@ -60,22 +81,34 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
           <div className="info-section">
             <h3>Contact Information</h3>
             <div className="info-grid">
-              <div className="info-label">Address:</div>
+              <div className="info-label flex items-center gap-1">
+                <MapPin size={16} aria-hidden="true" /> Address:
+              </div>
               <div className="info-value">{company.address || 'N/A'}</div>
               
-              <div className="info-label">City:</div>
+              <div className="info-label flex items-center gap-1">
+                <MapPin size={16} aria-hidden="true" /> City:
+              </div>
               <div className="info-value">{company.city || 'N/A'}</div>
               
-              <div className="info-label">State:</div>
+              <div className="info-label flex items-center gap-1">
+                <MapPin size={16} aria-hidden="true" /> State:
+              </div>
               <div className="info-value">{company.state || 'N/A'}</div>
               
-              <div className="info-label">Postal Code:</div>
+              <div className="info-label flex items-center gap-1">
+                <MapPin size={16} aria-hidden="true" /> Postal Code:
+              </div>
               <div className="info-value">{company.postalCode || 'N/A'}</div>
               
-              <div className="info-label">Phone:</div>
+              <div className="info-label flex items-center gap-1">
+                <Phone size={16} aria-hidden="true" /> Phone:
+              </div>
               <div className="info-value">{company.phone || 'N/A'}</div>
               
-              <div className="info-label">Website:</div>
+              <div className="info-label flex items-center gap-1">
+                <Globe size={16} aria-hidden="true" /> Website:
+              </div>
               <div className="info-value">
                 {company.url ? (
                   <a href={company.url} target="_blank" rel="noopener noreferrer" className="website-link">
