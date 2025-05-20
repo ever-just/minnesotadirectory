@@ -1,5 +1,7 @@
 import { Company } from '../lib/types';
 import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import './CompanyDetail.css';
 
 interface CompanyDetailProps {
@@ -14,9 +16,11 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
       </header>
 
       <div className="back-button-container">
-        <Link to="/" className="back-button">
-          ← Back to Catalog
-        </Link>
+        <Button asChild variant="outline" size="icon">
+          <Link to="/" aria-label="Back to Catalog">
+            <ArrowLeft className="h-4 w-4" />
+          </Link>
+        </Button>
       </div>
 
       <div className="detail-container">
