@@ -1,6 +1,6 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project contains a small React application that loads data about Minnesota companies from a CSV file. The repository also ships with a helper script to convert that CSV into a JSON dataset that the app can easily consume.
 
 Currently, two official plugins are available:
 
@@ -23,6 +23,41 @@ export default tseslint.config({
     },
   },
 })
+```
+
+## Dataset location
+
+Place the raw CSV export in the `public/` directory. The file name expected by the application and conversion script is:
+
+```
+public/ForMinnesotacompanies.org $10M + 10+ ppl + MN Only.csv
+```
+
+## Converting CSV to JSON
+
+Run the following command to convert the CSV file into a JSON dataset:
+
+```bash
+pnpm run convert
+```
+
+The script writes `public/companies.json` and performs a simple deduplication based on `Company Name`. The source CSV currently contains **2765** lines. After deduplication the resulting JSON contains **2762** records.
+
+## Development
+
+Install dependencies and start the development server:
+
+```bash
+pnpm install
+pnpm run dev
+```
+
+## Building
+
+To create a production build run:
+
+```bash
+pnpm run build
 ```
 
 - Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
