@@ -11,7 +11,6 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
     <div className="detail-page">
       <header className="header">
         <h1>Local Companies Catalog</h1>
-        <p>Explore businesses in your area</p>
       </header>
 
       <div className="back-button-container">

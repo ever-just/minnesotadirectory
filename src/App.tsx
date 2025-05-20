@@ -21,7 +21,6 @@ function HomePage({ filteredCompanies, industries, loading, handleSearch, handle
     <>
       <header className="header">
         <h1>MINNESOTA COMPANIES</h1>
-        <p>Explore businesses in your area</p>
       </header>
       
       <main className="main-content">
