@@ -60,7 +60,8 @@ export const parseCSVData = (csvData: string) => {
       ownership: company['Ownership Type'] || '',
       ticker: company['Ticker'] || '',
       employeesSite: company['Employees (Single Site)'] || '',
-      sicDescription: company['US 8-Digit SIC Description'] || ''
+      sicDescription: company['US 8-Digit SIC Description'] || '',
+      contacts: []
     };
   }).filter(Boolean);
 };

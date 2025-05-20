@@ -97,7 +97,8 @@ function App() {
             ownership: company.ownership || '',
             ticker: company.ticker || '',
             employeesSite: company.employeesSite || '',
-            sicDescription: company.sicDescription || ''
+            sicDescription: company.sicDescription || '',
+            contacts: company.contacts || []
           }));
         
         setCompanies(processedData);

@@ -113,7 +113,7 @@
   text-decoration: underline;
 }
 
-.description-section, .additional-section {
+.description-section, .additional-section, .contacts-section {
   background-color: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -121,7 +121,7 @@
   margin-bottom: 2rem;
 }
 
-.description-section h3, .additional-section h3 {
+.description-section h3, .additional-section h3, .contacts-section h3 {
   font-size: 1.25rem;
   font-weight: 600;
   margin-top: 0;

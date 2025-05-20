@@ -107,6 +107,24 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
             <div className="info-value">{company.tradestyle || 'N/A'}</div>
           </div>
         </div>
+
+        {company.contacts.length > 0 && (
+          <div className="contacts-section">
+            <h3>Contacts</h3>
+            <div className="info-grid wide-grid">
+              {company.contacts.map((contact, index) => (
+                <div key={index} className="contact-row">
+                  <div className="info-label">{contact.name}</div>
+                  <div className="info-value">
+                    {contact.title && <div>{contact.title}</div>}
+                    {contact.email && <div>{contact.email}</div>}
+                    {contact.phone && <div>{contact.phone}</div>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
