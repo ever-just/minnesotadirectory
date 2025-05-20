@@ -1,5 +1,6 @@
 import { Company } from '../lib/types';
 import { Link } from 'react-router-dom';
+import minnesotaLogo from '../assets/minnesotadirectorylogo.png';
 import './CompanyDetail.css';
 
 interface CompanyDetailProps {
@@ -10,6 +11,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
   return (
     <div className="detail-page">
       <header className="header">
+        <img src={minnesotaLogo} alt="Minnesota Directory logo" className="header-logo" />
         <h1>Local Companies Catalog</h1>
         <p>Explore businesses in your area</p>
       </header>

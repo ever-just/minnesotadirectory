@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
+import minnesotaLogo from './assets/minnesotadirectorylogo.png';
 import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
@@ -20,6 +21,7 @@ function HomePage({ filteredCompanies, industries, loading, handleSearch, handle
   return (
     <>
       <header className="header">
+        <img src={minnesotaLogo} alt="Minnesota Directory logo" className="header-logo" />
         <h1>MINNESOTA COMPANIES</h1>
         <p>Explore businesses in your area</p>
       </header>
