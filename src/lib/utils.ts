@@ -80,15 +80,15 @@ export const formatSales = (sales: string): string => {
   }
 };
 
-export const getUniqueIndustries = (companies: any[]) => {
+export const getUniqueIndustries = (companies: { industry?: string }[]) => {
   const industries = new Set<string>();
-  
-  companies.forEach((company: any) => {
+
+  companies.forEach(company => {
     if (company.industry) {
       industries.add(company.industry);
     }
   });
-  
+
   return Array.from(industries).sort();
 };
 
