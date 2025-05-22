@@ -1,3 +1,10 @@
+export interface Contact {
+  name: string;
+  title: string;
+  email: string;
+  phone: string;
+}
+
 export interface Company {
   name: string;
   tradestyle: string;
@@ -18,6 +25,7 @@ export interface Company {
   ticker?: string;
   employeesSite?: string;
   sicDescription?: string;
+  contacts: Contact[];
 }
 
 export interface IndustryOption {
