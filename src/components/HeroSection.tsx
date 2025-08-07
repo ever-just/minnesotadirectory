@@ -15,18 +15,21 @@ const HeroSection: React.FC<HeroSectionProps> = ({ totalCompanies }) => {
       <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-36 sm:h-36 lg:w-48 lg:h-48 bg-indigo-500/10 rounded-full translate-y-12 sm:translate-y-18 lg:translate-y-24 -translate-x-12 sm:-translate-x-18 lg:-translate-x-24"></div>
       <div className="absolute top-1/2 left-1/4 w-16 h-16 sm:w-20 sm:h-20 bg-purple-500/5 rounded-full -translate-y-1/2"></div>
       
-      <div className="relative max-w-4xl mx-auto text-center">
+      <div className="relative max-w-5xl mx-auto text-center">
         {/* Main heading */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-4 sm:mb-6 lg:mb-8 leading-tight tracking-tight">
           Discover Minnesota's
-          <span className="block text-blue-600">Leading Companies</span>
+          <span className="block text-blue-600 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Leading Companies
+          </span>
         </h1>
         
         {/* Descriptive text */}
-        <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 mb-6 sm:mb-8 lg:mb-10 max-w-4xl mx-auto leading-relaxed px-2 sm:px-4">
           Explore a comprehensive directory of Minnesota's most successful businesses. 
           From Fortune 500 corporations to innovative startups, find companies with 
-          $10M+ in revenue and 10+ employees driving the state's economy forward.
+          <span className="font-semibold text-blue-700">$10M+ in revenue</span> and 
+          <span className="font-semibold text-blue-700">10+ employees</span> driving the state's economy forward.
         </p>
         
         {/* Statistics cards */}
@@ -95,4 +98,5 @@ const HeroSection: React.FC<HeroSectionProps> = ({ totalCompanies }) => {
 };
 
 export default HeroSection;
+
 
