@@ -69,28 +69,37 @@ const HeroSection: React.FC<HeroSectionProps> = ({ totalCompanies }) => {
         </div>
         
         {/* Call to action */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center items-center mb-6 sm:mb-8">
           <Button 
             size="lg" 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold shadow-lg"
+            className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 rounded-lg"
           >
             Explore Companies
           </Button>
           <Button 
             variant="outline" 
             size="lg"
-            className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 text-lg font-semibold"
+            className="w-full sm:w-auto border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg"
           >
             Learn More
           </Button>
         </div>
         
         {/* Additional info */}
-        <div className="mt-8 text-sm text-gray-500">
-          <p>
-            Featuring companies across diverse industries including technology, healthcare, 
-            manufacturing, retail, and financial services
+        <div className="mt-6 sm:mt-8 lg:mt-10 px-4 sm:px-6">
+          <p className="text-xs sm:text-sm lg:text-base text-gray-500 leading-relaxed max-w-3xl mx-auto">
+            Featuring companies across diverse industries including 
+            <span className="font-medium text-gray-600"> technology</span>, 
+            <span className="font-medium text-gray-600"> healthcare</span>, 
+            <span className="font-medium text-gray-600"> manufacturing</span>, 
+            <span className="font-medium text-gray-600"> retail</span>, and 
+            <span className="font-medium text-gray-600"> financial services</span>
           </p>
+          
+          {/* Subtle divider */}
+          <div className="mt-6 sm:mt-8 flex justify-center">
+            <div className="w-16 sm:w-24 h-0.5 bg-gradient-to-r from-transparent via-blue-300 to-transparent"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -98,6 +107,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ totalCompanies }) => {
 };
 
 export default HeroSection;
+
 
 
 
