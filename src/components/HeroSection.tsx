@@ -8,11 +8,12 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ totalCompanies }) => {
   return (
-    <section className="relative bg-gradient-to-br from-blue-50 to-indigo-100 py-16 px-4 mb-8 rounded-lg overflow-hidden">
+    <section className="relative bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 mb-8 rounded-xl overflow-hidden shadow-sm">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-indigo-600/5"></div>
-      <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full -translate-y-32 translate-x-32"></div>
-      <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/10 rounded-full translate-y-24 -translate-x-24"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-indigo-600/5 to-purple-600/5"></div>
+      <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-blue-500/10 rounded-full -translate-y-16 sm:-translate-y-24 lg:-translate-y-32 translate-x-16 sm:translate-x-24 lg:translate-x-32"></div>
+      <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-36 sm:h-36 lg:w-48 lg:h-48 bg-indigo-500/10 rounded-full translate-y-12 sm:translate-y-18 lg:translate-y-24 -translate-x-12 sm:-translate-x-18 lg:-translate-x-24"></div>
+      <div className="absolute top-1/2 left-1/4 w-16 h-16 sm:w-20 sm:h-20 bg-purple-500/5 rounded-full -translate-y-1/2"></div>
       
       <div className="relative max-w-4xl mx-auto text-center">
         {/* Main heading */}
@@ -94,3 +95,4 @@ const HeroSection: React.FC<HeroSectionProps> = ({ totalCompanies }) => {
 };
 
 export default HeroSection;
+
