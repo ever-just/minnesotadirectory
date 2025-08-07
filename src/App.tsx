@@ -17,12 +17,14 @@ interface HomePageProps {
   handleIndustryChange: (industry: string) => void;
 }
 
-function HomePage({ filteredCompanies, industries, loading, handleSearch, handleIndustryChange }: HomePageProps) {
+function HomePage({ companies, filteredCompanies, industries, loading, handleSearch, handleIndustryChange }: HomePageProps) {
   return (
     <>
       <header className="header">
         <h1>MINNESOTA COMPANIES</h1>
       </header>
+      
+      <HeroSection totalCompanies={companies.length} />
       
       <main className="main-content">
         <SearchBar 
@@ -176,5 +178,6 @@ function App() {
 }
 
 export default App;
+
 
 
