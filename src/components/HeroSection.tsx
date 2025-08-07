@@ -33,35 +33,35 @@ const HeroSection: React.FC<HeroSectionProps> = ({ totalCompanies }) => {
         </p>
         
         {/* Statistics cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-2xl mx-auto">
-          <Card className="bg-white/80 backdrop-blur-sm border-blue-200 shadow-lg">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-blue-600 mb-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10 lg:mb-12 max-w-4xl mx-auto px-2 sm:px-4">
+          <Card className="bg-white/90 backdrop-blur-md border-blue-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-white/95">
+            <CardContent className="p-4 sm:p-6 text-center">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-600 mb-2 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 {totalCompanies.toLocaleString()}+
               </div>
-              <div className="text-sm font-medium text-gray-600">
+              <div className="text-xs sm:text-sm font-medium text-gray-600 uppercase tracking-wide">
                 Companies Listed
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-white/80 backdrop-blur-sm border-blue-200 shadow-lg">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-blue-600 mb-2">
+          <Card className="bg-white/90 backdrop-blur-md border-blue-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-white/95">
+            <CardContent className="p-4 sm:p-6 text-center">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-600 mb-2 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 $10M+
               </div>
-              <div className="text-sm font-medium text-gray-600">
+              <div className="text-xs sm:text-sm font-medium text-gray-600 uppercase tracking-wide">
                 Minimum Revenue
               </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-white/80 backdrop-blur-sm border-blue-200 shadow-lg">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-blue-600 mb-2">
+          <Card className="bg-white/90 backdrop-blur-md border-blue-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:bg-white/95 sm:col-span-2 lg:col-span-1">
+            <CardContent className="p-4 sm:p-6 text-center">
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-600 mb-2 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 10+
               </div>
-              <div className="text-sm font-medium text-gray-600">
+              <div className="text-xs sm:text-sm font-medium text-gray-600 uppercase tracking-wide">
                 Minimum Employees
               </div>
             </CardContent>
@@ -98,5 +98,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ totalCompanies }) => {
 };
 
 export default HeroSection;
+
 
 
