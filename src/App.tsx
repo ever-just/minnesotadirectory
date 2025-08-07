@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-
 import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
+import HeroSection from './components/HeroSection';
 import { Company, IndustryOption } from './lib/types';
 import { parseCSVData, getUniqueIndustries, formatSales } from './lib/utils';
 import './App.css';
@@ -175,3 +176,4 @@ function App() {
 }
 
 export default App;
+
