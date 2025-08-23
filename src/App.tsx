@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
-import minnesotaLogo from './assets/minnesotadirectorylogo.png';
+import minnesotaLogo from './assets/minnesotadirectorylogo.svg';
 import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
