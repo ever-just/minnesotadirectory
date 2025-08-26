@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
-import minnesotaLogo from './assets/minnesotadirectorylogo.svg';
+import { BrowserRouter as Router, Routes, Route, useParams, Link } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
 import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
@@ -8,7 +8,7 @@ import { Company, IndustryOption } from './lib/types';
 import { parseCSVData, getUniqueIndustries, formatSales } from './lib/utils';
 import './App.css';
 
-interface HomePageProps {
+interface DirectoryPageProps {
   companies: Company[];
   filteredCompanies: Company[];
   industries: IndustryOption[];
@@ -17,12 +17,18 @@ interface HomePageProps {
   handleIndustryChange: (industry: string) => void;
 }
 
-function HomePage({ filteredCompanies, industries, loading, handleSearch, handleIndustryChange }: HomePageProps) {
+function DirectoryPage({ filteredCompanies, industries, loading, handleSearch, handleIndustryChange }: DirectoryPageProps) {
   return (
     <>
+      <nav className="directory-nav">
+        <Link to="/" className="nav-link home-link">
+          ← Back to Home
+        </Link>
+      </nav>
+      
       <header className="header">
-        <img src={minnesotaLogo} alt="Minnesota Directory logo" className="header-logo" />
-        <h1>MINNESOTA COMPANIES</h1>
+        <h1>MINNESOTA DIRECTORY</h1>
+        <p>Explore businesses in your area</p>
       </header>
       
       <main className="main-content">
@@ -155,8 +161,12 @@ function App() {
         <Routes>
           <Route 
             path="/" 
+            element={<LandingPage />} 
+          />
+          <Route 
+            path="/directory" 
             element={
-              <HomePage 
+              <DirectoryPage 
                 companies={companies}
                 filteredCompanies={filteredCompanies}
                 industries={industries}

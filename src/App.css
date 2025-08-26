@@ -204,6 +204,40 @@ body {
   font-size: 1.125rem;
 }
 
+/* Navigation Styles */
+.directory-nav {
+  background: white;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.nav-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.home-link {
+  color: var(--light-text);
+}
+
+.home-link:hover {
+  color: var(--text-color);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .app {
@@ -221,8 +255,8 @@ body {
   .header p {
     font-size: 1rem;
   }
-
-  .header-logo {
-    height: 60px;
+  
+  .directory-nav {
+    padding: 0.75rem 1rem;
   }
 }

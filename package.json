@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run generate-sitemap && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "convert": "node scripts/csv-to-json.mjs"
+    "convert": "node scripts/csv-to-json.mjs",
+    "generate-sitemap": "node scripts/generate-sitemap.mjs",
+    "prebuild": "npm run generate-sitemap"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

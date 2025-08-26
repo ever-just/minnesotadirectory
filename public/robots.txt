@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://minnesotadirectory.com/sitemap.xml
+
+# Allow search engines to index all content
+# Block any potential admin or development paths
+Disallow: /admin/
+Disallow: /_*
+Disallow: /*.json$
+
+# Crawl-delay (optional - be respectful to smaller servers)
+Crawl-delay: 1
+
+# Additional sitemaps (if needed in future)
+# Sitemap: https://minnesotadirectory.com/sitemap-companies.xml
+# Sitemap: https://minnesotadirectory.com/sitemap-industries.xml
