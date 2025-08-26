@@ -80,10 +80,12 @@ export const formatSales = (sales: string): string => {
   }
 };
 
-export const getUniqueIndustries = (companies: any[]) => {
+import type { Company } from './types';
+
+export const getUniqueIndustries = (companies: Company[]) => {
   const industries = new Set<string>();
-  
-  companies.forEach((company: any) => {
+
+  companies.forEach((company: Company) => {
     if (company.industry) {
       industries.add(company.industry);
     }

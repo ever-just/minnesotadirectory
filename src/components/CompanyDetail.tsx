@@ -2,6 +2,7 @@ import { Company } from '../lib/types';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import minnesotaLogo from '../assets/minnesotadirectorylogo.svg';
 import './CompanyDetail.css';
 
 interface CompanyDetailProps {
@@ -12,6 +13,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
   return (
     <div className="detail-page">
       <header className="header">
+        <img src={minnesotaLogo} alt="Minnesota Directory logo" className="header-logo" />
         <h1>Local Companies Catalog</h1>
       </header>
 
