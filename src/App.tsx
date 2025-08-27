@@ -24,7 +24,6 @@ function DirectoryPage({ filteredCompanies, industries, loading, handleSearch, h
         
         <header className="header-expanded">
           <h1>MINNESOTA DIRECTORY</h1>
-          <p>Explore businesses in your area</p>
         </header>
         
         <div className="search-section">
