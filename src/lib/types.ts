@@ -83,3 +83,16 @@ export interface IndustryOption {
   value: string;
   label: string;
 }
+
+// Smart Chunking Types
+export interface IndustryIndex {
+  [industry: string]: (Company & { originalIndex: number })[];
+}
+
+export interface ChunkingStats {
+  totalCompanies: number;
+  totalIndustries: number;
+  firstChunkSize: number;
+  industryCoverage: number;
+  missingIndustries: string[];
+}

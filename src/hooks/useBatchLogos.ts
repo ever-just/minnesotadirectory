@@ -29,8 +29,8 @@ export const useBatchLogos = (
   options: Partial<UseBatchLogosOptions> = {}
 ) => {
   const defaultOptions: UseBatchLogosOptions = {
-    batchSize: 20,
-    delayBetweenBatches: 200, // ms
+    batchSize: 10, // Reduced from 20 to 10 for better browser stability
+    delayBetweenBatches: 500, // Increased from 200ms to 500ms to reduce browser stress
     enableAutoLoad: true,
     priorityCompanies: []
   };
@@ -138,8 +138,10 @@ export const useBatchLogos = (
         };
       });
 
-      // Log batch completion
-      console.log(`Logo batch ${batchIndex + 1}/${totalBatches} completed: ${batch.length} companies in ${batchLoadTime}ms`);
+      // Reduced logging - only log major milestones
+      if (batchIndex === 0 || (batchIndex + 1) % 10 === 0 || batchIndex === totalBatches - 1) {
+        console.log(`Logo batch ${batchIndex + 1}/${totalBatches} completed: ${batch.length} companies in ${batchLoadTime}ms`);
+      }
 
     } catch (error) {
       if (signal.aborted) return;
@@ -227,7 +229,7 @@ export const useBatchLogos = (
           loaded: true
         }));
 
-        console.log(`Batch logo loading completed: ${companies.length} companies processed`);
+        console.log(`✅ Logo loading completed: ${companies.length} companies processed`);
       }
 
     } catch (error) {

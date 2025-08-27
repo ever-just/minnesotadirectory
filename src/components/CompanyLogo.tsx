@@ -104,7 +104,10 @@ const CompanyLogo = ({
       onLoad?.(metadata);
 
     } catch (error) {
-      console.warn(`Logo fetch failed for ${company.name}:`, error);
+      // Reduced console output - only show in development
+      if (process.env.NODE_ENV === 'development' && loadingState.retryCount === 0) {
+        console.warn(`Logo fetch failed for ${company.name}:`, error);
+      }
       
       if (enableRetry && loadingState.retryCount < 2) {
         // Exponential backoff retry

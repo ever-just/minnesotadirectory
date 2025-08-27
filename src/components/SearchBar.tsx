@@ -21,8 +21,7 @@ const SearchBar = ({ onSearch, onIndustryChange, industries, totalCompanies }: S
   const handleIndustryChange = (selectedOption: any) => {
     const value = selectedOption ? selectedOption.value : '';
     onIndustryChange(value);
-    // Clear any existing search when industry changes
-    onSearch('');
+    // Note: Removed onSearch('') call that was causing filter reset bug
   };
 
   // Custom styles for React-Select

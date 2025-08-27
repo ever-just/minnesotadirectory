@@ -17,7 +17,7 @@ export class LogoService {
     enableBatch: true
   };
   
-  private readonly BATCH_SIZE = 50;
+  private readonly BATCH_SIZE = 25; // Reduced for better browser performance
 
   constructor(options: Partial<LogoServiceOptions> = {}) {
     this.defaultOptions = { ...this.defaultOptions, ...options };
@@ -66,7 +66,10 @@ export class LogoService {
 
       return metadata;
     } catch (error) {
-      console.warn(`Logo discovery failed for ${companyName}:`, error);
+      // Reduced console output - only log critical failures
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(`Logo discovery failed for ${companyName}:`, error);
+      }
       return this.generateFallbackMetadata(companyName, error instanceof Error ? error.message : 'Unknown error');
     }
   }
@@ -432,7 +435,10 @@ export class LogoService {
         });
       }
     } catch (error) {
-      console.warn('Failed to load logo cache from storage:', error);
+      // Cache loading failures are non-critical, suppress in production
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to load logo cache from storage:', error);
+      }
     }
   }
 
@@ -452,7 +458,10 @@ export class LogoService {
       const cacheData = Object.fromEntries(this.cache.entries());
       localStorage.setItem('logoServiceCache', JSON.stringify(cacheData));
     } catch (error) {
-      console.warn('Failed to save logo cache to storage:', error);
+      // Cache saving failures are non-critical, suppress in production
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('Failed to save logo cache to storage:', error);
+      }
     }
   }
 

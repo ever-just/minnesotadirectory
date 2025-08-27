@@ -159,3 +159,104 @@ export const formatNumber = (numStr: string): string => {
   
   return num.toLocaleString();
 };
+
+// Smart Chunking Functions
+import { IndustryIndex, ChunkingStats } from './types';
+
+export const buildIndustryIndex = (companies: Company[]): IndustryIndex => {
+  console.log('🏭 Building industry index...');
+  const index: IndustryIndex = {};
+  
+  companies.forEach((company, originalIndex) => {
+    const industry = company.industry || 'Unknown';
+    
+    if (!index[industry]) {
+      index[industry] = [];
+    }
+    
+    index[industry].push({
+      ...company,
+      originalIndex // Track position in full dataset
+    });
+  });
+  
+  // Sort companies within each industry by sales (high to low)
+  Object.keys(index).forEach(industry => {
+    index[industry].sort((a, b) => {
+      const salesA = parseFloat(a.sales) || 0;
+      const salesB = parseFloat(b.sales) || 0;
+      return salesB - salesA;
+    });
+  });
+  
+  console.log(`✅ Industry index built: ${Object.keys(index).length} industries`);
+  return index;
+};
+
+export const createSmartChunk = (
+  allCompanies: Company[], 
+  industryIndex: IndustryIndex, 
+  chunkSize: number = 500
+): Company[] => {
+  const smartChunk: Company[] = [];
+  const industryCount = Object.keys(industryIndex).length;
+  
+  console.log(`🎯 Creating smart chunk with ${industryCount} industries for ${chunkSize} slots`);
+  
+  // Step 1: Include top company from each industry (guarantees coverage)
+  Object.keys(industryIndex).forEach(industry => {
+    const topCompany = industryIndex[industry][0]; // Already sorted by sales
+    if (topCompany) {
+      smartChunk.push(topCompany);
+    }
+  });
+  
+  console.log(`✅ Added ${smartChunk.length} companies (1 per industry)`);
+  
+  // Step 2: Fill remaining slots with highest-sales companies not already included
+  const usedCompanies = new Set(smartChunk.map(c => `${c.name}-${c.city}`));
+  const remainingSlots = chunkSize - smartChunk.length;
+  
+  const filler = allCompanies
+    .filter(company => !usedCompanies.has(`${company.name}-${company.city}`))
+    .sort((a, b) => {
+      const salesA = parseFloat(a.sales) || 0;
+      const salesB = parseFloat(b.sales) || 0;
+      return salesB - salesA;
+    })
+    .slice(0, remainingSlots);
+    
+  smartChunk.push(...filler);
+  
+  console.log(`✅ Added ${filler.length} high-sales companies to fill chunk`);
+  console.log(`🎯 Smart chunk complete: ${smartChunk.length} companies`);
+  
+  return smartChunk;
+};
+
+export const validateIndustryCoverage = (firstChunk: Company[], industryIndex: IndustryIndex): ChunkingStats => {
+  const chunkIndustries = new Set(firstChunk.map(c => c.industry));
+  const allIndustries = new Set(Object.keys(industryIndex));
+  
+  const coverage = chunkIndustries.size / allIndustries.size;
+  const missing = [...allIndustries].filter(i => !chunkIndustries.has(i));
+  
+  const stats: ChunkingStats = {
+    totalCompanies: firstChunk.length,
+    totalIndustries: allIndustries.size,
+    firstChunkSize: firstChunk.length,
+    industryCoverage: coverage,
+    missingIndustries: missing
+  };
+  
+  console.log(`🎯 Industry Coverage Validation:`);
+  console.log(`✅ Covered: ${chunkIndustries.size}/${allIndustries.size} (${(coverage * 100).toFixed(1)}%)`);
+  
+  if (missing.length > 0) {
+    console.error(`❌ FAILED: ${missing.length} missing industries:`, missing);
+    return stats;
+  }
+  
+  console.log('✅ PASSED: All industries covered in first chunk');
+  return stats;
+};
