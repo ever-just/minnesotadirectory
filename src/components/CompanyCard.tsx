@@ -32,7 +32,6 @@ const CompanyCard = ({ company, priority = false, showLogoQuality = false }: Com
       <div className="company-header-new">
         <div className="company-title-section-new">
           <h2 className="company-name">{company.name}</h2>
-          {company.isHeadquarters && <span className="hq-badge">HQ</span>}
         </div>
         <div className="company-logo-top-right">
           <CompanyLogo
