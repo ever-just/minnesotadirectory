@@ -189,7 +189,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
               )}
               
               <div className="info-label">Employees (Site):</div>
-              <div className="info-value">{formatNumber(company.employeesSite) || 'N/A'}</div>
+              <div className="info-value">{formatNumber(company.employeesSite || '') || 'N/A'}</div>
               
               <div className="info-label">Employees (Total):</div>
               <div className="info-value">{formatNumber(company.employees) || 'N/A'}</div>

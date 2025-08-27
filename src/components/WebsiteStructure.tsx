@@ -50,7 +50,7 @@ const WebsiteStructureComponent = ({ companyUrl, companyName }: WebsiteStructure
       onSitemapFound: (sitemapUrl: string) => {
         setProgressText(`Found sitemap: ${new URL(sitemapUrl).pathname}`);
       },
-      onProgress: (status: string, completed: number, total?: number) => {
+      onProgress: (status: string, completed: number, _total?: number) => {
         setProgressText(status);
         setProgressPercent(completed);
       },
