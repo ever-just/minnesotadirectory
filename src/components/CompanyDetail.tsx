@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Company, LogoMetadata } from '../lib/types';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
@@ -10,6 +11,11 @@ interface CompanyDetailProps {
 }
 
 const CompanyDetail = ({ company }: CompanyDetailProps) => {
+  // Scroll to top when component loads
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [company.name]); // Re-scroll when company changes
+  
   const handleLogoLoad = (metadata: LogoMetadata) => {
     // Track successful logo loads for analytics
     if (process.env.NODE_ENV === 'development') {
@@ -32,7 +38,18 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
   return (
     <div className="detail-page">
       <header className="header">
-        <h1>MINNESOTA DIRECTORY</h1>
+        <div className="header-company-info">
+          <CompanyLogo
+            company={company}
+            size="medium"
+            priority={true}
+            lazy={false}
+            className="header-company-logo"
+            onLoad={handleLogoLoad}
+            onError={handleLogoError}
+          />
+          <h1 className="header-company-name">{company.name}</h1>
+        </div>
         <p>Company Details</p>
       </header>
 
@@ -59,10 +76,6 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
             />
             <div className="company-header-text">
               <h2 className="company-name">{company.name}</h2>
-              <div className="badges">
-                {company.isHeadquarters && <span className="badge headquarters-badge">Headquarters</span>}
-                {company.ownership && <span className="badge ownership-badge">{company.ownership}</span>}
-              </div>
               {company.url && (
                 <a 
                   href={company.url} 
@@ -86,6 +99,14 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
               
               <div className="info-label">Ownership:</div>
               <div className="info-value">{company.ownership || 'N/A'}</div>
+              
+              <div className="info-label">Type:</div>
+              <div className="info-value">
+                <div className="badges">
+                  {company.isHeadquarters && <span className="badge headquarters-badge">Headquarters</span>}
+                  {company.ownership && <span className="badge ownership-badge">{company.ownership}</span>}
+                </div>
+              </div>
               
               {company.ticker && (
                 <>

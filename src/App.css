@@ -397,3 +397,39 @@ body {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* Company Detail Header Styling */
+.header-company-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.header-company-logo {
+  flex-shrink: 0;
+}
+
+.header-company-name {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.2;
+  /* Ensure it aligns with logo height */
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive header adjustments */
+@media (max-width: 768px) {
+  .header-company-info {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+  
+  .header-company-name {
+    font-size: 1.5rem;
+  }
+}
