@@ -9,12 +9,42 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// Domain extraction utility for company logos
+export const extractDomain = (url: string): string | null => {
+  if (!url) return null;
+  try {
+    // Add protocol if missing
+    const fullUrl = url.includes('http') ? url : `https://${url}`;
+    const domain = new URL(fullUrl).hostname;
+    return domain.replace('www.', '');
+  } catch {
+    return null;
+  }
+};
+
+// Generate company logo URLs based on domain
+export const generateLogoUrls = (domain: string | null) => {
+  if (!domain) {
+    return {
+      logoUrl: null,
+      logoFallbackUrl: null,
+      hasLogo: false
+    };
+  }
+
+  return {
+    logoUrl: `https://logo.clearbit.com/${domain}`,
+    logoFallbackUrl: `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
+    hasLogo: true
+  };
+};
+
 export const parseCSVData = (csvData: string) => {
   // CSV parsing logic remains the same
   const rows = csvData.split('\n');
   const headers = rows[0].split(',').map(h => h.replace(/"/g, ''));
   
-  return rows.slice(1).map(row => {
+  return rows.slice(1).map((row, index) => {
     if (!row.trim()) return null;
     
     // Handle commas within quoted fields
@@ -42,6 +72,11 @@ export const parseCSVData = (csvData: string) => {
       company[header] = values[index] || '';
     });
     
+    // Extract logo information
+    const url = company['URL'] || '';
+    const domain = extractDomain(url);
+    const logoData = generateLogoUrls(domain);
+    
     return {
       name: company['Company Name'] || '',
       tradestyle: company['Tradestyle'] || '',
@@ -50,7 +85,7 @@ export const parseCSVData = (csvData: string) => {
       state: company['State Or Province'] || '',
       postalCode: company['Postal Code'] || '',
       phone: company['Phone'] || '',
-      url: company['URL'] || '',
+      url: url,
       sales: company['Sales (USD)'] || '',
       employees: company['Employees (Total)'] || '',
       description: company['Business Description'] || '',
@@ -60,7 +95,15 @@ export const parseCSVData = (csvData: string) => {
       ownership: company['Ownership Type'] || '',
       ticker: company['Ticker'] || '',
       employeesSite: company['Employees (Single Site)'] || '',
-      sicDescription: company['US 8-Digit SIC Description'] || ''
+      sicDescription: company['US 8-Digit SIC Description'] || '',
+      
+      // Logo fields
+      id: index,
+      domain: domain,
+      logoUrl: logoData.logoUrl,
+      logoFallbackUrl: logoData.logoFallbackUrl,
+      hasLogo: logoData.hasLogo,
+      logoLastUpdated: new Date().toISOString()
     };
   }).filter(Boolean);
 };

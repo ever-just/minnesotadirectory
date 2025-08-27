@@ -129,9 +129,45 @@ body {
 
 .company-header {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
+  gap: 1rem;
   margin-bottom: 0.5rem;
+}
+
+.company-logo-container {
+  flex-shrink: 0;
+}
+
+.company-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 4px;
+}
+
+.company-favicon {
+  padding: 8px;
+}
+
+.company-logo-placeholder {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.company-title-section {
+  flex: 1;
+  min-width: 0;
 }
 
 .company-name {
@@ -259,4 +295,105 @@ body {
   .directory-nav {
     padding: 0.75rem 1rem;
   }
+  
+  /* Logo responsive adjustments */
+  .company-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .company-logo-container {
+    align-self: center;
+  }
+  
+  /* Advanced logo system responsive adjustments */
+  .company-header-content {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem !important;
+  }
+}
+
+/* Advanced Logo System Styles */
+.company-header-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.company-detail-logo {
+  flex-shrink: 0;
+}
+
+.company-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.company-website-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  background: var(--card-bg);
+}
+
+.company-website-link:hover {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+/* Logo service performance indicators */
+.logo-quality-indicator {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 600;
+  z-index: 10;
+}
+
+.logo-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+}
+
+.logo-loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

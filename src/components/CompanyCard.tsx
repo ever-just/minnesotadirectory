@@ -1,16 +1,48 @@
-import { Company } from '../lib/types';
+import { Company, LogoMetadata } from '../lib/types';
 import { formatSales } from '../lib/utils';
+import CompanyLogo from './CompanyLogo';
 
 interface CompanyCardProps {
   company: Company;
+  priority?: boolean; // For above-the-fold cards
+  showLogoQuality?: boolean; // Dev mode feature
 }
 
-const CompanyCard = ({ company }: CompanyCardProps) => {
+const CompanyCard = ({ company, priority = false, showLogoQuality = false }: CompanyCardProps) => {
+  const handleLogoLoad = (metadata: LogoMetadata) => {
+    // Track successful logo loads for analytics
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Logo loaded for ${company.name}:`, {
+        source: metadata.bestSource?.name,
+        quality: metadata.qualityScore,
+        cached: metadata.sources.some(s => s.lastTested)
+      });
+    }
+  };
+
+  const handleLogoError = (error: Error) => {
+    // Track logo errors for monitoring
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(`Logo error for ${company.name}:`, error.message);
+    }
+  };
+
   return (
     <div className="company-card">
       <div className="company-header">
-        <h2 className="company-name">{company.name}</h2>
-        {company.isHeadquarters && <span className="hq-badge">HQ</span>}
+        <CompanyLogo
+          company={company}
+          size="medium"
+          priority={priority}
+          className="flex-shrink-0"
+          onLoad={handleLogoLoad}
+          onError={handleLogoError}
+          showQualityIndicator={showLogoQuality}
+        />
+        <div className="company-title-section flex-1 min-w-0 ml-4">
+          <h2 className="company-name">{company.name}</h2>
+          {company.isHeadquarters && <span className="hq-badge">HQ</span>}
+        </div>
       </div>
       <div className="company-industry">{company.industry}</div>
       <div className="company-details">

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
+  <defs>
+    <linearGradient id="twitterBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="600" fill="url(#twitterBg)"/>
+  
+  <!-- Main logo/icon -->
+  <circle cx="300" cy="300" r="115" fill="rgba(255,255,255,0.2)" stroke="#ffffff" stroke-width="4"/>
+  <text x="300" y="335" font-family="Arial, sans-serif" font-size="75" font-weight="bold" 
+        text-anchor="middle" fill="white">MN</text>
+  
+  <!-- Building icon -->
+  <rect x="260" y="240" width="80" height="50" fill="none" stroke="white" stroke-width="3" rx="3"/>
+  <rect x="270" y="250" width="8" height="8" fill="white"/>
+  <rect x="285" y="250" width="8" height="8" fill="white"/>
+  <rect x="300" y="250" width="8" height="8" fill="white"/>
+  <rect x="315" y="250" width="8" height="8" fill="white"/>
+  <rect x="330" y="250" width="8" height="8" fill="white"/>
+  <rect x="270" y="265" width="8" height="8" fill="white"/>
+  <rect x="285" y="265" width="8" height="8" fill="white"/>
+  <rect x="300" y="265" width="8" height="8" fill="white"/>
+  <rect x="315" y="265" width="8" height="8" fill="white"/>
+  <rect x="330" y="265" width="8" height="8" fill="white"/>
+  
+  <!-- Directory dots -->
+  <circle cx="270" cy="375" r="4" fill="white"/>
+  <circle cx="300" cy="375" r="4" fill="white"/>
+  <circle cx="330" cy="375" r="4" fill="white"/>
+  
+  <!-- Title text -->
+  <text x="480" y="260" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="white">
+    Minnesota Business Directory
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="480" y="310" font-family="Arial, sans-serif" font-size="30" fill="rgba(255,255,255,0.9)">
+    Discover 2,700+ Local Companies
+  </text>
+  
+  <!-- Call to action -->
+  <text x="480" y="360" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.8)">
+    Connect • Explore • Grow
+  </text>
+  
+  <!-- Website -->
+  <text x="480" y="400" font-family="Arial, sans-serif" font-size="20" fill="rgba(255,255,255,0.7)">
+    minnesotadirectory.com
+  </text>
+</svg>

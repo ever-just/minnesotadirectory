@@ -1,0 +1,60 @@
+{
+  "source": "public/favicon.svg",
+  "outputs": [
+    {
+      "filename": "favicon.ico",
+      "size": "16x16,32x32 (multi-size ICO)",
+      "format": "ico"
+    },
+    {
+      "filename": "favicon-16x16.png",
+      "size": "16x16",
+      "format": "png"
+    },
+    {
+      "filename": "favicon-32x32.png",
+      "size": "32x32",
+      "format": "png"
+    },
+    {
+      "filename": "apple-touch-icon.png",
+      "size": "180x180",
+      "format": "png"
+    },
+    {
+      "filename": "android-chrome-192x192.png",
+      "size": "192x192",
+      "format": "png"
+    },
+    {
+      "filename": "android-chrome-512x512.png",
+      "size": "512x512",
+      "format": "png"
+    },
+    {
+      "filename": "mstile-150x150.png",
+      "size": "150x150",
+      "format": "png"
+    }
+  ],
+  "socialMedia": [
+    {
+      "filename": "og-image.png",
+      "size": "1200x630 (Open Graph)",
+      "format": "png",
+      "template": "Minnesota Business Directory - Social Preview"
+    },
+    {
+      "filename": "twitter-image.png",
+      "size": "1200x600 (Twitter Card)",
+      "format": "png",
+      "template": "Minnesota Business Directory - Twitter Card"
+    }
+  ],
+  "instructions": [
+    "Upload public/favicon.svg to your preferred favicon generator",
+    "Generate all required formats",
+    "Download and extract to public/ directory",
+    "Run npm run check-favicons to verify"
+  ]
+}

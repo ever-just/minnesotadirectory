@@ -1,7 +1,8 @@
-import { Company } from '../lib/types';
+import { Company, LogoMetadata } from '../lib/types';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import CompanyLogo from './CompanyLogo';
 import './CompanyDetail.css';
 
 interface CompanyDetailProps {
@@ -9,6 +10,25 @@ interface CompanyDetailProps {
 }
 
 const CompanyDetail = ({ company }: CompanyDetailProps) => {
+  const handleLogoLoad = (metadata: LogoMetadata) => {
+    // Track successful logo loads for analytics
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Detail logo loaded for ${company.name}:`, {
+        source: metadata.bestSource?.name,
+        quality: metadata.qualityScore,
+        fromCache: metadata.sources.some(s => s.lastTested && 
+          new Date(metadata.lastUpdated).getTime() - new Date(s.lastTested).getTime() < 1000)
+      });
+    }
+  };
+
+  const handleLogoError = (error: Error) => {
+    // Track logo errors for monitoring
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(`Detail logo error for ${company.name}:`, error.message);
+    }
+  };
+
   return (
     <div className="detail-page">
       <header className="header">
@@ -26,10 +46,33 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
 
       <div className="detail-container">
         <div className="company-header">
-          <h2 className="company-name">{company.name}</h2>
-          <div className="badges">
-            {company.isHeadquarters && <span className="badge headquarters-badge">Headquarters</span>}
-            {company.ownership && <span className="badge ownership-badge">{company.ownership}</span>}
+          <div className="company-header-content">
+            <CompanyLogo
+              company={company}
+              size="large"
+              priority={true} // Above the fold on detail page
+              className="company-detail-logo"
+              onLoad={handleLogoLoad}
+              onError={handleLogoError}
+              showQualityIndicator={process.env.NODE_ENV === 'development'}
+            />
+            <div className="company-header-text">
+              <h2 className="company-name">{company.name}</h2>
+              <div className="badges">
+                {company.isHeadquarters && <span className="badge headquarters-badge">Headquarters</span>}
+                {company.ownership && <span className="badge ownership-badge">{company.ownership}</span>}
+              </div>
+              {company.url && (
+                <a 
+                  href={company.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="company-website-link"
+                >
+                  Visit Website →
+                </a>
+              )}
+            </div>
           </div>
         </div>
 
