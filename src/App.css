@@ -378,48 +378,10 @@ body {
 
 
 
-/* Responsive adjustments - Mobile First Optimization */
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .app {
-    padding: 0.75rem; /* Tighter padding for more content */
-  }
-
-  /* Touch Target Improvements - Minimum 44px for all interactive elements */
-  .search-submit {
-    min-width: 44px;
-    min-height: 44px;
-    touch-action: manipulation; /* Disable double-tap zoom */
-  }
-
-  /* Company cards - better touch experience */
-  .company-card {
-    margin-bottom: 1.25rem; /* More spacing between cards */
-    padding: 1.25rem;
-    border-radius: 12px; /* Larger border radius for modern mobile feel */
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    touch-action: manipulation;
-  }
-
-  .company-card:active {
-    transform: scale(0.98); /* Subtle press feedback */
-  }
-
-  /* Better mobile typography */
-  .company-name {
-    font-size: 1.25rem; /* Larger, more readable on mobile */
-    line-height: 1.4;
-    margin-bottom: 0.75rem;
-  }
-
-  .company-industry {
-    font-size: 1rem;
-    margin-bottom: 1rem; /* More breathing room */
-  }
-
-  .detail-item {
-    margin-bottom: 0.75rem; /* Better spacing between details */
-    font-size: 0.95rem;
+    padding: 1rem;
   }
   
   .company-grid {
@@ -931,30 +893,9 @@ body {
     font-size: 1.125rem;
   }
 
-  /* Mobile Search Experience Optimization */
-  .search-container-new {
-    margin-bottom: 1.5rem; /* More space from content below */
-  }
-
   .search-input-container {
-    padding: 1rem; /* More generous padding for touch */
-    gap: 0.75rem; /* Better spacing between elements */
-    border-radius: 16px; /* More modern, touch-friendly radius */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Elevated feel */
-  }
-
-  /* React Select mobile optimization */
-  .react-select-container {
-    min-width: 200px; /* Better minimum width */
-    flex: 1; /* Take available space */
-  }
-
-  /* Results count mobile positioning */
-  .results-count-new {
-    font-size: 1rem; /* Slightly larger for mobile */
-    margin-top: 1rem; /* Better spacing */
-    text-align: center; /* Center on mobile */
-    color: #6b7280;
+    padding: 0.75rem;
+    gap: 0.4rem;
   }
 
   .search-submit {
@@ -1017,65 +958,5 @@ body {
 
   .hero-section {
     min-height: 35vh;
-  }
-
-  /* Mobile Loading States */
-  .loading-container {
-    padding: 3rem 1rem;
-    text-align: center;
-    font-size: 1.125rem;
-    color: #6b7280;
-    background: linear-gradient(45deg, #f8fafc, #e2e8f0);
-    border-radius: 12px;
-    margin: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  /* Mobile No Results State */
-  .no-results {
-    padding: 3rem 1.5rem;
-    text-align: center;
-    font-size: 1.125rem;
-    color: #6b7280;
-    background: #f9fafb;
-    border-radius: 12px;
-    margin: 1rem;
-    border: 2px dashed #d1d5db;
-  }
-
-  /* Mobile Pull-to-Refresh Style Loading Animation */
-  @keyframes mobileLoader {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  .mobile-loading-spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid #e5e7eb;
-    border-top: 3px solid #3b82f6;
-    border-radius: 50%;
-    animation: mobileLoader 1s linear infinite;
-    margin: 0 auto 1rem auto;
-  }
-
-  /* Better mobile scrolling experience */
-  html {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* iOS momentum scrolling */
-  }
-
-  /* Mobile-optimized focus states */
-  .company-card:focus,
-  .search-submit:focus,
-  .react-select__control:focus {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
-    border-radius: 8px;
-  }
-
-  /* Remove tap highlight on mobile */
-  * {
-    -webkit-tap-highlight-color: transparent;
   }
 }

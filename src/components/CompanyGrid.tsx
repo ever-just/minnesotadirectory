@@ -9,12 +9,7 @@ interface CompanyGridProps {
 
 const CompanyGrid = ({ companies, loading }: CompanyGridProps) => {
   if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="mobile-loading-spinner"></div>
-        <div>Loading companies...</div>
-      </div>
-    );
+    return <div className="loading-container">Loading companies...</div>;
   }
 
   if (companies.length === 0) {
@@ -25,7 +20,7 @@ const CompanyGrid = ({ companies, loading }: CompanyGridProps) => {
     <div className="company-grid">
       {companies.map((company, index) => (
         <Link 
-          key={`${company.name}-${company.city}-${index}`}
+          key={index}
           to={`/company/${encodeURIComponent(company.name)}`} 
           className="company-card-link"
           style={{ textDecoration: 'none', color: 'inherit' }}

@@ -25,7 +25,7 @@ const SearchBar = ({ onSearch, onIndustryChange, industries, totalCompanies }: S
     onSearch('');
   };
 
-  // Custom styles for React-Select with Mobile Optimization
+  // Custom styles for React-Select
   const customStyles = {
     control: (provided: any) => ({
       ...provided,
@@ -38,16 +38,9 @@ const SearchBar = ({ onSearch, onIndustryChange, industries, totalCompanies }: S
       color: 'var(--text-color)',
       padding: '0.5rem 0',
       cursor: 'pointer',
-      minHeight: '44px', // Mobile touch target compliance
-      touchAction: 'manipulation', // Disable double-tap zoom
+      minHeight: 'auto',
       '&:hover': {
         border: 'none'
-      },
-      // Mobile-specific styles
-      '@media (max-width: 768px)': {
-        fontSize: '1rem',
-        padding: '0.75rem 0',
-        minHeight: '48px', // Larger touch target on mobile
       }
     }),
     valueContainer: (provided: any) => ({
@@ -103,19 +96,11 @@ const SearchBar = ({ onSearch, onIndustryChange, industries, totalCompanies }: S
         ? '#f8fafc' 
         : 'white',
       color: state.isSelected ? 'white' : 'var(--text-color)',
-      padding: '16px 20px', // Larger mobile-friendly touch targets
-      fontSize: '1rem',
+      padding: '12px 16px',
+      fontSize: '0.975rem',
       cursor: 'pointer',
-      minHeight: '48px', // Touch compliance
-      display: 'flex',
-      alignItems: 'center',
-      touchAction: 'manipulation', // Prevent double-tap zoom
-      borderBottom: '1px solid #f3f4f6', // Subtle dividers
       '&:hover': {
         backgroundColor: state.isSelected ? 'var(--primary-color)' : '#f1f5f9',
-      },
-      '&:active': {
-        backgroundColor: state.isSelected ? 'var(--primary-color)' : '#e2e8f0',
       }
     }),
   };
@@ -129,7 +114,7 @@ const SearchBar = ({ onSearch, onIndustryChange, industries, totalCompanies }: S
             onChange={handleIndustryChange}
             placeholder="All Industries - Browse Companies"
             isClearable={false}
-            isSearchable={false}
+            isSearchable={true}
             styles={customStyles}
             className="react-select"
             classNamePrefix="react-select"

@@ -128,17 +128,6 @@ const CompanyLogo = ({
     }
   }, [company.name, company.domain, company.url, loadingState.retryCount, enableRetry, onLoad, onError]);
 
-  // Reset logo state when company changes (fixes logo mismatch on filter changes)
-  useEffect(() => {
-    setLoadingState({
-      status: 'idle',
-      currentSource: null,
-      retryCount: 0
-    });
-    setLogoMetadata(null);
-    setImageLoaded(false);
-  }, [company.name, company.domain, company.url]);
-
   // Intersection Observer for lazy loading
   useEffect(() => {
     if (!lazy || priority) {
