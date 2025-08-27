@@ -14,7 +14,7 @@ const CompanyGrid = ({ companies, loading, onLoadMore, hasMore }: CompanyGridPro
   const observerRef = useRef<IntersectionObserver>();
   
   // Intersection Observer for infinite scroll
-  const lastCompanyRef = useCallback((node: HTMLDivElement | null) => {
+  const lastCompanyRef = useCallback((node: HTMLAnchorElement | null) => {
     if (loading) return;
     if (observerRef.current) observerRef.current.disconnect();
     
