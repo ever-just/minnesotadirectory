@@ -1,0 +1,155 @@
+<mxfile host="65bd71144e">
+    <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+        <mxGraphModel dx="1386" dy="759" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0"/>
+                
+                <!-- CURRENT LAYOUT -->
+                <mxCell id="current-title" value="CURRENT LAYOUT" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="30" width="400" height="30" as="geometry"/>
+                </mxCell>
+                
+                <!-- Nav Bar Container -->
+                <mxCell id="current-nav" value="← Back to Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=left;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="70" width="400" height="30" as="geometry"/>
+                </mxCell>
+                
+                <!-- Header Container (compact) -->
+                <mxCell id="current-header" value="MINNESOTA DIRECTORY&#10;Explore businesses in your area" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="110" width="400" height="60" as="geometry"/>
+                </mxCell>
+                
+                <!-- Search Container (current - compact) -->
+                <mxCell id="current-search-container" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="180" width="400" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="current-search-input" value="Search companies..." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=10;align=left;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="55" y="185" width="220" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="current-industry-dropdown" value="All Industries ▼" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="285" y="185" width="160" height="25" as="geometry"/>
+                </mxCell>
+                
+                <!-- Results Count -->
+                <mxCell id="current-results" value="2765 companies found" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=none;fontSize=11;align=left;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="225" width="400" height="20" as="geometry"/>
+                </mxCell>
+                
+                <!-- Company Grid (current) -->
+                <mxCell id="current-company-grid" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="255" width="400" height="300" as="geometry"/>
+                </mxCell>
+                
+                <!-- Company Cards (current layout) -->
+                <mxCell id="current-card1" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="60" y="265" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="current-card2" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="190" y="265" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="current-card3" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="320" y="265" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="current-card4" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="60" y="335" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="current-card5" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="190" y="335" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="current-card6" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="320" y="335" width="120" height="60" as="geometry"/>
+                </mxCell>
+                
+                <!-- PROPOSED LAYOUT -->
+                <mxCell id="proposed-title" value="PROPOSED LAYOUT" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="550" y="30" width="400" height="30" as="geometry"/>
+                </mxCell>
+                
+                <!-- Nav Bar Container -->
+                <mxCell id="proposed-nav" value="← Back to Home" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=left;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="550" y="70" width="400" height="30" as="geometry"/>
+                </mxCell>
+                
+                <!-- Spacer Container (new) -->
+                <mxCell id="proposed-spacer1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;opacity=50;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="550" y="110" width="400" height="40" as="geometry"/>
+                </mxCell>
+                
+                <!-- Header Container (expanded and prominent) -->
+                <mxCell id="proposed-header" value="MINNESOTA DIRECTORY&#10;Explore businesses in your area" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="550" y="160" width="400" height="80" as="geometry"/>
+                </mxCell>
+                
+                <!-- Large Search Container (Lovable-style) -->
+                <mxCell id="proposed-search-container" value="" style="rounded=2;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="570" y="260" width="360" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="proposed-search-input" value="Search companies by name or description..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=12;align=left;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="580" y="270" width="220" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="proposed-industry-integrated" value="Industries ▼" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;align=center;verticalAlign=middle;fontStyle=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="810" y="275" width="110" height="30" as="geometry"/>
+                </mxCell>
+                
+                <!-- Spacer Container (new) -->
+                <mxCell id="proposed-spacer2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f7ed;strokeColor=#36393d;opacity=50;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="550" y="330" width="400" height="30" as="geometry"/>
+                </mxCell>
+                
+                <!-- Company Grid (proposed) -->
+                <mxCell id="proposed-company-grid" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="550" y="370" width="400" height="185" as="geometry"/>
+                </mxCell>
+                
+                <!-- Company Cards (proposed layout) -->
+                <mxCell id="proposed-card1" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="560" y="380" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="proposed-card2" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="690" y="380" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="proposed-card3" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="820" y="380" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="proposed-card4" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="560" y="450" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="proposed-card5" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="690" y="450" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="proposed-card6" value="Company Card" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="820" y="450" width="120" height="60" as="geometry"/>
+                </mxCell>
+                
+                <!-- KEY DIFFERENCES ANNOTATIONS -->
+                <mxCell id="annotation1" value="COMPACT&#10;Header" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fillColor=#ffcc99;strokeColor=#ff9900;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="470" y="120" width="60" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="annotation2" value="EXPANDED&#10;Header&#10;+ Spacing" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=10;fillColor=#ffcc99;strokeColor=#ff9900;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="470" y="180" width="60" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="annotation3" value="Small Search&#10;+ Separate&#10;Dropdown" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=9;fillColor=#ffcc99;strokeColor=#ff9900;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="470" y="185" width="60" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="annotation4" value="LARGE&#10;Prominent&#10;Search&#10;+ Integrated&#10;Dropdown" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=9;fillColor=#ffcc99;strokeColor=#ff9900;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="470" y="270" width="70" height="50" as="geometry"/>
+                </mxCell>
+                
+                <!-- ARROWS -->
+                <mxCell id="arrow1" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#ff9900;strokeWidth=2;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="450" y="140" as="sourcePoint"/>
+                        <mxPoint x="550" y="190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="arrow2" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#ff9900;strokeWidth=2;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="450" y="200" as="sourcePoint"/>
+                        <mxPoint x="570" y="290" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

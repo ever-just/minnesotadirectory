@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useParams, Link } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
+import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
@@ -20,25 +19,27 @@ interface DirectoryPageProps {
 function DirectoryPage({ filteredCompanies, industries, loading, handleSearch, handleIndustryChange }: DirectoryPageProps) {
   return (
     <>
-      <nav className="directory-nav">
-        <Link to="/" className="nav-link home-link">
-          ← Back to Home
-        </Link>
-      </nav>
-      
-      <header className="header">
-        <h1>MINNESOTA DIRECTORY</h1>
-        <p>Explore businesses in your area</p>
-      </header>
+      <div className="hero-section">
+        <div className="spacer-top"></div>
+        
+        <header className="header-expanded">
+          <h1>MINNESOTA DIRECTORY</h1>
+          <p>Explore businesses in your area</p>
+        </header>
+        
+        <div className="search-section">
+          <SearchBar 
+            onSearch={handleSearch}
+            onIndustryChange={handleIndustryChange}
+            industries={industries}
+            totalCompanies={filteredCompanies.length}
+          />
+        </div>
+        
+        <div className="spacer-bottom"></div>
+      </div>
       
       <main className="main-content">
-        <SearchBar 
-          onSearch={handleSearch}
-          onIndustryChange={handleIndustryChange}
-          industries={industries}
-          totalCompanies={filteredCompanies.length}
-        />
-        
         <CompanyGrid 
           companies={filteredCompanies}
           loading={loading}
@@ -53,8 +54,8 @@ interface DetailPageWrapperProps {
 }
 
 function DetailPageWrapper({ companies }: DetailPageWrapperProps) {
-  const { id } = useParams<{ id: string }>();
-  const company = companies.find(c => c.name === decodeURIComponent(id || ''));
+  const { companyName } = useParams<{ companyName: string }>();
+  const company = companies.find(c => c.name === decodeURIComponent(companyName || ''));
   
   if (!company) {
     return <div className="loading-container">Company not found</div>;
@@ -161,10 +162,6 @@ function App() {
         <Routes>
           <Route 
             path="/" 
-            element={<LandingPage />} 
-          />
-          <Route 
-            path="/directory" 
             element={
               <DirectoryPage 
                 companies={companies}
@@ -177,7 +174,7 @@ function App() {
             } 
           />
           <Route 
-            path="/company/:id" 
+            path="/company/:companyName" 
             element={<DetailPageWrapper companies={companies} />} 
           />
         </Routes>
