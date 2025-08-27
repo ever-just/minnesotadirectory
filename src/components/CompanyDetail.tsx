@@ -173,20 +173,13 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
       <div className="detail-container">
         <div className="info-sections">
           <div className="info-section">
-            <h3>Company Information</h3>
+            <h3>Company Overview</h3>
             <div className="info-grid">
               <div className="info-label">Industry:</div>
               <div className="info-value">{company.industry}</div>
               
               <div className="info-label">Ownership:</div>
               <div className="info-value">{company.ownership || 'N/A'}</div>
-              
-              <div className="info-label">Type:</div>
-              <div className="info-value">
-                <div className="badges">
-                  {company.ownership && <span className="badge ownership-badge">{company.ownership}</span>}
-                </div>
-              </div>
               
               {company.ticker && (
                 <>
@@ -207,7 +200,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
           </div>
 
           <div className="info-section">
-            <h3>Contact Information</h3>
+            <h3>Company Office</h3>
             <div className="info-grid">
               <div className="info-label">Address:</div>
               <div className="info-value">{company.address || 'N/A'}</div>

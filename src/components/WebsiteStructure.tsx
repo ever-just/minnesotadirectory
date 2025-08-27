@@ -186,7 +186,6 @@ const WebsiteStructureComponent = ({ companyUrl, companyName }: WebsiteStructure
   const hasPages = structure.pages.length > 0;
   const hasSubdomains = structure.subdomains.length > 0;
   const siteStats = siteMap ? WebsiteStructureService.countTotalNodes(siteMap) : { directories: 0, pages: 0 };
-  const maxDepth = siteMap ? WebsiteStructureService.getMaxDepth(siteMap) : 0;
 
   return (
     <div className="sitemap-directory-card">
@@ -195,7 +194,7 @@ const WebsiteStructureComponent = ({ companyUrl, companyName }: WebsiteStructure
           <Globe size={20} className="header-icon" />
           <div className="header-text">
             <h3>Website Directory</h3>
-            <p className="header-subtitle">Complete sitemap structure for {companyName}</p>
+            <p className="header-subtitle">Site directory structure</p>
           </div>
         </div>
         
@@ -210,10 +209,7 @@ const WebsiteStructureComponent = ({ companyUrl, companyName }: WebsiteStructure
                 <span className="stat-value">{siteStats.directories}</span>
                 <span className="stat-label">Directories</span>
               </div>
-              <div className="stat">
-                <span className="stat-value">{maxDepth}</span>
-                <span className="stat-label">Max Depth</span>
-              </div>
+
             </>
           )}
           {hasSubdomains && (
