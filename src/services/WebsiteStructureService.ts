@@ -21,6 +21,14 @@ export interface WebsiteStructure {
   error?: string;
 }
 
+export interface ProgressCallback {
+  onPageFound: (page: WebsitePage) => void;
+  onSubdomainFound: (subdomain: Subdomain) => void;
+  onSitemapFound: (sitemapUrl: string) => void;
+  onProgress: (status: string, completed: number, total?: number) => void;
+  onError: (error: string) => void;
+}
+
 export interface SiteMapNode {
   name: string;
   path: string;
@@ -92,6 +100,40 @@ export class WebsiteStructureService {
     return structure;
   }
 
+  static async analyzeWebsiteRealTime(url: string, callbacks: ProgressCallback): Promise<WebsiteStructure> {
+    const domain = this.extractDomain(url);
+    
+    const structure: WebsiteStructure = {
+      domain,
+      pages: [],
+      subdomains: [],
+      totalPages: 0,
+      lastUpdated: new Date().toISOString()
+    };
+
+    try {
+      callbacks.onProgress('Starting website analysis...', 0);
+      
+      // Try to fetch sitemap with real-time updates
+      const sitemapResult = await this.fetchSitemapRealTime(domain, callbacks);
+      structure.pages = sitemapResult.pages;
+      structure.sitemapUrl = sitemapResult.sitemapUrl;
+      structure.totalPages = sitemapResult.pages.length;
+
+      // Try to discover subdomains with real-time updates
+      structure.subdomains = await this.discoverSubdomainsRealTime(domain, callbacks);
+
+      callbacks.onProgress('Analysis complete!', 100, 100);
+
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error occurred';
+      structure.error = errorMsg;
+      callbacks.onError(errorMsg);
+    }
+
+    return structure;
+  }
+
   private static extractDomain(url: string): string {
     try {
       const urlObj = new URL(url.startsWith('http') ? url : `https://${url}`);
@@ -113,6 +155,37 @@ export class WebsiteStructureService {
         if (response.ok) {
           const xmlText = await response.text();
           const pages = await this.parseSitemap(xmlText, baseUrl);
+          return { pages, sitemapUrl };
+        }
+      } catch (error) {
+        console.log(`Failed to fetch ${path} for ${domain}:`, error);
+        continue;
+      }
+    }
+
+    throw new Error('No accessible sitemap found');
+  }
+
+  private static async fetchSitemapRealTime(domain: string, callbacks: ProgressCallback): Promise<{pages: WebsitePage[], sitemapUrl?: string}> {
+    const baseUrl = `https://${domain}`;
+    
+    callbacks.onProgress('Searching for sitemap files...', 10);
+    
+    // Try common sitemap locations
+    for (let i = 0; i < this.COMMON_SITEMAP_PATHS.length; i++) {
+      const path = this.COMMON_SITEMAP_PATHS[i];
+      try {
+        const sitemapUrl = `${baseUrl}${path}`;
+        callbacks.onProgress(`Trying ${path}...`, 10 + (i * 5));
+        
+        const response = await this.fetchWithProxy(sitemapUrl);
+        
+        if (response.ok) {
+          callbacks.onSitemapFound(sitemapUrl);
+          callbacks.onProgress('Parsing sitemap...', 40);
+          
+          const xmlText = await response.text();
+          const pages = await this.parseSitemapRealTime(xmlText, baseUrl, callbacks);
           return { pages, sitemapUrl };
         }
       } catch (error) {
@@ -197,6 +270,73 @@ export class WebsiteStructureService {
     return pages;
   }
 
+  private static async parseSitemapRealTime(xmlText: string, baseUrl: string, callbacks: ProgressCallback): Promise<WebsitePage[]> {
+    const pages: WebsitePage[] = [];
+    
+    try {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+      
+      // Check if it's a sitemap index
+      const sitemapElements = xmlDoc.querySelectorAll('sitemap > loc');
+      if (sitemapElements.length > 0) {
+        callbacks.onProgress(`Found sitemap index with ${sitemapElements.length} sitemaps`, 45);
+        
+        // This is a sitemap index, fetch individual sitemaps
+        for (let i = 0; i < sitemapElements.length; i++) {
+          const sitemapLoc = sitemapElements[i];
+          try {
+            const sitemapUrl = sitemapLoc.textContent?.trim();
+            if (sitemapUrl) {
+              callbacks.onProgress(`Fetching subsitemap ${i + 1}/${sitemapElements.length}...`, 45 + (i * 15));
+              
+              const response = await this.fetchWithProxy(sitemapUrl);
+              if (response.ok) {
+                const subSitemapXml = await response.text();
+                const subPages = await this.parseSitemapRealTime(subSitemapXml, baseUrl, callbacks);
+                pages.push(...subPages);
+              }
+            }
+          } catch (error) {
+            console.log('Failed to fetch subsitemap:', error);
+          }
+        }
+      } else {
+        // Regular sitemap with URL entries
+        const urlElements = xmlDoc.querySelectorAll('url');
+        callbacks.onProgress(`Found ${urlElements.length} pages in sitemap`, 50);
+        
+        for (let i = 0; i < urlElements.length; i++) {
+          const urlElement = urlElements[i];
+          const loc = urlElement.querySelector('loc')?.textContent?.trim();
+          const lastmod = urlElement.querySelector('lastmod')?.textContent?.trim();
+          const priority = urlElement.querySelector('priority')?.textContent?.trim();
+          
+          if (loc) {
+            const page: WebsitePage = {
+              url: loc,
+              lastModified: lastmod || undefined,
+              priority: priority ? parseFloat(priority) : undefined
+            };
+            
+            pages.push(page);
+            callbacks.onPageFound(page);
+            
+            // Update progress every 10 pages or on last page
+            if (i % 10 === 0 || i === urlElements.length - 1) {
+              const progress = 50 + Math.round((i / urlElements.length) * 30);
+              callbacks.onProgress(`Processed ${i + 1}/${urlElements.length} pages`, progress);
+            }
+          }
+        }
+      }
+    } catch (error) {
+      throw new Error(`Failed to parse sitemap: ${error}`);
+    }
+
+    return pages;
+  }
+
   private static async discoverSubdomains(domain: string): Promise<Subdomain[]> {
     const subdomains: Subdomain[] = [];
     
@@ -215,6 +355,48 @@ export class WebsiteStructureService {
           isActive,
           lastChecked: new Date().toISOString()
         });
+      } catch (error) {
+        // Subdomain check failed, mark as inactive
+        subdomains.push({
+          domain: `${subdomain}.${domain}`,
+          isActive: false,
+          lastChecked: new Date().toISOString()
+        });
+      }
+    }
+
+    return subdomains.filter(sub => sub.isActive);
+  }
+
+  private static async discoverSubdomainsRealTime(domain: string, callbacks: ProgressCallback): Promise<Subdomain[]> {
+    const subdomains: Subdomain[] = [];
+    
+    callbacks.onProgress('Discovering subdomains...', 85);
+    
+    // Note: This approach is limited by CORS policies
+    // In a production app, you'd use a backend service or third-party API
+    
+    for (let i = 0; i < this.COMMON_SUBDOMAINS.length; i++) {
+      const subdomain = this.COMMON_SUBDOMAINS[i];
+      try {
+        const fullDomain = `${subdomain}.${domain}`;
+        callbacks.onProgress(`Checking ${fullDomain}...`, 85 + Math.round((i / this.COMMON_SUBDOMAINS.length) * 10));
+        
+        // Simple DNS resolution check (limited by browser security)
+        const isActive = await this.checkSubdomainExists(fullDomain);
+        
+        const subdomainObj: Subdomain = {
+          domain: fullDomain,
+          isActive,
+          lastChecked: new Date().toISOString()
+        };
+        
+        subdomains.push(subdomainObj);
+        
+        if (isActive) {
+          callbacks.onSubdomainFound(subdomainObj);
+        }
+        
       } catch (error) {
         // Subdomain check failed, mark as inactive
         subdomains.push({

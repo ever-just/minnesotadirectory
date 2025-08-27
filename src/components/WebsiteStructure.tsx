@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Globe, FileText, ExternalLink, ChevronDown, ChevronRight, Loader2, Folder, FolderOpen, File, Home } from 'lucide-react';
-import { WebsiteStructureService, WebsiteStructure, SiteMapNode } from '../services/WebsiteStructureService';
+import { WebsiteStructureService, WebsiteStructure, SiteMapNode, WebsitePage, Subdomain, ProgressCallback } from '../services/WebsiteStructureService';
 
 interface WebsiteStructureProps {
   companyUrl: string;
@@ -12,6 +12,10 @@ const WebsiteStructureComponent = ({ companyUrl, companyName }: WebsiteStructure
   const [loading, setLoading] = useState(false);
   const [siteMap, setSiteMap] = useState<SiteMapNode | null>(null);
   const [showSubdomains, setShowSubdomains] = useState(false);
+  const [progressText, setProgressText] = useState<string>('');
+  const [progressPercent, setProgressPercent] = useState<number>(0);
+  const [discoveredPages, setDiscoveredPages] = useState<WebsitePage[]>([]);
+  const [discoveredSubdomains, setDiscoveredSubdomains] = useState<Subdomain[]>([]);
 
   useEffect(() => {
     if (companyUrl) {
@@ -23,11 +27,43 @@ const WebsiteStructureComponent = ({ companyUrl, companyName }: WebsiteStructure
     if (!companyUrl) return;
     
     setLoading(true);
+    setProgressText('Initializing analysis...');
+    setProgressPercent(0);
+    setDiscoveredPages([]);
+    setDiscoveredSubdomains([]);
+    setSiteMap(null);
+    
+    // Progress callbacks for real-time updates
+    const callbacks: ProgressCallback = {
+      onPageFound: (page: WebsitePage) => {
+        setDiscoveredPages(prev => {
+          const updated = [...prev, page];
+          // Build sitemap incrementally
+          const newSiteMap = WebsiteStructureService.buildSiteMap(updated);
+          setSiteMap(newSiteMap);
+          return updated;
+        });
+      },
+      onSubdomainFound: (subdomain: Subdomain) => {
+        setDiscoveredSubdomains(prev => [...prev, subdomain]);
+      },
+      onSitemapFound: (sitemapUrl: string) => {
+        setProgressText(`Found sitemap: ${new URL(sitemapUrl).pathname}`);
+      },
+      onProgress: (status: string, completed: number, total?: number) => {
+        setProgressText(status);
+        setProgressPercent(completed);
+      },
+      onError: (error: string) => {
+        console.error('Real-time analysis error:', error);
+      }
+    };
+    
     try {
-      const result = await WebsiteStructureService.analyzeWebsite(companyUrl);
+      const result = await WebsiteStructureService.analyzeWebsiteRealTime(companyUrl, callbacks);
       setStructure(result);
       
-      // Build hierarchical site map
+      // Final sitemap build with all discovered pages
       if (result.pages.length > 0) {
         const siteMapTree = WebsiteStructureService.buildSiteMap(result.pages);
         setSiteMap(siteMapTree);
@@ -36,15 +72,17 @@ const WebsiteStructureComponent = ({ companyUrl, companyName }: WebsiteStructure
       console.error('Failed to analyze website structure:', error);
       setStructure({
         domain: companyUrl.replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0],
-        pages: [],
-        subdomains: [],
-        totalPages: 0,
+        pages: discoveredPages,
+        subdomains: discoveredSubdomains,
+        totalPages: discoveredPages.length,
         lastUpdated: new Date().toISOString(),
         error: 'Unable to analyze website structure. This may be due to CORS restrictions or the website not having a public sitemap.'
       });
       setSiteMap(null);
     } finally {
       setLoading(false);
+      setProgressText('');
+      setProgressPercent(100);
     }
   };
 
@@ -143,7 +181,44 @@ const WebsiteStructureComponent = ({ companyUrl, companyName }: WebsiteStructure
           <Loader2 size={20} className="animate-spin" />
           <div className="loading-content">
             <h3>Discovering Website Directory</h3>
-            <p>Parsing sitemap and building site structure...</p>
+            <p>{progressText || 'Parsing sitemap and building site structure...'}</p>
+            
+            {/* Progress bar */}
+            <div className="progress-bar-container">
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
+              <span className="progress-text">{progressPercent}%</span>
+            </div>
+            
+            {/* Real-time discovered content */}
+            {(discoveredPages.length > 0 || discoveredSubdomains.length > 0) && (
+              <div className="discovery-stats">
+                {discoveredPages.length > 0 && (
+                  <span className="discovery-stat">
+                    📄 {discoveredPages.length} pages found
+                  </span>
+                )}
+                {discoveredSubdomains.length > 0 && (
+                  <span className="discovery-stat">
+                    🌐 {discoveredSubdomains.length} subdomains found
+                  </span>
+                )}
+              </div>
+            )}
+            
+            {/* Show discovered sitemap tree in real-time */}
+            {siteMap && discoveredPages.length > 0 && (
+              <div className="real-time-preview">
+                <h4>Live Directory Preview:</h4>
+                <div className="mini-tree">
+                  {renderSiteMapNode(siteMap)}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
