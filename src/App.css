@@ -309,35 +309,9 @@ body {
   }
   
   /* Advanced logo system responsive adjustments */
-  .company-header-content {
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    gap: 1.5rem !important;
-    padding: 1.5rem !important;
-  }
 }
 
 /* Advanced Logo System Styles */
-.company-header-content {
-  display: flex;
-  align-items: flex-start;
-  gap: 2rem;
-  padding: 2rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2rem;
-}
-
-.company-detail-logo {
-  flex-shrink: 0;
-}
-
-.company-header-text {
-  flex: 1;
-  min-width: 0;
-}
 
 .company-website-link {
   display: inline-flex;

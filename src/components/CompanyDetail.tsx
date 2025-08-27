@@ -41,7 +41,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
         <div className="header-company-info">
           <CompanyLogo
             company={company}
-            size="medium"
+            size="large"
             priority={true}
             lazy={false}
             className="header-company-logo"
@@ -62,34 +62,6 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
       </div>
 
       <div className="detail-container">
-        <div className="company-header">
-          <div className="company-header-content">
-            <CompanyLogo
-              company={company}
-              size="large"
-              priority={true} // Above the fold on detail page
-              lazy={false} // Never lazy load detail page logos
-              className="company-detail-logo"
-              onLoad={handleLogoLoad}
-              onError={handleLogoError}
-              showQualityIndicator={process.env.NODE_ENV === 'development'}
-            />
-            <div className="company-header-text">
-              <h2 className="company-name">{company.name}</h2>
-              {company.url && (
-                <a 
-                  href={company.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="company-website-link"
-                >
-                  Visit Website →
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-
         <div className="info-sections">
           <div className="info-section">
             <h3>Company Information</h3>
@@ -147,8 +119,13 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
               <div className="info-label">Website:</div>
               <div className="info-value">
                 {company.url ? (
-                  <a href={company.url} target="_blank" rel="noopener noreferrer" className="website-link">
-                    Visit Website
+                  <a 
+                    href={company.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="company-website-link"
+                  >
+                    Visit Website →
                   </a>
                 ) : (
                   'N/A'
