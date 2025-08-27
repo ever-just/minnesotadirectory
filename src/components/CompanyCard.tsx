@@ -1,5 +1,5 @@
 import { Company, LogoMetadata } from '../lib/types';
-import { formatSales } from '../lib/utils';
+import { formatSales, formatNumber } from '../lib/utils';
 import CompanyLogo from './CompanyLogo';
 
 interface CompanyCardProps {
@@ -52,10 +52,10 @@ const CompanyCard = ({ company, priority = false, showLogoQuality = false }: Com
           <span className="detail-label">Location:</span> {company.city}, {company.state}
         </div>
         <div className="detail-item">
-          <span className="detail-label">Employees:</span> {company.employees}
+          <span className="detail-label">Employees:</span> {formatNumber(company.employees)}
         </div>
         <div className="detail-item">
-          <span className="detail-label">Sales:</span> {formatSales(company.sales || '')}
+          <span className="detail-label">Annual Revenue:</span> {formatSales(company.sales || '')}
         </div>
       </div>
       <div className="company-description">

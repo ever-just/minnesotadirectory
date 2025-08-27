@@ -107,8 +107,15 @@ function App() {
             sicDescription: company.sicDescription || ''
           }));
         
-        setCompanies(processedData);
-        setFilteredCompanies(processedData);
+        // Sort companies by sales (high to low) as default
+        const sortedData = processedData.sort((a, b) => {
+          const salesA = parseFloat(a.sales) || 0;
+          const salesB = parseFloat(b.sales) || 0;
+          return salesB - salesA; // Descending order (high to low)
+        });
+        
+        setCompanies(sortedData);
+        setFilteredCompanies(sortedData);
         
         // Extract unique industries for the filter dropdown
         const uniqueIndustries = getUniqueIndustries(processedData);

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Company, LogoMetadata } from '../lib/types';
-import { formatSales } from '../lib/utils';
+import { formatSales, formatNumber } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -196,12 +196,12 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
               )}
               
               <div className="info-label">Employees (Site):</div>
-              <div className="info-value">{company.employeesSite || 'N/A'}</div>
+              <div className="info-value">{formatNumber(company.employeesSite) || 'N/A'}</div>
               
               <div className="info-label">Employees (Total):</div>
-              <div className="info-value">{company.employees || 'N/A'}</div>
+              <div className="info-value">{formatNumber(company.employees) || 'N/A'}</div>
               
-              <div className="info-label">Annual Sales:</div>
+              <div className="info-label">Annual Revenue:</div>
               <div className="info-value">{formatSales(company.sales || '') || 'N/A'}</div>
             </div>
           </div>

@@ -150,3 +150,12 @@ export const formatPhoneNumber = (phone: string): string => {
   
   return phone;
 };
+
+export const formatNumber = (numStr: string): string => {
+  if (!numStr) return 'N/A';
+  
+  const num = parseFloat(numStr);
+  if (isNaN(num)) return numStr;
+  
+  return num.toLocaleString();
+};
