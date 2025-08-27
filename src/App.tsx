@@ -4,7 +4,7 @@ import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
 import { Company, IndustryOption } from './lib/types';
-import { parseCSVData, getUniqueIndustries, formatSales } from './lib/utils';
+import { parseCSVData, getUniqueIndustries } from './lib/utils';
 import './App.css';
 
 interface DirectoryPageProps {
@@ -92,7 +92,7 @@ function App() {
             city: company.city || '',
             state: company.state || '',
             postalCode: company.postalCode || '',
-            sales: formatSales(company.sales || ''),
+            sales: company.sales || '', // Keep raw sales data, format in components
             employees: company.employees || '',
             description: company.description || '',
             industry: company.industry || '',
@@ -101,7 +101,7 @@ function App() {
             tradestyle: company.tradestyle || '',
             phone: company.phone || '',
             url: company.url || '',
-            rawSales: company.sales || '',
+            rawSales: company.sales || '', // Store raw sales for formatting
             ownership: company.ownership || '',
             ticker: company.ticker || '',
             employeesSite: company.employeesSite || '',

@@ -29,20 +29,22 @@ const CompanyCard = ({ company, priority = false, showLogoQuality = false }: Com
 
   return (
     <div className="company-card">
-      <div className="company-header">
-        <CompanyLogo
-          company={company}
-          size="medium"
-          priority={priority}
-          lazy={!priority} // Disable lazy loading for priority (above-the-fold) cards
-          className="flex-shrink-0"
-          onLoad={handleLogoLoad}
-          onError={handleLogoError}
-          showQualityIndicator={showLogoQuality}
-        />
-        <div className="company-title-section flex-1 min-w-0 ml-4">
+      <div className="company-header-new">
+        <div className="company-title-section-new">
           <h2 className="company-name">{company.name}</h2>
           {company.isHeadquarters && <span className="hq-badge">HQ</span>}
+        </div>
+        <div className="company-logo-top-right">
+          <CompanyLogo
+            company={company}
+            size="small"
+            priority={priority}
+            lazy={!priority} // Disable lazy loading for priority (above-the-fold) cards
+            className="logo-positioned"
+            onLoad={handleLogoLoad}
+            onError={handleLogoError}
+            showQualityIndicator={showLogoQuality}
+          />
         </div>
       </div>
       <div className="company-industry">{company.industry}</div>
@@ -62,9 +64,7 @@ const CompanyCard = ({ company, priority = false, showLogoQuality = false }: Com
           ? `${company.description.substring(0, 300)}...` 
           : company.description}
       </div>
-      <div className="view-details">
-        <a href="#" className="view-details-link">View Details →</a>
-      </div>
+
     </div>
   );
 };

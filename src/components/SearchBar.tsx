@@ -75,11 +75,18 @@ const SearchBar = ({ onSearch, onIndustryChange, industries, totalCompanies }: S
       border: '1px solid #e2e8f0',
       overflow: 'hidden',
       marginTop: '8px',
+      zIndex: 1050, // Explicit z-index control
+      isolation: 'isolate', // Prevent interference with other elements
     }),
     menuList: (provided: any) => ({
       ...provided,
       padding: '0',
       maxHeight: '300px',
+    }),
+    menuPortal: (provided: any) => ({
+      ...provided,
+      zIndex: 1050, // Ensure portal doesn't interfere
+      isolation: 'isolate',
     }),
     option: (provided: any, state: any) => ({
       ...provided,
@@ -111,6 +118,9 @@ const SearchBar = ({ onSearch, onIndustryChange, industries, totalCompanies }: S
             styles={customStyles}
             className="react-select"
             classNamePrefix="react-select"
+            menuPortalTarget={null}
+            menuPlacement="bottom"
+            menuPosition="absolute"
           />
         </div>
         <div className="search-controls">

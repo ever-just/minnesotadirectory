@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { Company, LogoMetadata } from '../lib/types';
+import { formatSales } from '../lib/utils';
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CompanyLogo from './CompanyLogo';
+import WebsiteStructure from './WebsiteStructure';
 import './CompanyDetail.css';
 
 interface CompanyDetailProps {
@@ -15,6 +17,70 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [company.name]); // Re-scroll when company changes
+
+  // Extract clean domain from URL (remove www. and protocol)
+  const getCleanDomain = (url: string): string => {
+    if (!url) return '';
+    
+    try {
+      // Remove protocol if present
+      let cleanUrl = url.replace(/^https?:\/\//, '');
+      // Remove www. if present
+      cleanUrl = cleanUrl.replace(/^www\./, '');
+      // Remove trailing slash if present
+      cleanUrl = cleanUrl.replace(/\/$/, '');
+      
+      return cleanUrl;
+    } catch {
+      return url;
+    }
+  };
+
+  // Format business description into readable paragraphs
+  const formatBusinessDescription = (description: string): string[] => {
+    if (!description) return ['No description available.'];
+    
+    // Split on multiple sentence endings that suggest new topics/paragraphs
+    let paragraphs = description
+      .split(/(?<=[.!?])\s+(?=[A-Z]|The\s|In\s|For\s|During\s|Additionally\s|Furthermore\s|Moreover\s|However\s|Currently\s|Recently\s|Today\s)/)
+      .filter(para => para.trim().length > 0);
+    
+    // If we don't get good natural breaks, try splitting on certain phrases
+    if (paragraphs.length === 1) {
+      paragraphs = description
+        .split(/(?:\.\s*)(?=The company|In addition|Additionally|Furthermore|Moreover|Currently|Recently|Today|The business|Operations|Products|Services)/)
+        .filter(para => para.trim().length > 0);
+    }
+    
+    // If still one long paragraph, split by length (every ~300-400 characters at sentence boundaries)
+    if (paragraphs.length === 1 && description.length > 400) {
+      const sentences = description.split(/(?<=[.!?])\s+/);
+      paragraphs = [];
+      let currentParagraph = '';
+      
+      sentences.forEach(sentence => {
+        if (currentParagraph.length + sentence.length > 350 && currentParagraph.length > 100) {
+          paragraphs.push(currentParagraph.trim());
+          currentParagraph = sentence;
+        } else {
+          currentParagraph += (currentParagraph ? ' ' : '') + sentence;
+        }
+      });
+      
+      if (currentParagraph.trim()) {
+        paragraphs.push(currentParagraph.trim());
+      }
+    }
+    
+    // Clean up paragraphs and ensure they end with punctuation
+    return paragraphs.map(para => {
+      para = para.trim();
+      if (para && !para.match(/[.!?]$/)) {
+        para += '.';
+      }
+      return para;
+    }).filter(para => para.length > 10); // Filter out very short fragments
+  };
 
   // Smart function to split company name into two lines for header display
   const splitCompanyName = (name: string): { line1: string; line2: string } => {
@@ -78,6 +144,14 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
 
   return (
     <div className="detail-page">
+      <div className="back-button-container">
+        <Button asChild variant="outline" size="icon">
+          <Link to="/" aria-label="Back to Directory">
+            <ArrowLeft className="h-4 w-4" />
+          </Link>
+        </Button>
+      </div>
+
       <header className="header">
         <div className="header-company-info">
           <CompanyLogo
@@ -95,14 +169,6 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
           </h1>
         </div>
       </header>
-
-      <div className="back-button-container">
-        <Button asChild variant="outline" size="icon">
-          <Link to="/directory" aria-label="Back to Directory">
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-        </Button>
-      </div>
 
       <div className="detail-container">
         <div className="info-sections">
@@ -137,7 +203,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
               <div className="info-value">{company.employees || 'N/A'}</div>
               
               <div className="info-label">Annual Sales:</div>
-              <div className="info-value">{company.sales || 'N/A'}</div>
+              <div className="info-value">{formatSales(company.sales || '') || 'N/A'}</div>
             </div>
           </div>
 
@@ -162,14 +228,24 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
               <div className="info-label">Website:</div>
               <div className="info-value">
                 {company.url ? (
-                  <a 
-                    href={company.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="company-website-link"
-                  >
-                    Visit Website →
-                  </a>
+                  <div className="website-display">
+                    <span className="website-url">{getCleanDomain(company.url)}</span>
+                    <Button 
+                      asChild 
+                      variant="ghost" 
+                      size="icon"
+                      className="website-button"
+                    >
+                      <a 
+                        href={company.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label="Visit website"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </Button>
+                  </div>
                 ) : (
                   'N/A'
                 )}
@@ -180,7 +256,13 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
 
         <div className="description-section">
           <h3>Business Description</h3>
-          <p className="full-description">{company.description || 'No description available.'}</p>
+          <div className="description-content">
+            {formatBusinessDescription(company.description || '').map((paragraph, index) => (
+              <p key={index} className="description-paragraph">
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </div>
 
         <div className="additional-section">
@@ -196,6 +278,14 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
             <div className="info-value">{company.tradestyle || 'N/A'}</div>
           </div>
         </div>
+
+        {/* Website Structure Analysis - Separate Component */}
+        {company.url && (
+          <WebsiteStructure 
+            companyUrl={company.url} 
+            companyName={company.name}
+          />
+        )}
       </div>
     </div>
   );

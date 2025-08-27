@@ -120,11 +120,33 @@ body {
   display: flex;
   flex-direction: column;
   transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  z-index: 1; /* Lower z-index than search dropdown */
+  height: 100%; /* Make all cards same height within grid */
+  min-height: 450px; /* Consistent minimum height for uniformity */
 }
 
 .company-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Company card link wrapper */
+.company-card-link {
+  display: block;
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: transform 0.2s ease;
+}
+
+.company-card-link:hover {
+  text-decoration: none !important;
+}
+
+.company-card-link:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
 }
 
 .company-header {
@@ -168,6 +190,120 @@ body {
 .company-title-section {
   flex: 1;
   min-width: 0;
+}
+
+/* New header layout with logo in top-right */
+.company-header-new {
+  position: relative;
+  padding-right: 100px; /* Space for logo (60px + 40px margin) */
+  margin-bottom: 0.5rem;
+  min-height: 60px; /* Ensure space for logo */
+}
+
+.company-title-section-new {
+  padding-right: 20px; /* Generous margin from logo */
+  padding-top: 5px; /* Align with logo center */
+}
+
+.company-logo-top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Logo styling within container */
+.company-logo-top-right .logo-positioned {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.company-logo-top-right .logo-positioned > div {
+  width: 50px !important;
+  height: 50px !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+}
+
+.company-logo-top-right .logo-positioned img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+  object-fit: contain !important;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.company-logo-top-right .logo-positioned .w-16 {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+/* Override any conflicting classes from CompanyLogo component */
+.company-logo-top-right .logo-positioned * {
+  border-radius: 4px;
+}
+
+/* Fallback styling for missing logos */
+.company-logo-top-right .logo-positioned .logo-fallback {
+  width: 50px !important;
+  height: 50px !important;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Handle any generated placeholders */
+.company-logo-top-right .logo-positioned [class*="bg-gradient"] {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 4px;
+}
+
+/* Handle loading skeletons */
+.company-logo-top-right .logo-positioned .animate-pulse {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 4px;
+}
+
+/* Loading state */
+.logo-positioned.loading {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.logo-positioned.loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e2e8f0;
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .company-name {
@@ -272,6 +408,45 @@ body {
   
   .company-logo-container {
     align-self: center;
+  }
+
+  /* New header layout mobile adjustments */
+  .company-header-new {
+    padding-right: 80px; /* Adequate padding for mobile */
+    min-height: 50px;    /* Smaller minimum height */
+  }
+  
+  .company-title-section-new {
+    padding-right: 15px; /* Maintain good spacing on mobile */
+  }
+  
+  .company-logo-top-right {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .company-logo-top-right .logo-positioned > div {
+    width: 35px !important;
+    height: 35px !important;
+    max-width: 35px !important;
+    max-height: 35px !important;
+  }
+
+  .company-logo-top-right .logo-positioned img {
+    max-width: 35px !important;
+    max-height: 35px !important;
+  }
+  
+  .company-logo-top-right .logo-positioned .logo-fallback {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 10px;
+  }
+  
+  .company-logo-top-right .logo-positioned [class*="bg-gradient"],
+  .company-logo-top-right .logo-positioned .animate-pulse {
+    width: 35px !important;
+    height: 35px !important;
   }
   
   /* Advanced logo system responsive adjustments */
@@ -460,6 +635,9 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  position: relative;
+  z-index: 100; /* Ensure search container is above other content */
+  isolation: isolate; /* Prevent dropdown interference */
 }
 
 .search-input-container {
@@ -536,6 +714,8 @@ body {
   flex: 1;
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 10; /* Ensure dropdown renders above other content */
 }
 
 .react-select {
@@ -735,6 +915,45 @@ body {
 
   .search-input-large {
     font-size: 0.975rem;
+  }
+
+    /* Extra small mobile logo adjustments */
+  .company-header-new {
+    padding-right: 70px; /* Proportional padding for tiny screens */
+    min-height: 40px;    /* Compact height */
+  }
+  
+  .company-title-section-new {
+    padding-right: 10px; /* Tight but adequate spacing */
+  }
+  
+  .company-logo-top-right {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .company-logo-top-right .logo-positioned > div {
+    width: 30px !important;
+    height: 30px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+  }
+  
+  .company-logo-top-right .logo-positioned img {
+    max-width: 30px !important;
+    max-height: 30px !important;
+  }
+  
+  .company-logo-top-right .logo-positioned .logo-fallback {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 8px;
+  }
+  
+  .company-logo-top-right .logo-positioned [class*="bg-gradient"],
+  .company-logo-top-right .logo-positioned .animate-pulse {
+    width: 30px !important;
+    height: 30px !important;
   }
 
   .hero-section {
