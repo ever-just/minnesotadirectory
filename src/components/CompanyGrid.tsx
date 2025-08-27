@@ -20,7 +20,7 @@ const CompanyGrid = ({ companies, loading }: CompanyGridProps) => {
     <div className="company-grid">
       {companies.map((company, index) => (
         <Link 
-          key={index}
+          key={`${company.name}-${company.city}-${index}`}
           to={`/company/${encodeURIComponent(company.name)}`} 
           className="company-card-link"
           style={{ textDecoration: 'none', color: 'inherit' }}
