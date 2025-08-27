@@ -18,6 +18,12 @@ body {
   padding: 0;
   background-color: #f9fafb;
   color: var(--text-color);
+  overflow-x: hidden; /* Prevent horizontal scrolling on mobile */
+}
+
+/* Ensure all elements use border-box sizing for better mobile layouts */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 .app {
@@ -378,14 +384,34 @@ body {
 
 
 
-/* Responsive adjustments */
+/* Mobile-First Responsive adjustments - Prevent Horizontal Scrolling */
 @media (max-width: 768px) {
   .app {
-    padding: 1rem;
+    padding: 0.75rem; /* Reduce padding to maximize content width */
+    width: 100%;
+    max-width: 100vw; /* Ensure container doesn't exceed viewport width */
   }
   
   .company-grid {
     grid-template-columns: 1fr;
+    width: 100%;
+    margin: 0; /* Remove any margin that could cause overflow */
+    gap: 1rem; /* Slightly reduce gap for more content space */
+  }
+  
+  /* Ensure search container doesn't cause horizontal overflow */
+  .search-container-new {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .search-input-container {
+    width: 100%;
+    max-width: 100%; /* Override the 700px max-width for mobile */
+    margin: 0;
+    box-sizing: border-box;
   }
   
   .header h1 {
@@ -395,8 +421,6 @@ body {
   .header p {
     font-size: 1rem;
   }
-  
-
   
   /* Logo responsive adjustments */
   .company-header {
@@ -841,10 +865,13 @@ body {
   }
 
   .search-input-container {
-    padding: 0.875rem 1rem;
+    padding: 0.75rem; /* Reduce padding to prevent overflow */
     flex-direction: row;
     gap: 0.5rem;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .search-controls {
@@ -855,7 +882,9 @@ body {
 
   .react-select-container {
     flex: 1;
-    min-width: 200px;
+    min-width: 0; /* Remove fixed min-width that causes overflow */
+    width: 100%;
+    max-width: none; /* Allow React-Select to be fully flexible */
   }
 
   .search-submit {
@@ -875,7 +904,18 @@ body {
   }
 
   .main-content {
-    padding: 0 1rem 2rem 1rem;
+    padding: 0 0.75rem 2rem 0.75rem; /* Consistent with app padding */
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+
+  .hero-section {
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    padding: 1.5rem 0.75rem; /* Match app padding */
+    margin-bottom: 1.5rem;
   }
 
   .spacer-top,
