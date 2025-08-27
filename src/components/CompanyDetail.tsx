@@ -15,6 +15,47 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [company.name]); // Re-scroll when company changes
+
+  // Smart function to split company name into two lines for header display
+  const splitCompanyName = (name: string): { line1: string; line2: string } => {
+    const businessSuffixes = [
+      'Corporation', 'Corp', 'Incorporated', 'Inc', 'Company', 'Co', 
+      'Group', 'LLC', 'LLP', 'LP', 'Ltd', 'Limited', 'Associates', 
+      'Partners', 'Enterprises', 'Industries', 'Systems', 'Services',
+      'Solutions', 'Technologies', 'Holdings', 'International', 'Worldwide'
+    ];
+    
+    const words = name.trim().split(' ');
+    
+    // If name is short (1-2 words), keep on one line, pad with empty second line
+    if (words.length <= 2) {
+      return { line1: name, line2: '' };
+    }
+    
+    // Look for business suffixes to create natural split
+    for (let i = businessSuffixes.length - 1; i >= 0; i--) {
+      const suffix = businessSuffixes[i];
+      const suffixIndex = words.findIndex(word => 
+        word.toLowerCase() === suffix.toLowerCase() || 
+        word.toLowerCase() === suffix.toLowerCase() + '.'
+      );
+      
+      if (suffixIndex > 0) {
+        const line1 = words.slice(0, suffixIndex).join(' ');
+        const line2 = words.slice(suffixIndex).join(' ');
+        return { line1, line2 };
+      }
+    }
+    
+    // Fallback: split roughly in the middle
+    const midPoint = Math.ceil(words.length / 2);
+    const line1 = words.slice(0, midPoint).join(' ');
+    const line2 = words.slice(midPoint).join(' ');
+    
+    return { line1, line2 };
+  };
+
+  const { line1, line2 } = splitCompanyName(company.name);
   
   const handleLogoLoad = (metadata: LogoMetadata) => {
     // Track successful logo loads for analytics
@@ -48,9 +89,11 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
             onLoad={handleLogoLoad}
             onError={handleLogoError}
           />
-          <h1 className="header-company-name">{company.name}</h1>
+          <h1 className="header-company-name">
+            <span className="company-name-line1">{line1}</span>
+            {line2 && <span className="company-name-line2">{line2}</span>}
+          </h1>
         </div>
-        <p>Company Details</p>
       </header>
 
       <div className="back-button-container">

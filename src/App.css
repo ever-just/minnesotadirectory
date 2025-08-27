@@ -389,10 +389,30 @@ body {
   font-size: 2rem;
   font-weight: 700;
   color: var(--text-dark);
-  line-height: 1.2;
-  /* Ensure it aligns with logo height */
+  line-height: 1.1;
+  /* Two-line layout to match logo height */
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 96px; /* Match large logo size */
+}
+
+.company-name-line1,
+.company-name-line2 {
+  display: block;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.company-name-line1 {
+  margin-bottom: 0.25rem;
+}
+
+.company-name-line2 {
+  font-size: 0.95em; /* Slightly smaller for visual balance */
+  opacity: 0.9;
 }
 
 /* Responsive header adjustments */
@@ -405,5 +425,10 @@ body {
   
   .header-company-name {
     font-size: 1.5rem;
+    min-height: 64px; /* Smaller logo size on mobile */
+  }
+  
+  .company-name-line2 {
+    font-size: 0.9em; /* Even smaller on mobile */
   }
 }
