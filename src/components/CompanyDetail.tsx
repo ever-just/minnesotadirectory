@@ -51,6 +51,7 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
               company={company}
               size="large"
               priority={true} // Above the fold on detail page
+              lazy={false} // Never lazy load detail page logos
               className="company-detail-logo"
               onLoad={handleLogoLoad}
               onError={handleLogoError}

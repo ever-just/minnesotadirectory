@@ -34,6 +34,7 @@ const CompanyCard = ({ company, priority = false, showLogoQuality = false }: Com
           company={company}
           size="medium"
           priority={priority}
+          lazy={!priority} // Disable lazy loading for priority (above-the-fold) cards
           className="flex-shrink-0"
           onLoad={handleLogoLoad}
           onError={handleLogoError}

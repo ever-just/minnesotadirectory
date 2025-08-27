@@ -34,6 +34,7 @@ const CompanyLogo = ({
   
   const [logoMetadata, setLogoMetadata] = useState<LogoMetadata | null>(null);
   const [intersectionObserved, setIntersectionObserved] = useState(!lazy || priority);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -174,13 +175,15 @@ const CompanyLogo = ({
     };
   }, []);
 
-  // Handle image load events
+  // Handle image load events with smooth transition
   const handleImageLoad = useCallback(() => {
     const loadTime = Date.now() - loadStartTime.current;
     setLoadingState(prev => ({
       ...prev,
       loadTime
     }));
+    // Smooth fade-in transition
+    setImageLoaded(true);
   }, []);
 
   const handleImageError = useCallback(() => {
@@ -269,7 +272,7 @@ const CompanyLogo = ({
     />
   );
 
-  // Render logo image
+  // Render logo image with SMOOTH transitions
   const renderLogoImage = () => {
     if (!logoMetadata || !loadingState.currentSource) {
       return renderPlaceholder();
@@ -280,15 +283,23 @@ const CompanyLogo = ({
     const isFallback = loadingState.status === 'fallback';
 
     return (
-      <div className={`${currentSize.className} ${className} relative`}>
+      <div className={`${currentSize.className} ${className} relative overflow-hidden`}>
+        {/* Show placeholder until image loads to prevent layout shift */}
+        {!imageLoaded && !isPlaceholder && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg">
+            <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+          </div>
+        )}
+        
         <img
           ref={imgRef}
           src={source.url}
           alt={`${company.name} logo`}
           className={`
-            w-full h-full object-contain rounded-lg 
+            w-full h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out
             ${isPlaceholder ? '' : 'bg-gray-50 border border-gray-200'}
             ${isFallback ? 'opacity-80' : ''}
+            ${imageLoaded || isPlaceholder ? 'opacity-100' : 'opacity-0'}
           `}
           onError={handleImageError}
           onLoad={handleImageLoad}

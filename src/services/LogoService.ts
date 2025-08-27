@@ -10,8 +10,8 @@ export class LogoService {
   private defaultOptions: LogoServiceOptions = {
     enableCache: true,
     cacheTTL: 24 * 60 * 60 * 1000, // 24 hours
-    maxRetries: 3,
-    timeout: 5000,
+    maxRetries: 2, // Reduced from 3 to 2 for faster failure
+    timeout: 2500, // Reduced from 5000ms to 2.5s for faster loading
     preferredFormats: ['svg', 'png', 'webp'],
     minQuality: 20,
     enableBatch: true
@@ -24,15 +24,15 @@ export class LogoService {
     this.loadCacheFromStorage();
   }
 
-  // Main entry point - Get company logo with comprehensive fallback
-  async getCompanyLogo(domain: string | null, companyName: string): Promise<LogoMetadata> {
+  // Main entry point - Get company logo with FAST-FIRST strategy
+  async getCompanyLogo(domain: string | null, companyName: string, fastFirst: boolean = true): Promise<LogoMetadata> {
     if (!domain) {
       return this.generateFallbackMetadata(companyName, 'No domain available');
     }
 
     const cacheKey = this.getCacheKey(domain, companyName);
     
-    // Check cache first
+    // IMMEDIATE cache check - return instantly if cached
     if (this.defaultOptions.enableCache) {
       const cached = this.getFromCache(cacheKey);
       if (cached) {
@@ -44,8 +44,8 @@ export class LogoService {
       // Discover all logo sources
       const sources = await this.discoverLogoSources(domain, companyName);
       
-      // Test and score sources
-      const scoredSources = await this.testAndScoreSources(sources);
+      // Test sources with FAST-FIRST strategy (returns on first success)
+      const scoredSources = await this.testAndScoreSources(sources, fastFirst);
       
       // Create metadata
       const metadata: LogoMetadata = {
@@ -59,7 +59,7 @@ export class LogoService {
         errors: []
       };
 
-      // Cache the result
+      // Cache the result for next time
       if (this.defaultOptions.enableCache) {
         this.saveToCache(cacheKey, metadata);
       }
@@ -155,41 +155,91 @@ export class LogoService {
     return sources;
   }
 
-  // Test sources and assign quality scores
-  private async testAndScoreSources(sources: LogoSource[]): Promise<LogoSource[]> {
-    const testPromises = sources.map(async (source) => {
+  // Test sources with FAST-FIRST strategy - return immediately when first good source found
+  private async testAndScoreSources(sources: LogoSource[], fastFirst: boolean = true): Promise<LogoSource[]> {
+    if (!fastFirst) {
+      // Original behavior: test all sources
+      const testPromises = sources.map(async (source) => {
+        try {
+          const startTime = Date.now();
+          const result = await this.testLogoUrl(source.url);
+          const responseTime = Date.now() - startTime;
+          
+          return {
+            ...source,
+            quality: this.calculateQualityScore(source, result, responseTime),
+            responseTime,
+            lastTested: new Date().toISOString(),
+            size: result.size
+          };
+        } catch (error) {
+          return {
+            ...source,
+            quality: source.name === 'generated' ? 30 : 0,
+            lastTested: new Date().toISOString()
+          };
+        }
+      });
+
+      const results = await Promise.allSettled(testPromises);
+      const validSources = results
+        .map(result => result.status === 'fulfilled' ? result.value : null)
+        .filter((source): source is LogoSource => {
+          return source !== null && 
+                 typeof source.quality === 'number' && 
+                 source.quality >= this.defaultOptions.minQuality;
+        })
+        .sort((a, b) => b.quality - a.quality);
+
+      return validSources;
+    }
+
+    // FAST-FIRST: Test sources in priority order, return immediately when first succeeds
+    const sortedSources = [...sources].sort((a, b) => b.priority - a.priority);
+    const validSources: LogoSource[] = [];
+    
+    // Always include generated placeholder as guaranteed fallback
+    const placeholder = sources.find(s => s.name === 'generated');
+    if (placeholder) {
+      validSources.push({
+        ...placeholder,
+        quality: 30,
+        lastTested: new Date().toISOString()
+      });
+    }
+
+    // Test high-priority sources first (Clearbit, Google)
+    for (const source of sortedSources) {
+      if (source.name === 'generated') continue; // Already added
+      
       try {
         const startTime = Date.now();
         const result = await this.testLogoUrl(source.url);
         const responseTime = Date.now() - startTime;
         
-        return {
+        const testedSource = {
           ...source,
           quality: this.calculateQualityScore(source, result, responseTime),
           responseTime,
           lastTested: new Date().toISOString(),
           size: result.size
         };
+
+        if (testedSource.quality >= this.defaultOptions.minQuality) {
+          validSources.unshift(testedSource); // Add to front
+          
+          // Return immediately with first successful logo + placeholder fallback
+          if (source.name === 'clearbit' || source.name === 'google') {
+            return validSources;
+          }
+        }
       } catch (error) {
-        return {
-          ...source,
-          quality: source.name === 'generated' ? 30 : 0, // Placeholders always work
-          lastTested: new Date().toISOString()
-        };
+        // Source failed, continue to next
+        continue;
       }
-    });
+    }
 
-    const results = await Promise.allSettled(testPromises);
-    const validSources = results
-      .map(result => result.status === 'fulfilled' ? result.value : null)
-      .filter((source): source is LogoSource => {
-        return source !== null && 
-               typeof source.quality === 'number' && 
-               source.quality >= this.defaultOptions.minQuality;
-      })
-      .sort((a, b) => b.quality - a.quality);
-
-    return validSources;
+    return validSources.sort((a, b) => b.quality - a.quality);
   }
 
   // Test if a logo URL is accessible and get metadata
