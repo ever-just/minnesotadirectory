@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { db } from '../db/index.js';
-import { companies, industries } from '../db/schema.js';
+import { db } from '../db/index.ts';
+import { companies, industries } from '../db/schema.ts';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
