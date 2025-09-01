@@ -1,16 +1,14 @@
 import React from 'react';
 import { 
-  Youtube, 
-  Linkedin, 
-  Instagram, 
   MapPin, 
   Phone, 
-  Globe,
-  Bell,
-  MessageCircle
+  Bell
 } from 'lucide-react';
 import { Company } from '../lib/types';
 import XIcon from './XIcon';
+import YouTubeIcon from './YouTubeIcon';
+import LinkedInIcon from './LinkedInIcon';
+import InstagramIcon from './InstagramIcon';
 import wikipediaLogo from '../assets/Wikipedia-Logo.wine.png';
 import tiktokLogo from '../assets/TikTok-Logo-2016-present.png';
 import redditLogo from '../assets/reddit-logo-reddit-icon-transparent-free-png.webp';
@@ -77,14 +75,14 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
   const socialIcons = [
     {
       name: 'YouTube',
-      icon: Youtube,
+      icon: YouTubeIcon,
       platform: 'youtube',
       color: '#FF0000',
       hoverColor: '#CC0000'
     },
     {
       name: 'LinkedIn',
-      icon: Linkedin,
+      icon: LinkedInIcon,
       platform: 'linkedin',
       color: '#0077B5',
       hoverColor: '#005885'
@@ -105,7 +103,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
     },
     {
       name: 'Instagram',
-      icon: Instagram,
+      icon: InstagramIcon,
       platform: 'instagram',
       color: '#E4405F',
       hoverColor: '#d1354d'
@@ -223,7 +221,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
               '--icon-hover-color': '#1ea952',
             } as React.CSSProperties}
           >
-            <Phone className="social-icon" size={20} />
+            <Phone className="social-icon" size={24} />
             <span className="social-icon-label">Call</span>
           </button>
         )}
