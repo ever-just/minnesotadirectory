@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="65bd71144e">
+    <diagram id="C5RBs43oDa-KdzZeNtuy" name="Tech Architecture">
+        <mxGraphModel dx="2074" dy="1196" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+            <root>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0"/>
+                
+                <!-- Title -->
+                <mxCell id="title-1" value="MINNESOTA DIRECTORY - TECHNICAL ARCHITECTURE OVERVIEW" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1f2937;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="284" y="20" width="600" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- HOSTING & DEPLOYMENT SECTION -->
+                <mxCell id="hosting-section" value="HOSTING &amp; DEPLOYMENT" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#dbeafe;strokeColor=#3b82f6;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="80" y="80" width="200" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- Git Repository -->
+                <mxCell id="git-repo" value="📦 GitHub Repository&lt;br/&gt;&lt;small&gt;ever-just/minnesotadirectory&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3f4f6;strokeColor=#6b7280;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="40" y="140" width="120" height="60" as="geometry"/>
+                </mxCell>
+
+                <!-- Build Process -->
+                <mxCell id="build-process" value="⚙️ Vite Build Process&lt;br/&gt;&lt;small&gt;TypeScript → JavaScript&lt;br/&gt;Asset Optimization&lt;br/&gt;Sitemap Generation&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="180" y="140" width="140" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- Static Hosting -->
+                <mxCell id="static-hosting" value="🌐 Static File Hosting&lt;br/&gt;&lt;small&gt;Vercel/Netlify/GitHub Pages&lt;br/&gt;CDN Distribution&lt;br/&gt;Auto-Deploy on Push&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="340" y="140" width="140" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- FRONTEND TECH STACK -->
+                <mxCell id="frontend-section" value="FRONTEND TECH STACK" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#fef2f2;strokeColor=#ef4444;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="600" y="80" width="200" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- React/Vite -->
+                <mxCell id="react-vite" value="⚛️ React 18 + Vite&lt;br/&gt;&lt;small&gt;TypeScript&lt;br/&gt;Hot Module Replacement&lt;br/&gt;ES6+ Support&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0284c7;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="540" y="140" width="120" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- Libraries -->
+                <mxCell id="libraries" value="📚 Key Libraries&lt;br/&gt;&lt;small&gt;React Router (SPA)&lt;br/&gt;React-Select (Dropdowns)&lt;br/&gt;Lucide React (Icons)&lt;br/&gt;Intersection Observer&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f3ff;strokeColor=#8b5cf6;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="680" y="140" width="140" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- Styling -->
+                <mxCell id="styling" value="🎨 Styling&lt;br/&gt;&lt;small&gt;Custom CSS&lt;br/&gt;Responsive Design&lt;br/&gt;CSS Grid/Flexbox&lt;br/&gt;Mobile Optimized&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdf4ff;strokeColor=#c026d3;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="840" y="140" width="120" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- DATA ARCHITECTURE -->
+                <mxCell id="data-section" value="DATA ARCHITECTURE" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#ecfdf5;strokeColor=#10b981;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="80" y="280" width="200" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- CSV Data Source -->
+                <mxCell id="csv-data" value="📊 CSV Data Source&lt;br/&gt;&lt;small&gt;2,765 MN Companies&lt;br/&gt;$10M+ Revenue&lt;br/&gt;10+ Employees&lt;br/&gt;49 Data Fields&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="40" y="340" width="120" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- Data Processing -->
+                <mxCell id="data-processing" value="⚡ Smart Data Processing&lt;br/&gt;&lt;small&gt;CSV Parsing&lt;br/&gt;Revenue-Based Sorting&lt;br/&gt;Industry Indexing&lt;br/&gt;Smart Chunking (500)&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#16a34a;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="180" y="340" width="140" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- Performance Features -->
+                <mxCell id="performance" value="🚀 Performance Features&lt;br/&gt;&lt;small&gt;Infinite Scroll&lt;br/&gt;Auto-Loading&lt;br/&gt;Logo Caching&lt;br/&gt;Industry Coverage&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f9ff;strokeColor=#0ea5e9;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="340" y="340" width="140" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- COMPONENT ARCHITECTURE -->
+                <mxCell id="component-section" value="COMPONENT ARCHITECTURE" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#fff1f2;strokeColor=#f43f5e;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="600" y="280" width="200" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- App.tsx -->
+                <mxCell id="app-component" value="🏠 App.tsx&lt;br/&gt;&lt;small&gt;Main Logic&lt;br/&gt;State Management&lt;br/&gt;Data Loading&lt;br/&gt;Routing&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#dc2626;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="540" y="340" width="100" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- SearchBar -->
+                <mxCell id="searchbar-component" value="🔍 SearchBar&lt;br/&gt;&lt;small&gt;React-Select&lt;br/&gt;Industry Filter&lt;br/&gt;159 Industries&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#ca8a04;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="660" y="340" width="100" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- CompanyGrid -->
+                <mxCell id="grid-component" value="📋 CompanyGrid&lt;br/&gt;&lt;small&gt;Infinite Scroll&lt;br/&gt;Intersection Observer&lt;br/&gt;500 Cards/Chunk&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#16a34a;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="780" y="340" width="100" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- CompanyCard -->
+                <mxCell id="card-component" value="🏢 CompanyCard&lt;br/&gt;&lt;small&gt;Logo Loading&lt;br/&gt;Company Info&lt;br/&gt;Revenue Display&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f9ff;strokeColor=#0ea5e9;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="900" y="340" width="100" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- EXTERNAL SERVICES -->
+                <mxCell id="external-section" value="EXTERNAL SERVICES" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="80" y="480" width="200" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- Logo Services -->
+                <mxCell id="logo-services" value="🖼️ Logo APIs&lt;br/&gt;&lt;small&gt;Clearbit Logo API&lt;br/&gt;Google Favicon API&lt;br/&gt;Automatic Fallback&lt;br/&gt;Cache Management&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#ca8a04;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="40" y="540" width="120" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- Website Crawling -->
+                <mxCell id="website-crawling" value="🕷️ Website Directory&lt;br/&gt;&lt;small&gt;Real-time Crawling&lt;br/&gt;Sitemap Generation&lt;br/&gt;CORS Proxy&lt;br/&gt;Progressive Loading&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f9ff;strokeColor=#0ea5e9;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="180" y="540" width="140" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- DATA FLOW DIAGRAM -->
+                <mxCell id="dataflow-section" value="DATA FLOW" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#e0f2fe;strokeColor=#0284c7;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="600" y="480" width="200" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- Flow Steps -->
+                <mxCell id="flow-1" value="1. CSV Load" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="540" y="540" width="80" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="flow-2" value="2. Parse &amp; Sort" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="640" y="540" width="80" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="flow-3" value="3. Smart Chunk" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0284c7;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="740" y="540" width="80" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="flow-4" value="4. Render UI" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f3ff;strokeColor=#8b5cf6;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="840" y="540" width="80" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="flow-5" value="5. Auto-Load" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fdf4ff;strokeColor=#c026d3;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="940" y="540" width="80" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- Arrows for data flow -->
+                <mxCell id="arrow-1" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="flow-1" target="flow-2">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="660" y="600" as="sourcePoint"/>
+                        <mxPoint x="710" y="550" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <mxCell id="arrow-2" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="flow-2" target="flow-3">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="630" y="570" as="sourcePoint"/>
+                        <mxPoint x="650" y="570" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <mxCell id="arrow-3" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="flow-3" target="flow-4">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="730" y="570" as="sourcePoint"/>
+                        <mxPoint x="750" y="570" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <mxCell id="arrow-4" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="flow-4" target="flow-5">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="830" y="570" as="sourcePoint"/>
+                        <mxPoint x="850" y="570" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <!-- WIREFRAME SECTION -->
+                <mxCell id="wireframe-section" value="USER INTERFACE WIREFRAMES" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#f1f5f9;strokeColor=#475569;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="80" y="660" width="300" height="40" as="geometry"/>
+                </mxCell>
+
+                <!-- Home Page Wireframe -->
+                <mxCell id="home-wireframe" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="40" y="720" width="200" height="260" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="home-header" value="MINNESOTA DIRECTORY" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#3b82f6;fontColor=white;fontSize=12;fontStyle=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="730" width="180" height="30" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="home-search" value="🔽 All Industries - Browse Companies" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3f4f6;strokeColor=#6b7280;fontSize=10;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="60" y="770" width="160" height="25" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="home-count" value="2765 companies found" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=10;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="60" y="800" width="160" height="20" as="geometry"/>
+                </mxCell>
+
+                <!-- Company Cards -->
+                <mxCell id="card-1" value="🏢 UnitedHealth Group&lt;br/&gt;&lt;small&gt;$400.3B | 400,000 emp&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#3b82f6;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="830" width="80" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="card-2" value="🏢 Cargill Inc&lt;br/&gt;&lt;small&gt;$159.6B | 155,000 emp&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="140" y="830" width="80" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="card-3" value="🏢 Target Corp&lt;br/&gt;&lt;small&gt;$106.6B | 440,000 emp&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="880" width="80" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="card-4" value="🏢 Best Buy Co&lt;br/&gt;&lt;small&gt;$41.5B | 85,000 emp&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f9ff;strokeColor=#0ea5e9;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="140" y="880" width="80" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="infinite-indicator" value="⬇️ Auto-Loading More..." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=9;fontStyle=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="50" y="930" width="170" height="20" as="geometry"/>
+                </mxCell>
+
+                <!-- Detail Page Wireframe -->
+                <mxCell id="detail-wireframe" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#64748b;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="280" y="720" width="200" height="260" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="detail-back" value="← Back" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3f4f6;strokeColor=#6b7280;fontSize=10;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="290" y="730" width="50" height="20" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="detail-header" value="🏢 UnitedHealth Group" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#3b82f6;fontColor=white;fontSize=11;fontStyle=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="290" y="760" width="180" height="25" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="detail-info" value="Company Overview&lt;br/&gt;&lt;small&gt;Revenue: $400.3B&lt;br/&gt;Employees: 400,000&lt;br/&gt;Industry: Health Insurance&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#3b82f6;fontSize=9;align=left;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="300" y="800" width="80" height="60" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="detail-contact" value="Company Office&lt;br/&gt;&lt;small&gt;Eden Prairie, MN&lt;br/&gt;📞 800-328-5979&lt;br/&gt;🌐 Visit Website →&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;fontSize=9;align=left;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="390" y="800" width="80" height="60" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="detail-directory" value="Website Directory&lt;br/&gt;&lt;small&gt;📁 /about&lt;br/&gt;📁 /careers&lt;br/&gt;📁 /investors&lt;br/&gt;🔄 Real-time crawling...&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f9ff;strokeColor=#0ea5e9;fontSize=9;align=left;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="300" y="870" width="170" height="60" as="geometry"/>
+                </mxCell>
+
+                <!-- Performance Stats -->
+                <mxCell id="perf-section" value="PERFORMANCE METRICS" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#fefce8;strokeColor=#ca8a04;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="600" y="660" width="200" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="perf-stats" value="⚡ Initial Load&lt;br/&gt;&lt;small&gt;500 companies (Smart Chunk)&lt;br/&gt;100% Industry Coverage&lt;br/&gt;159/159 Industries&lt;br/&gt;&lt;0.5s Load Time&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fefce8;strokeColor=#ca8a04;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="540" y="720" width="120" height="80" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="perf-auto" value="🔄 Auto-Loading&lt;br/&gt;&lt;small&gt;+500 every 150-300ms&lt;br/&gt;Up to 2000 companies&lt;br/&gt;Progressive Enhancement&lt;br/&gt;No User Interaction&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#16a34a;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="680" y="720" width="120" height="80" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="perf-filter" value="🔍 Filter Performance&lt;br/&gt;&lt;small&gt;Instant Response&lt;br/&gt;Single-Click Selection&lt;br/&gt;Real-time Results&lt;br/&gt;2765 → N companies&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2fe;strokeColor=#0284c7;strokeWidth=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="820" y="720" width="120" height="80" as="geometry"/>
+                </mxCell>
+
+                <!-- Key Features -->
+                <mxCell id="features-section" value="KEY FEATURES" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fontStyle=1;fillColor=#f5f3ff;strokeColor=#8b5cf6;strokeWidth=2;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="600" y="820" width="200" height="40" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="feature-1" value="💰 Revenue Sorting&lt;br/&gt;&lt;small&gt;$400B → $10M&lt;br/&gt;Fortune 500 First&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fdf4ff;strokeColor=#c026d3;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="540" y="880" width="80" height="50" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="feature-2" value="🏭 159 Industries&lt;br/&gt;&lt;small&gt;Complete Coverage&lt;br/&gt;Smart Filtering&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f9ff;strokeColor=#0ea5e9;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="630" y="880" width="80" height="50" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="feature-3" value="🖼️ Logo Integration&lt;br/&gt;&lt;small&gt;Auto-Fetching&lt;br/&gt;Fallback Support&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="720" y="880" width="80" height="50" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="feature-4" value="🕷️ Website Crawling&lt;br/&gt;&lt;small&gt;Real-time Sitemaps&lt;br/&gt;Progressive UI&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="810" y="880" width="80" height="50" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="feature-5" value="📱 Mobile Ready&lt;br/>&lt;small&gt;Responsive Design&lt;br/&gt;Touch Optimized&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fdf4;strokeColor=#16a34a;fontSize=9;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="900" y="880" width="80" height="50" as="geometry"/>
+                </mxCell>
+
+                <!-- Deployment Arrows -->
+                <mxCell id="deploy-arrow-1" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2;strokeColor=#3b82f6;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="git-repo" target="build-process">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="200" y="250" as="sourcePoint"/>
+                        <mxPoint x="250" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <mxCell id="deploy-arrow-2" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2;strokeColor=#3b82f6;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="build-process" target="static-hosting">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="170" y="180" as="sourcePoint"/>
+                        <mxPoint x="190" y="180" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <!-- Data Processing Arrows -->
+                <mxCell id="data-arrow-1" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2;strokeColor=#16a34a;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="csv-data" target="data-processing">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="200" y="450" as="sourcePoint"/>
+                        <mxPoint x="250" y="400" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <mxCell id="data-arrow-2" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2;strokeColor=#16a34a;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="data-processing" target="performance">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="170" y="380" as="sourcePoint"/>
+                        <mxPoint x="190" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <!-- Tech Stack Label -->
+                <mxCell id="tech-note" value="🚫 NO BACKEND DATABASE REQUIRED&lt;br/&gt;&lt;small&gt;Pure Frontend • Static Hosting • CSV Data&lt;br/&gt;Serverless Architecture • CDN Distributed&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;strokeWidth=2;fontSize=12;fontStyle=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="40" y="1020" width="440" height="60" as="geometry"/>
+                </mxCell>
+
+                <!-- Performance Note -->
+                <mxCell id="perf-note" value="⚡ PERFORMANCE OPTIMIZATIONS&lt;br/>&lt;small&gt;Smart Chunking • Infinite Scroll • Logo Caching&lt;br/&gt;Auto-Loading • Progressive Enhancement&lt;/small&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=2;fontSize=12;fontStyle=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="520" y="1020" width="440" height="60" as="geometry"/>
+                </mxCell>
+
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

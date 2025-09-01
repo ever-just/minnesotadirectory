@@ -6,6 +6,7 @@ import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CompanyLogo from './CompanyLogo';
 import WebsiteStructure from './WebsiteStructure';
+import SocialMediaLinks from './SocialMediaLinks';
 import './CompanyDetail.css';
 
 interface CompanyDetailProps {
@@ -269,6 +270,9 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
             <div className="info-label">Tradestyle:</div>
             <div className="info-value">{company.tradestyle || 'N/A'}</div>
           </div>
+
+          {/* Social Media & Contact Links */}
+          <SocialMediaLinks company={company} />
         </div>
 
         {/* Website Structure Analysis - Separate Component */}
