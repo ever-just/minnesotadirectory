@@ -52,7 +52,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
         return `https://www.reddit.com/search/?q=${encodedName}`;
       
       case 'google-alerts':
-        return `https://www.google.com/alerts/create?query=${encodedName}`;
+        return `https://www.google.com/alerts#q=${encodedName}`;
       
       case 'wikipedia':
         return `https://en.wikipedia.org/wiki/Special:Search?search=${encodedName}`;
