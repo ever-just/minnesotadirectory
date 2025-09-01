@@ -173,29 +173,31 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
               } as React.CSSProperties}
             >
               {social.platform === 'twitter' ? (
-                <XIcon className="social-icon" size={24} />
+                <XIcon className="social-icon" size={32} />
               ) : social.platform === 'wikipedia' ? (
                 <img 
                   src={wikipediaLogo} 
                   alt="Wikipedia" 
                   className="social-icon wikipedia-logo"
+                  style={{ width: '32px', height: '32px' }}
                 />
               ) : social.platform === 'tiktok' ? (
                 <img 
                   src={tiktokLogo} 
                   alt="TikTok" 
                   className="social-icon tiktok-logo"
+                  style={{ width: '32px', height: '32px' }}
                 />
               ) : social.platform === 'reddit' ? (
                 <img 
                   src={redditLogo} 
                   alt="Reddit" 
                   className="social-icon reddit-logo"
+                  style={{ width: '32px', height: '32px' }}
                 />
               ) : (
-                <IconComponent className="social-icon" size={24} />
+                <IconComponent className="social-icon" size={32} />
               )}
-              <span className="social-icon-label">{social.name}</span>
             </a>
           );
         })}
@@ -211,8 +213,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
               '--icon-hover-color': '#1ea952',
             } as React.CSSProperties}
           >
-            <Phone className="social-icon" size={24} />
-            <span className="social-icon-label">Call</span>
+            <Phone className="social-icon" size={32} />
           </button>
         )}
       </div>
