@@ -79,6 +79,17 @@
 
 /* Image logos inherit all styling from .social-icon */
 
+/* Specific overrides for icons with extra whitespace */
+.wikipedia-logo {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.tiktok-logo {
+  width: 38px !important;
+  height: 38px !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .social-icons-grid {

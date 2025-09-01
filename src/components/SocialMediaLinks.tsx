@@ -179,14 +179,14 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
                   src={wikipediaLogo} 
                   alt="Wikipedia" 
                   className="social-icon wikipedia-logo"
-                  style={{ width: '32px', height: '32px' }}
+                  style={{ width: '40px', height: '40px' }}
                 />
               ) : social.platform === 'tiktok' ? (
                 <img 
                   src={tiktokLogo} 
                   alt="TikTok" 
                   className="social-icon tiktok-logo"
-                  style={{ width: '32px', height: '32px' }}
+                  style={{ width: '38px', height: '38px' }}
                 />
               ) : social.platform === 'reddit' ? (
                 <img 
