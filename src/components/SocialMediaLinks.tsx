@@ -1,6 +1,5 @@
 import React from 'react';
 import { 
-  MapPin, 
   Phone, 
   Bell
 } from 'lucide-react';
@@ -10,6 +9,7 @@ import YouTubeIcon from './YouTubeIcon';
 import LinkedInIcon from './LinkedInIcon';
 import InstagramIcon from './InstagramIcon';
 import GoogleIcon from './GoogleIcon';
+import GoogleMapsIcon from './GoogleMapsIcon';
 import wikipediaLogo from '../assets/Wikipedia-Logo.wine.png';
 import tiktokLogo from '../assets/TikTok-Logo-2016-present.png';
 import redditLogo from '../assets/reddit-logo-reddit-icon-transparent-free-png.webp';
@@ -117,7 +117,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
     },
     {
       name: 'Google Maps',
-      icon: MapPin,
+      icon: GoogleMapsIcon,
       platform: 'maps',
       color: '#34A853',
       hoverColor: '#2d8f47'
