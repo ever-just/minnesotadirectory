@@ -1,0 +1,41 @@
+.version-display {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.65rem;
+  color: #9ca3af;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2px 6px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(229, 231, 235, 0.5);
+  z-index: 1000;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.version-display:hover {
+  opacity: 1;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .version-display {
+    background: rgba(17, 24, 39, 0.8);
+    color: #9ca3af;
+    border-color: rgba(75, 85, 99, 0.5);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .version-display {
+    font-size: 0.6rem;
+    bottom: 8px;
+    right: 8px;
+    padding: 1px 4px;
+  }
+}
