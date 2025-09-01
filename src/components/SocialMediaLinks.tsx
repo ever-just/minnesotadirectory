@@ -14,6 +14,7 @@ import XIcon from './XIcon';
 import wikipediaLogo from '../assets/Wikipedia-Logo.wine.png';
 import tiktokLogo from '../assets/TikTok-Logo-2016-present.png';
 import redditLogo from '../assets/reddit-logo-reddit-icon-transparent-free-png.webp';
+import googleLogo from '../assets/Google__G__logo.svg';
 import './SocialMediaLinks.css';
 
 interface SocialMediaLinksProps {
@@ -111,7 +112,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
     },
     {
       name: 'Google',
-      icon: Globe,
+      icon: 'google-logo', // Special identifier for Google logo
       platform: 'google',
       color: '#4285F4',
       hoverColor: '#3367d6'
@@ -194,6 +195,13 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
                   src={redditLogo} 
                   alt="Reddit" 
                   className="social-icon reddit-logo" 
+                  style={{ width: '24px', height: '24px' }}
+                />
+              ) : social.platform === 'google' ? (
+                <img 
+                  src={googleLogo} 
+                  alt="Google" 
+                  className="social-icon google-logo" 
                   style={{ width: '24px', height: '24px' }}
                 />
               ) : (

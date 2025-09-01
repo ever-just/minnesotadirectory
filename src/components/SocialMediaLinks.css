@@ -115,6 +115,17 @@
   opacity: 0.9;
 }
 
+/* Special styling for Google logo */
+.google-logo {
+  object-fit: contain;
+  margin-bottom: 0.25rem;
+  transition: opacity 0.2s ease;
+}
+
+.social-icon-link:hover .google-logo {
+  opacity: 0.9;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .social-icons-grid {
