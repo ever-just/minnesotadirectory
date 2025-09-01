@@ -12,6 +12,7 @@ import {
 import { Company } from '../lib/types';
 import XIcon from './XIcon';
 import wikipediaLogo from '../assets/Wikipedia-Logo.wine.png';
+import tiktokLogo from '../assets/TikTok-Logo-2016-present.png';
 import './SocialMediaLinks.css';
 
 interface SocialMediaLinksProps {
@@ -95,7 +96,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
     },
     {
       name: 'TikTok',
-      icon: MessageCircle, // Using MessageCircle as substitute for TikTok
+      icon: 'tiktok-logo', // Special identifier for TikTok logo
       platform: 'tiktok',
       color: '#000000',
       hoverColor: '#333333'
@@ -178,6 +179,13 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
                   src={wikipediaLogo} 
                   alt="Wikipedia" 
                   className="social-icon wikipedia-logo" 
+                  style={{ width: '20px', height: '20px' }}
+                />
+              ) : social.platform === 'tiktok' ? (
+                <img 
+                  src={tiktokLogo} 
+                  alt="TikTok" 
+                  className="social-icon tiktok-logo" 
                   style={{ width: '20px', height: '20px' }}
                 />
               ) : (

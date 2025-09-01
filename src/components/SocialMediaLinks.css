@@ -89,6 +89,17 @@
   opacity: 0.9;
 }
 
+/* Special styling for TikTok logo */
+.tiktok-logo {
+  object-fit: contain;
+  margin-bottom: 0.25rem;
+  transition: opacity 0.2s ease;
+}
+
+.social-icon-link:hover .tiktok-logo {
+  opacity: 0.9;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .social-icons-grid {
