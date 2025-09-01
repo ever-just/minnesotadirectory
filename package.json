@@ -11,7 +11,9 @@
     "convert": "node scripts/csv-to-json.mjs",
     "generate-sitemap": "node scripts/generate-sitemap.mjs",
     "check-favicons": "node scripts/generate-favicons.mjs",
-    "prebuild": "npm run generate-sitemap"
+    "prebuild": "npm run generate-sitemap",
+    "version:increment": "node scripts/increment-version.js",
+    "commit": "npm run version:increment && git add . && git commit"
   },
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.4.2",
