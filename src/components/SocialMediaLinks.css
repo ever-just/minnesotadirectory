@@ -48,6 +48,10 @@
   color: var(--icon-color);
   margin-bottom: 0.25rem;
   transition: color 0.2s ease;
+  /* Enforce consistent sizing for all icons */
+  width: 24px !important;
+  height: 24px !important;
+  flex-shrink: 0;
 }
 
 .social-icon-link:hover .social-icon {
@@ -97,6 +101,17 @@
 }
 
 .social-icon-link:hover .tiktok-logo {
+  opacity: 0.9;
+}
+
+/* Special styling for Reddit logo */
+.reddit-logo {
+  object-fit: contain;
+  margin-bottom: 0.25rem;
+  transition: opacity 0.2s ease;
+}
+
+.social-icon-link:hover .reddit-logo {
   opacity: 0.9;
 }
 

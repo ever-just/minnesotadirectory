@@ -13,6 +13,7 @@ import { Company } from '../lib/types';
 import XIcon from './XIcon';
 import wikipediaLogo from '../assets/Wikipedia-Logo.wine.png';
 import tiktokLogo from '../assets/TikTok-Logo-2016-present.png';
+import redditLogo from '../assets/reddit-logo-reddit-icon-transparent-free-png.webp';
 import './SocialMediaLinks.css';
 
 interface SocialMediaLinksProps {
@@ -124,7 +125,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
     },
     {
       name: 'Reddit',
-      icon: MessageCircle, // Using MessageCircle as substitute for Reddit
+      icon: 'reddit-logo', // Special identifier for Reddit logo
       platform: 'reddit',
       color: '#FF4500',
       hoverColor: '#e03e00'
@@ -173,23 +174,30 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
               } as React.CSSProperties}
             >
               {social.platform === 'twitter' ? (
-                <XIcon className="social-icon" size={20} />
+                <XIcon className="social-icon" size={24} />
               ) : social.platform === 'wikipedia' ? (
                 <img 
                   src={wikipediaLogo} 
                   alt="Wikipedia" 
                   className="social-icon wikipedia-logo" 
-                  style={{ width: '20px', height: '20px' }}
+                  style={{ width: '24px', height: '24px' }}
                 />
               ) : social.platform === 'tiktok' ? (
                 <img 
                   src={tiktokLogo} 
                   alt="TikTok" 
                   className="social-icon tiktok-logo" 
-                  style={{ width: '20px', height: '20px' }}
+                  style={{ width: '24px', height: '24px' }}
+                />
+              ) : social.platform === 'reddit' ? (
+                <img 
+                  src={redditLogo} 
+                  alt="Reddit" 
+                  className="social-icon reddit-logo" 
+                  style={{ width: '24px', height: '24px' }}
                 />
               ) : (
-                <IconComponent className="social-icon" size={20} />
+                <IconComponent className="social-icon" size={24} />
               )}
               <span className="social-icon-label">{social.name}</span>
             </a>
