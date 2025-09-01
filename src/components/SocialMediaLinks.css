@@ -78,6 +78,17 @@
   border-color: var(--icon-color);
 }
 
+/* Special styling for Wikipedia logo */
+.wikipedia-logo {
+  object-fit: contain;
+  margin-bottom: 0.25rem;
+  transition: opacity 0.2s ease;
+}
+
+.social-icon-link:hover .wikipedia-logo {
+  opacity: 0.9;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .social-icons-grid {

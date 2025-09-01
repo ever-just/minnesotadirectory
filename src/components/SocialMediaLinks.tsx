@@ -7,11 +7,11 @@ import {
   Phone, 
   Globe,
   Bell,
-  BookOpen,
   MessageCircle
 } from 'lucide-react';
 import { Company } from '../lib/types';
 import XIcon from './XIcon';
+import wikipediaLogo from '../assets/Wikipedia-Logo.wine.png';
 import './SocialMediaLinks.css';
 
 interface SocialMediaLinksProps {
@@ -137,7 +137,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
     },
     {
       name: 'Wikipedia',
-      icon: BookOpen,
+      icon: 'wikipedia-logo', // Special identifier for Wikipedia logo
       platform: 'wikipedia',
       color: '#000000',
       hoverColor: '#333333'
@@ -173,6 +173,13 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
             >
               {social.platform === 'twitter' ? (
                 <XIcon className="social-icon" size={20} />
+              ) : social.platform === 'wikipedia' ? (
+                <img 
+                  src={wikipediaLogo} 
+                  alt="Wikipedia" 
+                  className="social-icon wikipedia-logo" 
+                  style={{ width: '20px', height: '20px' }}
+                />
               ) : (
                 <IconComponent className="social-icon" size={20} />
               )}
