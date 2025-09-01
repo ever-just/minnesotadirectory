@@ -24,7 +24,7 @@ function DirectoryPage({
   filteredCompanies, 
   visibleCompanies,
   industries, 
-  loading: _loading, 
+  loading, 
   loadingMore,
   hasMore,
   handleSearch, 
@@ -46,6 +46,7 @@ function DirectoryPage({
             onIndustryChange={handleIndustryChange}
             industries={industries}
             totalCompanies={filteredCompanies.length}
+            loading={loading}
           />
         </div>
         
@@ -172,11 +173,11 @@ function App() {
           label: industry
         }));
         
-        // Set state - FIXED: filteredCompanies uses full dataset for hasMore calculation
+        // Set state - ensure UI updates immediately when data loads
         setAllCompanies(sortedAllCompanies);
         setIndustryIndex(industryMap);
+        setFilteredCompanies(sortedAllCompanies); // Set BEFORE visibleCompanies to avoid race condition
         setVisibleCompanies(smartFirstChunk);
-        setFilteredCompanies(sortedAllCompanies); // FIX: Use full dataset, not smart chunk
         setTotalChunks(chunks);
         setIndustries(industryOptions);
         

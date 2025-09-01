@@ -6,9 +6,10 @@ interface SearchBarProps {
   onIndustryChange: (industry: string) => void;
   industries: IndustryOption[];
   totalCompanies: number;
+  loading?: boolean;
 }
 
-const SearchBar = ({ onSearch: _onSearch, onIndustryChange, industries, totalCompanies }: SearchBarProps) => {
+const SearchBar = ({ onSearch: _onSearch, onIndustryChange, industries, totalCompanies, loading = false }: SearchBarProps) => {
   // Transform industries for React-Select
   const industryOptions = [
     { value: '', label: 'All Industries - Browse Companies' },
@@ -125,7 +126,7 @@ const SearchBar = ({ onSearch: _onSearch, onIndustryChange, industries, totalCom
 
       </div>
       <div className="results-count-new">
-        {totalCompanies} companies found
+        {loading ? 'Loading companies...' : `${totalCompanies} companies found`}
       </div>
     </div>
   );

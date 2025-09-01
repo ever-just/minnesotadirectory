@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="mnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle with Minnesota blue gradient -->
+  <circle cx="256" cy="256" r="240" fill="url(#mnGradient)" stroke="#ffffff" stroke-width="8"/>
+  
+  <!-- MN Text - Bold and clear for small sizes -->
+  <text x="256" y="320" font-family="Arial, sans-serif" font-size="160" font-weight="bold" 
+        text-anchor="middle" fill="white">MN</text>
+  
+  <!-- Simplified business/directory indicator -->
+  <rect x="220" y="150" width="72" height="48" fill="none" stroke="white" stroke-width="4" rx="4"/>
+  <rect x="230" y="160" width="8" height="8" fill="white"/>
+  <rect x="245" y="160" width="8" height="8" fill="white"/>
+  <rect x="260" y="160" width="8" height="8" fill="white"/>
+  <rect x="275" y="160" width="8" height="8" fill="white"/>
+  <rect x="230" y="175" width="8" height="8" fill="white"/>
+  <rect x="245" y="175" width="8" height="8" fill="white"/>
+  <rect x="260" y="175" width="8" height="8" fill="white"/>
+  <rect x="275" y="175" width="8" height="8" fill="white"/>
+  
+  <!-- Three dots to represent directory/listings -->
+  <circle cx="235" cy="380" r="6" fill="white"/>
+  <circle cx="256" cy="380" r="6" fill="white"/>
+  <circle cx="277" cy="380" r="6" fill="white"/>
+</svg>
