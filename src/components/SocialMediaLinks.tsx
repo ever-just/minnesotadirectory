@@ -9,10 +9,10 @@ import XIcon from './XIcon';
 import YouTubeIcon from './YouTubeIcon';
 import LinkedInIcon from './LinkedInIcon';
 import InstagramIcon from './InstagramIcon';
+import GoogleIcon from './GoogleIcon';
 import wikipediaLogo from '../assets/Wikipedia-Logo.wine.png';
 import tiktokLogo from '../assets/TikTok-Logo-2016-present.png';
 import redditLogo from '../assets/reddit-logo-reddit-icon-transparent-free-png.webp';
-import googleLogo from '../assets/Google__G__logo.svg';
 import './SocialMediaLinks.css';
 
 interface SocialMediaLinksProps {
@@ -110,7 +110,7 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
     },
     {
       name: 'Google',
-      icon: 'google-logo', // Special identifier for Google logo
+      icon: GoogleIcon,
       platform: 'google',
       color: '#4285F4',
       hoverColor: '#3367d6'
@@ -178,29 +178,19 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
                 <img 
                   src={wikipediaLogo} 
                   alt="Wikipedia" 
-                  className="social-icon wikipedia-logo" 
-                  style={{ width: '24px', height: '24px' }}
+                  className="social-icon wikipedia-logo"
                 />
               ) : social.platform === 'tiktok' ? (
                 <img 
                   src={tiktokLogo} 
                   alt="TikTok" 
-                  className="social-icon tiktok-logo" 
-                  style={{ width: '24px', height: '24px' }}
+                  className="social-icon tiktok-logo"
                 />
               ) : social.platform === 'reddit' ? (
                 <img 
                   src={redditLogo} 
                   alt="Reddit" 
-                  className="social-icon reddit-logo" 
-                  style={{ width: '24px', height: '24px' }}
-                />
-              ) : social.platform === 'google' ? (
-                <img 
-                  src={googleLogo} 
-                  alt="Google" 
-                  className="social-icon google-logo" 
-                  style={{ width: '24px', height: '24px' }}
+                  className="social-icon reddit-logo"
                 />
               ) : (
                 <IconComponent className="social-icon" size={24} />
