@@ -8,6 +8,7 @@ import UserIcon from './components/UserIcon';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
 import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
 import { CompanyService } from './services/companyService';
+import { FastLoadService } from './services/fastLoadService';
 import './App.css';
 
 interface DirectoryPageProps {
@@ -185,26 +186,33 @@ function App() {
     console.log(`📊 Stats: ${smartFirstChunk.length} visible, ${sortedAllCompanies.length} total, ${chunks} chunks`);
   };
 
-  // Smart Chunking Data Loading (API-powered)
+  // Fast Loading Data (Optimized for Speed)
   useEffect(() => {
-    const fetchData = async () => {
+    const fastLoadData = async () => {
       try {
         setLoading(true);
-        console.log('🚀 Starting API-powered data load...');
+        console.log('⚡ Starting fast initial load...');
+        const loadStartTime = Date.now();
         
-        // Test API connection first
+        // Test API connection first (quick test)
         const isAPIConnected = await CompanyService.testConnection();
         if (!isAPIConnected) {
           console.warn('⚠️ API connection failed, falling back to CSV loading...');
           return await fallbackToCSVLoading();
         }
         
-        // Fetch all companies from API (replaces CSV fetch)
-        const allCompaniesData = await CompanyService.fetchAllCompanies();
-        console.log(`📊 Loaded ${allCompaniesData.length} companies from database`);
+        // PARALLEL LOADING: Get first 500 companies AND industries simultaneously
+        const [initialData, industriesData] = await Promise.all([
+          FastLoadService.getInitialCompanies(),
+          FastLoadService.getInitialIndustries()
+        ]);
         
-        // Ensure data is in the expected format
-        const processedData: Company[] = allCompaniesData
+        const totalLoadTime = Date.now() - loadStartTime;
+        console.log(`⚡ Fast parallel load complete in ${totalLoadTime}ms`);
+        console.log(`📊 Initial companies: ${initialData.companies.length}, Industries: ${industriesData.industries.length}`);
+        
+        // Process companies for consistent format
+        const processedCompanies: Company[] = initialData.companies
           .filter(Boolean)
           .map((company: any) => ({
             name: company.name || '',
@@ -228,48 +236,28 @@ function App() {
             sicDescription: company.sicDescription || company.sic_description || ''
           }));
         
-        // Sort full dataset by sales for progressive loading FIRST
-        const sortedAllCompanies = [...processedData].sort((a, b) => {
+        // Sort by sales (preserve revenue ordering)
+        const sortedCompanies = [...processedCompanies].sort((a, b) => {
           const salesA = parseFloat(a.sales) || 0;
           const salesB = parseFloat(b.sales) || 0;
           return salesB - salesA;
         });
         
-        // Build industry index from revenue-sorted data
-        const industryMap = buildIndustryIndex(sortedAllCompanies);
-        const industryCount = Object.keys(industryMap).length;
-        console.log(`🏭 Built index for ${industryCount} industries`);
+        // Show data to user IMMEDIATELY (no waiting for full dataset)
+        setVisibleCompanies(sortedCompanies);
+        setFilteredCompanies(sortedCompanies);
+        setAllCompanies(sortedCompanies); // Start with initial data
+        setIndustries(industriesData.industries);
+        setTotalChunks(Math.ceil(initialData.total / 500));
+        setLoading(false); // ✅ USER SEES COMPANIES NOW
         
-        // Create smart first chunk from revenue-sorted data (ensures all industries represented)
-        const smartFirstChunk = createSmartChunk(sortedAllCompanies, industryMap, 500);
-        console.log(`✅ Smart first chunk: ${smartFirstChunk.length} companies`);
+        console.log(`✅ FAST LOAD COMPLETE: User sees ${sortedCompanies.length} companies immediately`);
+        console.log(`🎯 Total companies available: ${initialData.total}, Background loading: ${initialData.hasMore}`);
         
-        // Verify industry coverage
-        const coverageStats = validateIndustryCoverage(smartFirstChunk, industryMap);
-        if (coverageStats.missingIndustries.length > 0) {
-          console.error('❌ CRITICAL: Not all industries covered in first chunk!');
-          console.error('Missing industries:', coverageStats.missingIndustries);
-        } else {
-          console.log('✅ SUCCESS: All industries covered in first chunk');
+        // Background loading: Load remaining companies (non-blocking)
+        if (initialData.hasMore) {
+          loadRemainingCompaniesInBackground(initialData.total, sortedCompanies);
         }
-        
-        // Calculate total chunks needed
-        const chunks = Math.ceil(sortedAllCompanies.length / 500);
-        
-        // Fetch industries from API (more efficient than extracting from full dataset)
-        const industryOptions = await CompanyService.fetchIndustries();
-        
-        // Set state - ensure UI updates immediately when data loads
-        setAllCompanies(sortedAllCompanies);
-        setIndustryIndex(industryMap);
-        setFilteredCompanies(sortedAllCompanies); // Set BEFORE visibleCompanies to avoid race condition
-        setVisibleCompanies(smartFirstChunk);
-        setTotalChunks(chunks);
-        setIndustries(industryOptions);
-        
-        console.log('✅ API-powered smart chunking initialization complete');
-        console.log(`📊 Initial Stats: ${smartFirstChunk.length} visible, ${sortedAllCompanies.length} total, ${chunks} chunks`);
-        console.log(`🎯 Auto-loading will begin automatically to load more companies...`);
         
       } catch (error) {
         console.error('Failed to load data from API:', error);
@@ -279,13 +267,44 @@ function App() {
         } catch (fallbackError) {
           console.error('Fallback to CSV also failed:', fallbackError);
         }
-      } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fastLoadData();
   }, []);
+
+  // Background loading function (non-blocking)
+  const loadRemainingCompaniesInBackground = async (totalCount: number, currentCompanies: Company[]) => {
+    try {
+      console.log('🔄 Starting background loading of remaining companies...');
+      
+      const allCompanies = await FastLoadService.loadRemainingCompanies(
+        currentCompanies,
+        totalCount,
+        (loaded, total) => {
+          // Update progress (optional - could show progress indicator)
+          const progress = Math.round((loaded / total) * 100);
+          console.log(`📊 Background progress: ${loaded}/${total} companies (${progress}%)`);
+        }
+      );
+      
+      // Update state with complete dataset (for filtering and search)
+      setAllCompanies(allCompanies);
+      setFilteredCompanies(allCompanies);
+      
+      // Build industry index for smart chunking (now that we have all data)
+      const industryMap = buildIndustryIndex(allCompanies);
+      setIndustryIndex(industryMap);
+      
+      console.log(`✅ Background loading complete: ${allCompanies.length} total companies available`);
+      console.log('🎯 Full dataset now available for filtering and search');
+      
+    } catch (error) {
+      console.warn('Background loading failed:', error);
+      // Non-critical - user already has initial companies
+    }
+  };
 
   // Progressive Loading Function
   const loadMoreCompanies = useCallback(() => {
