@@ -271,24 +271,38 @@ export class WebsiteStructureService {
   }
 
   private static async fetchWithProxy(url: string): Promise<Response> {
-    // In a real implementation, you'd use a CORS proxy or backend service
-    // For now, we'll try direct fetch (will likely fail due to CORS)
+    // Improved error handling for CORS and mixed content issues
     try {
-      return await fetch(url);
+      // Normalize to HTTPS to prevent mixed content warnings
+      const httpsUrl = url.replace(/^http:\/\//i, 'https://');
+      
+      return await fetch(httpsUrl, {
+        mode: 'cors',
+        credentials: 'omit',
+        signal: AbortSignal.timeout(5000) // 5 second timeout
+      });
     } catch (error) {
-      // Fallback: use a public CORS proxy (use with caution in production)
-      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-      const proxyResponse = await fetch(proxyUrl);
-      
-      if (proxyResponse.ok) {
-        const data = await proxyResponse.json();
-        return new Response(data.contents, {
-          status: 200,
-          headers: { 'content-type': 'application/xml' }
+      // Fallback: use a public CORS proxy with better error handling
+      try {
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const proxyResponse = await fetch(proxyUrl, {
+          signal: AbortSignal.timeout(8000) // 8 second timeout for proxy
         });
+        
+        if (proxyResponse.ok) {
+          const data = await proxyResponse.json();
+          return new Response(data.contents, {
+            status: 200,
+            headers: { 'content-type': 'application/xml' }
+          });
+        }
+        
+        throw new Error(`Proxy response not ok: ${proxyResponse.status}`);
+      } catch (proxyError) {
+        // Silently fail for external website analysis - this is expected
+        console.warn(`Website analysis failed for ${url}:`, proxyError);
+        throw new Error(`Unable to analyze external website: ${url}`);
       }
-      
-      throw new Error('Failed to fetch via proxy');
     }
   }
 
