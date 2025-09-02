@@ -6,7 +6,7 @@ import CompanyDetail from './components/CompanyDetail';
 import VersionDisplay from './components/VersionDisplay';
 import UserIcon from './components/UserIcon';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
-import { getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
+import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
 import './App.css';
 
 interface DirectoryPageProps {
@@ -108,9 +108,9 @@ function App() {
         setLoading(true);
         console.log('🚀 Starting smart chunking data load...');
         
-        const response = await fetch('/.netlify/functions/get-companies?limit=3000');
-        const data = await response.json();
-        const parsedData = data.companies || [];
+        const response = await fetch('/ForMinnesotacompanies.org $10M + 10+ ppl + MN Only.csv');
+        const csvText = await response.text();
+        const parsedData = parseCSVData(csvText);
         
         console.log(`📊 Parsed ${parsedData.length} companies`);
         
