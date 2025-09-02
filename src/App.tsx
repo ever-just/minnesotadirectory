@@ -6,7 +6,7 @@ import CompanyDetail from './components/CompanyDetail';
 import VersionDisplay from './components/VersionDisplay';
 import UserIcon from './components/UserIcon';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
-import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
+import { getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
 import './App.css';
 
 interface DirectoryPageProps {
@@ -115,10 +115,10 @@ function App() {
         console.log(`📊 Parsed ${parsedData.length} companies`);
         
         // Filter out null values and process data
-        const validData = parsedData.filter(item => item !== null);
+        const validData = parsedData.filter((item: any) => item !== null);
         const processedData: Company[] = validData
           .filter(Boolean)
-          .map(company => ({
+          .map((company: any) => ({
             name: company.name || '',
             address: company.address || '',
             city: company.city || '',
