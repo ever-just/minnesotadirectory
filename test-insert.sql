@@ -1,0 +1,2 @@
+INSERT INTO companies (name, industry, sales, employees, city, state) VALUES ('Target Corporation', 'Department Stores', 106566000000, 440000, 'Minneapolis', 'Minnesota') ON CONFLICT DO NOTHING;
+INSERT INTO companies (name, industry, sales, employees, city, state) VALUES ('UnitedHealth Group Incorporated', 'Life and Health Insurance', 400278000000, 400000, 'Eden Prairie', 'Minnesota') ON CONFLICT DO NOTHING;
