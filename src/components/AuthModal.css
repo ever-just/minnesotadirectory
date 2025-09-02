@@ -28,10 +28,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 24px 0;
+  padding: 24px 24px 16px;
   border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 0;
-  padding-bottom: 16px;
 }
 
 .auth-modal-header h2 {
@@ -80,10 +78,6 @@
   border-bottom-color: #3b82f6;
 }
 
-.tab-button:hover {
-  color: #374151;
-}
-
 .auth-form {
   padding: 24px;
 }
@@ -123,48 +117,11 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.input-wrapper input.error {
-  border-color: #ef4444;
-  background: #fef2f2;
-}
-
 .input-icon {
   position: absolute;
   left: 14px;
   color: #9ca3af;
   z-index: 10;
-}
-
-.password-toggle {
-  position: absolute;
-  right: 14px;
-  background: none;
-  border: none;
-  color: #6b7280;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: color 0.2s ease;
-}
-
-.password-toggle:hover {
-  color: #374151;
-}
-
-.error-message {
-  color: #ef4444;
-  font-size: 0.75rem;
-  margin-top: 4px;
-  display: block;
-}
-
-.submit-error {
-  margin-bottom: 16px;
-  padding: 12px;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 6px;
-  text-align: center;
 }
 
 .submit-button {
@@ -190,51 +147,8 @@
 .submit-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
-  transform: none;
 }
 
-.loading-spinner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top: 2px solid white;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-.auth-modal-footer {
-  padding: 0 24px 24px;
-  text-align: center;
-}
-
-.auth-modal-footer p {
-  margin: 0;
-  font-size: 0.875rem;
-  color: #6b7280;
-}
-
-.switch-mode-button {
-  background: none;
-  border: none;
-  color: #3b82f6;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: underline;
-  transition: color 0.2s ease;
-}
-
-.switch-mode-button:hover {
-  color: #1d4ed8;
-}
-
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -248,40 +162,5 @@
   to { 
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Mobile optimization */
-@media (max-width: 480px) {
-  .auth-modal {
-    width: 95%;
-    margin: 10px;
-  }
-  
-  .auth-modal-header {
-    padding: 20px 20px 0;
-  }
-  
-  .auth-form {
-    padding: 20px;
-  }
-  
-  .auth-modal-tabs {
-    padding: 0 20px;
-  }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .auth-modal {
-    border: 3px solid #000;
-  }
-  
-  .input-wrapper input {
-    border-width: 3px;
   }
 }

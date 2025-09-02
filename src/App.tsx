@@ -7,6 +7,7 @@ import VersionDisplay from './components/VersionDisplay';
 import UserIcon from './components/UserIcon';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
 import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
+import { CompanyService } from './services/companyService';
 import './App.css';
 
 interface DirectoryPageProps {
@@ -101,43 +102,130 @@ function App() {
   // Filter operation flag to prevent auto-loading interference
   const isFilteringRef = useRef<boolean>(false);
 
-  // Smart Chunking Data Loading
+  // Fallback CSV loading function (for when API fails)
+  const fallbackToCSVLoading = async () => {
+    console.log('📄 Loading data from CSV fallback...');
+    
+    const response = await fetch('/ForMinnesotacompanies.org $10M + 10+ ppl + MN Only.csv');
+    const csvText = await response.text();
+    const parsedData = parseCSVData(csvText);
+    
+    console.log(`📊 Parsed ${parsedData.length} companies from CSV`);
+    
+    // Filter out null values and process data
+    const validData = parsedData.filter((item: any) => item !== null);
+    const processedData: Company[] = validData
+      .filter(Boolean)
+      .map((company: any) => ({
+        name: company.name || '',
+        address: company.address || '',
+        city: company.city || '',
+        state: company.state || '',
+        postalCode: company.postalCode || '',
+        sales: company.sales || '',
+        employees: company.employees || '',
+        description: company.description || '',
+        industry: company.industry || '',
+        isHeadquarters: Boolean(company.isHeadquarters),
+        naicsDescription: company.naicsDescription || '',
+        tradestyle: company.tradestyle || '',
+        phone: company.phone || '',
+        url: company.url || '',
+        rawSales: company.sales || '',
+        ownership: company.ownership || '',
+        ticker: company.ticker || '',
+        employeesSite: company.employeesSite || '',
+        sicDescription: company.sicDescription || ''
+      }));
+
+    // Sort full dataset by sales for progressive loading FIRST
+    const sortedAllCompanies = [...processedData].sort((a, b) => {
+      const salesA = parseFloat(a.sales) || 0;
+      const salesB = parseFloat(b.sales) || 0;
+      return salesB - salesA;
+    });
+    
+    // Build industry index from revenue-sorted data
+    const industryMap = buildIndustryIndex(sortedAllCompanies);
+    const industryCount = Object.keys(industryMap).length;
+    console.log(`🏭 Built index for ${industryCount} industries`);
+    
+    // Create smart first chunk from revenue-sorted data
+    const smartFirstChunk = createSmartChunk(sortedAllCompanies, industryMap, 500);
+    console.log(`✅ Smart first chunk: ${smartFirstChunk.length} companies`);
+    
+    // Verify industry coverage
+    const coverageStats = validateIndustryCoverage(smartFirstChunk, industryMap);
+    if (coverageStats.missingIndustries.length > 0) {
+      console.error('❌ CRITICAL: Not all industries covered in first chunk!');
+      console.error('Missing industries:', coverageStats.missingIndustries);
+    } else {
+      console.log('✅ SUCCESS: All industries covered in first chunk');
+    }
+    
+    // Calculate total chunks needed
+    const chunks = Math.ceil(sortedAllCompanies.length / 500);
+    
+    // Extract unique industries for filter dropdown
+    const uniqueIndustries = getUniqueIndustries(processedData);
+    const industryOptions = uniqueIndustries.map(industry => ({
+      value: industry,
+      label: industry
+    }));
+    
+    // Set state - ensure UI updates immediately when data loads
+    setAllCompanies(sortedAllCompanies);
+    setIndustryIndex(industryMap);
+    setFilteredCompanies(sortedAllCompanies);
+    setVisibleCompanies(smartFirstChunk);
+    setTotalChunks(chunks);
+    setIndustries(industryOptions);
+    
+    console.log('✅ CSV fallback loading complete');
+    console.log(`📊 Stats: ${smartFirstChunk.length} visible, ${sortedAllCompanies.length} total, ${chunks} chunks`);
+  };
+
+  // Smart Chunking Data Loading (API-powered)
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        console.log('🚀 Starting smart chunking data load...');
+        console.log('🚀 Starting API-powered data load...');
         
-        const response = await fetch('/ForMinnesotacompanies.org $10M + 10+ ppl + MN Only.csv');
-        const csvText = await response.text();
-        const parsedData = parseCSVData(csvText);
+        // Test API connection first
+        const isAPIConnected = await CompanyService.testConnection();
+        if (!isAPIConnected) {
+          console.warn('⚠️ API connection failed, falling back to CSV loading...');
+          return await fallbackToCSVLoading();
+        }
         
-        console.log(`📊 Parsed ${parsedData.length} companies`);
+        // Fetch all companies from API (replaces CSV fetch)
+        const allCompaniesData = await CompanyService.fetchAllCompanies();
+        console.log(`📊 Loaded ${allCompaniesData.length} companies from database`);
         
-        // Filter out null values and process data
-        const validData = parsedData.filter((item: any) => item !== null);
-        const processedData: Company[] = validData
+        // Ensure data is in the expected format
+        const processedData: Company[] = allCompaniesData
           .filter(Boolean)
           .map((company: any) => ({
             name: company.name || '',
             address: company.address || '',
             city: company.city || '',
             state: company.state || '',
-            postalCode: company.postalCode || '',
-            sales: company.sales || '',
-            employees: company.employees || '',
+            postalCode: company.postalCode || company.postal_code || '',
+            sales: company.sales?.toString() || '',
+            employees: company.employees?.toString() || '',
             description: company.description || '',
             industry: company.industry || '',
-            isHeadquarters: Boolean(company.isHeadquarters),
-            naicsDescription: company.naicsDescription || '',
+            isHeadquarters: Boolean(company.isHeadquarters || company.is_headquarters),
+            naicsDescription: company.naicsDescription || company.naics_description || '',
             tradestyle: company.tradestyle || '',
             phone: company.phone || '',
-            url: company.url || '',
-            rawSales: company.sales || '',
+            url: company.website || company.url || '',
+            rawSales: company.sales?.toString() || '',
             ownership: company.ownership || '',
             ticker: company.ticker || '',
-            employeesSite: company.employeesSite || '',
-            sicDescription: company.sicDescription || ''
+            employeesSite: company.employeesSite || company.employees_site || '',
+            sicDescription: company.sicDescription || company.sic_description || ''
           }));
         
         // Sort full dataset by sales for progressive loading FIRST
@@ -168,12 +256,8 @@ function App() {
         // Calculate total chunks needed
         const chunks = Math.ceil(sortedAllCompanies.length / 500);
         
-        // Extract unique industries for filter dropdown
-        const uniqueIndustries = getUniqueIndustries(processedData);
-        const industryOptions = uniqueIndustries.map(industry => ({
-          value: industry,
-          label: industry
-        }));
+        // Fetch industries from API (more efficient than extracting from full dataset)
+        const industryOptions = await CompanyService.fetchIndustries();
         
         // Set state - ensure UI updates immediately when data loads
         setAllCompanies(sortedAllCompanies);
@@ -183,12 +267,18 @@ function App() {
         setTotalChunks(chunks);
         setIndustries(industryOptions);
         
-        console.log('✅ Smart chunking initialization complete');
+        console.log('✅ API-powered smart chunking initialization complete');
         console.log(`📊 Initial Stats: ${smartFirstChunk.length} visible, ${sortedAllCompanies.length} total, ${chunks} chunks`);
         console.log(`🎯 Auto-loading will begin automatically to load more companies...`);
         
       } catch (error) {
-        console.error('Failed to load data:', error);
+        console.error('Failed to load data from API:', error);
+        console.log('🔄 Attempting fallback to CSV loading...');
+        try {
+          await fallbackToCSVLoading();
+        } catch (fallbackError) {
+          console.error('Fallback to CSV also failed:', fallbackError);
+        }
       } finally {
         setLoading(false);
       }

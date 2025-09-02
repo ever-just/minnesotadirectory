@@ -3,19 +3,15 @@ import { User, LogIn } from 'lucide-react';
 import AuthModal from './AuthModal';
 import './UserIcon.css';
 
-interface UserIconProps {}
-
-const UserIcon: React.FC<UserIconProps> = () => {
+const UserIcon: React.FC = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<{name: string, email: string} | null>(null);
 
   const handleIconClick = () => {
     if (isAuthenticated) {
-      // Show user menu or logout
       handleLogout();
     } else {
-      // Show login modal
       setShowAuthModal(true);
     }
   };
