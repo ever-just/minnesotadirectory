@@ -244,12 +244,18 @@ function App() {
         });
         
         // Show data to user IMMEDIATELY (no waiting for full dataset)
+        console.log(`🔧 Setting state: ${sortedCompanies.length} companies, ${industriesData.industries.length} industries`);
         setVisibleCompanies(sortedCompanies);
         setFilteredCompanies(sortedCompanies);
         setAllCompanies(sortedCompanies); // Start with initial data
         setIndustries(industriesData.industries);
         setTotalChunks(Math.ceil(initialData.total / 500));
         setLoading(false); // ✅ USER SEES COMPANIES NOW
+        
+        // Force re-render to ensure state updates
+        setTimeout(() => {
+          console.log(`🔧 State verification: visibleCompanies=${sortedCompanies.length}, loading=${false}`);
+        }, 100);
         
         console.log(`✅ FAST LOAD COMPLETE: User sees ${sortedCompanies.length} companies immediately`);
         console.log(`🎯 Total companies available: ${initialData.total}, Background loading: ${initialData.hasMore}`);
