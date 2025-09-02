@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, LogIn, LogOut } from 'lucide-react';
+import { User, LogIn } from 'lucide-react';
 import AuthModal from './AuthModal';
 import './UserIcon.css';
 
