@@ -191,7 +191,7 @@ function App() {
     const fastLoadData = async () => {
       try {
         setLoading(true);
-        console.log('⚡ Starting fast initial load...');
+        console.log('⚡ Starting fast initial load v01.00.30...');
         const loadStartTime = Date.now();
         
         // Test API connection first (quick test)
