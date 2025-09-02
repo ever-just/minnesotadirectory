@@ -53,8 +53,8 @@ export const handler: Handler = async (event) => {
     query += ` OFFSET $${paramCount}`;
     params.push(offset);
 
-    // Execute query
-    const companies = await sql.query(query, params);
+    // Execute query using tagged template
+    const companies = await sql(query, params);
 
     // Get total count for pagination
     let countQuery = 'SELECT COUNT(*) as total FROM companies WHERE 1=1';
@@ -73,7 +73,7 @@ export const handler: Handler = async (event) => {
       countParams.push(`%${search}%`);
     }
 
-    const [{ total }] = await sql.query(countQuery, countParams);
+    const [{ total }] = await sql(countQuery, countParams);
 
     const result = {
       companies: companies,
