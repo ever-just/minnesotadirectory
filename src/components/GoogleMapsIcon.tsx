@@ -27,3 +27,4 @@ const GoogleMapsIcon: React.FC<GoogleMapsIconProps> = ({ className, size = 24 })
 };
 
 export default GoogleMapsIcon;
+
