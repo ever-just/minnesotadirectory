@@ -102,7 +102,22 @@ export class FastLoadService {
       console.log('🔄 Loading remaining companies in background...');
       
       const remainingCompanies: Company[] = [...currentCompanies];
-      let page = 2; // Start from page 2 (page 1 already loaded)
+      
+      // Load the rest of page 1 first (we only got 500 out of 1000)
+      console.log('📦 Loading remaining companies from page 1...');
+      const page1Remaining = await CompanyService.fetchCompanies({ 
+        page: 1, 
+        limit: 1000 
+      });
+      
+      if (page1Remaining.companies && page1Remaining.companies.length > 500) {
+        // Add the companies we missed from page 1 (501-1000)
+        const missedFromPage1 = page1Remaining.companies.slice(500);
+        remainingCompanies.push(...missedFromPage1);
+        console.log(`📦 Added ${missedFromPage1.length} missed companies from page 1`);
+      }
+      
+      let page = 2; // Now start from page 2
       const limit = 1000;
       
       while (remainingCompanies.length < totalCount) {

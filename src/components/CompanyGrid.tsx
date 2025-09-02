@@ -37,6 +37,9 @@ const CompanyGrid = ({ companies, loading, onLoadMore, hasMore }: CompanyGridPro
         <div className="company-grid">
           <SkeletonLoader count={12} variant="company-card" />
         </div>
+        <div style={{ textAlign: 'center', padding: '20px', color: '#64748b' }}>
+          Loading companies from database...
+        </div>
       </div>
     );
   }
