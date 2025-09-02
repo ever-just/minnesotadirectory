@@ -108,7 +108,7 @@ function App() {
         setLoading(true);
         console.log('🚀 Starting smart chunking data load...');
         
-        const response = await fetch('/.netlify/functions/companies-api?limit=3000');
+        const response = await fetch('/.netlify/functions/get-companies?limit=3000');
         const data = await response.json();
         const parsedData = data.companies || [];
         
