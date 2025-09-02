@@ -108,9 +108,9 @@ function App() {
         setLoading(true);
         console.log('🚀 Starting smart chunking data load...');
         
-        const response = await fetch('/.netlify/functions/companies-api?limit=2000');
-        const data = await response.json();
-        const parsedData = data.companies || [];
+        const response = await fetch('/ForMinnesotacompanies.org $10M + 10+ ppl + MN Only.csv');
+        const csvText = await response.text();
+        const parsedData = parseCSVData(csvText);
         
         console.log(`📊 Parsed ${parsedData.length} companies`);
         
