@@ -4,6 +4,7 @@ import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
 import VersionDisplay from './components/VersionDisplay';
+import UserIcon from './components/UserIcon';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
 import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
 import './App.css';
@@ -377,6 +378,7 @@ function App() {
           />
         </Routes>
       </Router>
+      <UserIcon />
       <VersionDisplay />
     </div>
   );
