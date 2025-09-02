@@ -2,6 +2,7 @@ import { Company } from '../lib/types';
 import { Link } from 'react-router-dom';
 import { useCallback, useRef } from 'react';
 import CompanyCard from './CompanyCard';
+import SkeletonLoader from './SkeletonLoader';
 
 interface CompanyGridProps {
   companies: Company[];
@@ -32,8 +33,10 @@ const CompanyGrid = ({ companies, loading, onLoadMore, hasMore }: CompanyGridPro
 
   if (loading && companies.length === 0) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner">🏢 Loading companies...</div>
+      <div className="company-grid-container">
+        <div className="company-grid">
+          <SkeletonLoader count={12} variant="company-card" />
+        </div>
       </div>
     );
   }
@@ -70,13 +73,10 @@ const CompanyGrid = ({ companies, loading, onLoadMore, hasMore }: CompanyGridPro
         })}
       </div>
       
-      {/* Loading More State */}
+      {/* Loading More State with Skeleton */}
       {loading && companies.length > 0 && (
         <div className="loading-more">
-          <div className="loading-spinner">
-            <div className="spinner"></div>
-            <span>Loading more companies...</span>
-          </div>
+          <SkeletonLoader count={6} variant="company-card" className="skeleton-loading-more" />
         </div>
       )}
       

@@ -119,11 +119,17 @@ export class FastLoadService {
         if (!response.companies || response.companies.length < limit) break;
         page++;
         
+        // Safety break to prevent infinite loops
+        if (page > 10) {
+          console.warn('⚠️ Background loading: Breaking after 10 pages to prevent infinite loop');
+          break;
+        }
+        
         // Add small delay to prevent blocking UI
         await new Promise(resolve => setTimeout(resolve, 50));
       }
       
-      console.log(`✅ Background loading complete: ${remainingCompanies.length} total companies`);
+      console.log(`✅ Background loading complete: ${remainingCompanies.length} total companies (expected: ${totalCount})`);
       return remainingCompanies;
       
     } catch (error) {
