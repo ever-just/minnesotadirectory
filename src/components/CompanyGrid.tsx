@@ -14,6 +14,9 @@ interface CompanyGridProps {
 const CompanyGrid = ({ companies, loading, onLoadMore, hasMore }: CompanyGridProps) => {
   const observerRef = useRef<IntersectionObserver>();
   
+  // Debug logging
+  console.log(`🔧 CompanyGrid render: loading=${loading}, companies.length=${companies.length}, hasMore=${hasMore}`);
+  
   // Intersection Observer for infinite scroll
   const lastCompanyRef = useCallback((node: HTMLAnchorElement | null) => {
     if (loading) return;
@@ -32,6 +35,7 @@ const CompanyGrid = ({ companies, loading, onLoadMore, hasMore }: CompanyGridPro
   }, [loading, hasMore, onLoadMore]);
 
   if (loading && companies.length === 0) {
+    console.log('🎨 SHOWING SKELETON: loading=true, companies.length=0');
     return (
       <div className="company-grid-container">
         <div className="company-grid">

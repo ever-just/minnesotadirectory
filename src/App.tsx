@@ -192,6 +192,7 @@ function App() {
       try {
         setLoading(true);
         console.log('⚡ Starting fast initial load v01.00.30...');
+        console.log('🎨 Skeleton loading should be visible NOW');
         const loadStartTime = Date.now();
         
         // Test API connection first (quick test)
