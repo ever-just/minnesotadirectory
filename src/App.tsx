@@ -250,7 +250,10 @@ function App() {
         setAllCompanies(sortedCompanies); // Start with initial data
         setIndustries(industriesData.industries);
         setTotalChunks(Math.ceil(initialData.total / 500));
-        setLoading(false); // ✅ USER SEES COMPANIES NOW
+        // Add minimum skeleton display time (so users can see the animation)
+        setTimeout(() => {
+          setLoading(false); // ✅ USER SEES COMPANIES NOW
+        }, 800); // Show skeleton for at least 800ms
         
         // Force re-render to ensure state updates
         setTimeout(() => {
