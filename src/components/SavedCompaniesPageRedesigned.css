@@ -1,0 +1,760 @@
+/* Saved Companies Page - Redesigned Layout */
+.saved-page-redesigned {
+  min-height: 100vh;
+  background: #fafbfc;
+  color: #1a202c;
+}
+
+/* Header Section */
+.saved-page-header {
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 32px 0 28px 0;  /* Better vertical spacing */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.header-nav {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;  /* Increased horizontal padding */
+  display: flex;
+  align-items: center;
+  gap: 12px;  /* Better gap between breadcrumb items */
+  margin-bottom: 24px;  /* More space before title */
+  font-size: 0.9rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.nav-separator {
+  color: #cbd5e1;
+  margin: 0 4px;
+}
+
+.nav-current {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.header-title-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;  /* Match nav padding */
+}
+
+.title-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 20px;  /* Better gap between heart and title */
+  margin-bottom: 12px;  /* More space before subtitle */
+}
+
+.title-heart {
+  color: #ef4444;
+  flex-shrink: 0;
+}
+
+.title-heart.error {
+  color: #f87171;
+}
+
+.saved-page-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.saved-count-redesigned {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.header-subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
+  margin-bottom: 32px;  /* More space before controls */
+  line-height: 1.5;
+}
+
+/* Controls Section */
+.controls-section-redesigned {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;  /* Better spacing between control groups */
+  margin-bottom: 20px;  /* More space before results summary */
+  flex-wrap: wrap;
+}
+
+.controls-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;  /* Better spacing between search, filter, sort */
+  flex: 1;
+}
+
+.search-container-redesigned {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-icon-redesigned {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.search-input-redesigned {
+  width: 100%;
+  padding: 12px 16px 12px 48px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  background: white;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.search-input-redesigned:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.filter-container, .sort-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-select-redesigned, .sort-select-redesigned {
+  padding: 10px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.filter-select-redesigned:focus, .sort-select-redesigned:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.sort-direction-button {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.sort-direction-button:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+  color: #475569;
+}
+
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.view-toggle {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 4px;
+  gap: 2px;
+}
+
+.view-button {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-button.active {
+  background: white;
+  color: #3b82f6;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.view-button:hover:not(.active) {
+  color: #475569;
+}
+
+.results-summary-redesigned {
+  color: #64748b;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;  /* Better spacing between text and filter indicator */
+  margin-bottom: 8px;  /* Space before content */
+}
+
+.filter-indicator {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Content Section */
+.saved-page-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px;  /* More generous content padding */
+  flex: 1;
+}
+
+/* Companies Container */
+.companies-container.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));  /* Slightly wider cards */
+  gap: 28px;  /* Better spacing between cards */
+}
+
+.companies-container.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;  /* Better spacing between list items */
+}
+
+/* Company Items */
+.company-item {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.company-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  border-color: #cbd5e1;
+}
+
+.company-item.grid {
+  padding: 28px;  /* More generous padding */
+  min-height: 320px;  /* Slightly taller for better proportions */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;  /* Better spacing between sections */
+}
+
+.company-item.list {
+  padding: 24px 28px;  /* More generous padding */
+  display: flex;
+  align-items: center;
+  gap: 24px;  /* Better spacing between sections */
+  min-height: 130px;
+}
+
+/* Company Main Info */
+.company-main-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;  /* Better spacing between logo and text */
+  flex: 1;
+}
+
+.company-logo-container {
+  flex-shrink: 0;
+}
+
+.company-identity {
+  flex: 1;
+}
+
+.company-name-section {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;  /* Better spacing after company name */
+}
+
+.company-name-redesigned {
+  margin: 0;
+  font-size: 1.35rem;  /* Slightly larger for better hierarchy */
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.4;  /* Better line height */
+  flex: 1;
+  margin-right: 16px;  /* More space before heart button */
+}
+
+.favorite-redesigned {
+  margin-top: 2px;
+}
+
+.company-industry-redesigned {
+  color: #3b82f6;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 8px;  /* Better spacing after industry */
+}
+
+.company-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;  /* Better icon-text spacing */
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-top: 4px;  /* Space from industry */
+}
+
+/* Company Metrics */
+.company-metrics {
+  display: flex;
+  gap: 32px;  /* Better spacing between metrics */
+  margin: 20px 0;  /* More vertical space around metrics */
+  padding: 16px 0;  /* Add subtle vertical padding */
+  border-top: 1px solid #f1f5f9;  /* Subtle visual separator */
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 10px;  /* Better spacing between icon, value, label */
+  color: #475569;
+}
+
+.metric-value {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* Saved Info */
+.company-saved-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;  /* Better spacing between saved info elements */
+  margin-top: auto;
+  padding-top: 16px;  /* Space from metrics section */
+}
+
+.saved-meta-redesigned {
+  display: flex;
+  align-items: center;
+  gap: 8px;  /* Better icon-text spacing */
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.tags-redesigned {
+  display: flex;
+  align-items: center;
+  gap: 10px;  /* Better spacing between tag elements */
+  flex-wrap: wrap;
+}
+
+.tag-redesigned {
+  background: #f0f9ff;
+  color: #0369a1;
+  border-radius: 14px;  /* More rounded */
+  padding: 6px 12px;  /* Better padding for tags */
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #bae6fd;
+}
+
+.tag-count {
+  background: #e5e7eb;
+  color: #6b7280;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Company Actions */
+.company-actions {
+  display: flex;
+  gap: 16px;  /* Better spacing between action buttons */
+  margin-top: 12px;  /* More space before actions */
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;  /* Better icon-text spacing */
+  padding: 10px 16px;  /* More generous button padding */
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.action-button.view-details {
+  background: #f0f9ff;
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+
+.action-button.view-details:hover {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+}
+
+.action-button.visit-website {
+  background: #f9fafb;
+  color: #374151;
+  border-color: #e5e7eb;
+}
+
+.action-button.visit-website:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+/* List View Specific Styles */
+.company-item.list .company-main-info {
+  flex: 2;
+}
+
+.company-item.list .company-metrics {
+  flex: 1;
+  justify-content: center;
+  margin: 0;
+}
+
+.company-item.list .company-saved-info {
+  flex: 1;
+  margin: 0;
+}
+
+.company-item.list .company-actions {
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+}
+
+/* Empty and Error States */
+.empty-state-redesigned, .error-state-redesigned, .no-results-redesigned {
+  text-align: center;
+  padding: 80px 32px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.empty-heart, .error-heart {
+  color: #cbd5e1;
+  margin-bottom: 24px;
+}
+
+.error-heart {
+  color: #f87171;
+}
+
+.empty-state-redesigned h2, .error-state-redesigned h3, .no-results-redesigned h3 {
+  margin: 0 0 16px 0;
+  color: #1a202c;
+}
+
+.empty-state-redesigned h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.empty-state-redesigned p, .error-state-redesigned p, .no-results-redesigned p {
+  margin: 0 0 32px 0;
+  color: #64748b;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.explore-button-redesigned, .retry-button-redesigned, .clear-filters-redesigned {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.explore-button-redesigned:hover, .retry-button-redesigned:hover, .clear-filters-redesigned:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .saved-page-header {
+    padding: 24px 0;  /* Better mobile header padding */
+  }
+  
+  .header-nav {
+    padding: 0 24px;  /* More mobile padding */
+    margin-bottom: 20px;
+  }
+  
+  .header-title-section {
+    padding: 0 24px;
+  }
+  
+  .saved-page-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .controls-section-redesigned {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;  /* Better mobile gap */
+  }
+  
+  .controls-left {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;  /* Better mobile control spacing */
+  }
+  
+  .search-container-redesigned {
+    max-width: none;
+  }
+  
+  .saved-page-content {
+    padding: 24px;  /* Better mobile content padding */
+  }
+  
+  .companies-container.grid {
+    grid-template-columns: 1fr;
+    gap: 20px;  /* Better mobile card spacing */
+  }
+  
+  .loading-skeleton-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .company-item.grid {
+    padding: 24px;  /* Better mobile card padding */
+    min-height: auto;
+  }
+  
+  .company-item.list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;  /* Better mobile list item spacing */
+    padding: 24px;
+  }
+  
+  .company-item.list .company-main-info,
+  .company-item.list .company-metrics,
+  .company-item.list .company-saved-info {
+    flex: none;
+    width: 100%;
+  }
+  
+  .company-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;  /* Better mobile button spacing */
+  }
+  
+  .action-button {
+    justify-content: center;
+    padding: 12px 20px;  /* Better mobile button padding */
+  }
+  
+  .company-metrics {
+    gap: 20px;  /* Adjust metrics spacing for mobile */
+    margin: 16px 0;
+  }
+}
+
+/* Loading States */
+.loading-state-redesigned {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 60px 20px;
+}
+
+.loading-skeleton-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+  gap: 28px;
+  width: 100%;
+}
+
+.skeleton-card-redesigned {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 28px;
+  min-height: 320px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-card-redesigned::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-card-redesigned::after {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  right: 28px;
+  bottom: 28px;
+  background: linear-gradient(
+    to bottom,
+    #f1f5f9 20px,
+    #e2e8f0 20px,
+    #e2e8f0 22px,
+    transparent 22px,
+    transparent 60px,
+    #f1f5f9 60px,
+    #f1f5f9 80px,
+    transparent 80px,
+    transparent 120px,
+    #e2e8f0 120px,
+    #e2e8f0 140px,
+    transparent 140px,
+    transparent 180px,
+    #f1f5f9 180px,
+    #f1f5f9 200px,
+    transparent 200px
+  );
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.loading-text-redesigned {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #64748b;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.loading-heart {
+  color: #ef4444;
+  animation: pulse 2s infinite;
+}
+
+/* Enhanced Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.company-item {
+  animation: slideInUp 0.3s ease-out;
+}
+
+.company-item:nth-child(2) { animation-delay: 0.1s; }
+.company-item:nth-child(3) { animation-delay: 0.2s; }
+.company-item:nth-child(4) { animation-delay: 0.3s; }
+
+/* High-end Professional Touches */
+.company-name-redesigned:hover {
+  color: #3b82f6;
+}
+
+.company-item.grid:hover .company-logo-redesigned {
+  transform: scale(1.02);
+}
+
+.metric:hover {
+  color: #3b82f6;
+}
+
+.metric:hover .metric-value {
+  color: #3b82f6;
+}

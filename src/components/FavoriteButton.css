@@ -1,0 +1,126 @@
+.favorite-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  color: #6b7280;
+}
+
+.favorite-button:hover {
+  background: rgba(234, 179, 8, 0.1);
+  color: #eab308;
+  transform: scale(1.05);
+}
+
+.favorite-button:active {
+  transform: scale(0.95);
+}
+
+.favorite-button.saved {
+  color: #eab308;
+}
+
+.favorite-button.saved:hover {
+  background: rgba(234, 179, 8, 0.15);
+  color: #d97706;
+}
+
+.favorite-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.favorite-icon {
+  transition: all 0.2s ease;
+}
+
+.favorite-icon.loading {
+  animation: pulse 1s infinite;
+}
+
+.favorite-button-small {
+  padding: 4px;
+}
+
+.favorite-button-medium {
+  padding: 6px;
+}
+
+.favorite-button-large {
+  padding: 8px;
+}
+
+.favorite-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  user-select: none;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.15);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+.favorite-button.saved .favorite-icon {
+  animation: heartBeat 0.6s ease-in-out;
+}
+
+/* Success state animation when saving */
+.favorite-button.just-saved {
+  animation: successPulse 0.8s ease-out;
+}
+
+@keyframes successPulse {
+  0% {
+    transform: scale(1);
+    background: rgba(239, 68, 68, 0.1);
+  }
+  50% {
+    transform: scale(1.1);
+    background: rgba(239, 68, 68, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    background: rgba(239, 68, 68, 0.1);
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .favorite-button {
+    padding: 6px;
+  }
+  
+  .favorite-label {
+    font-size: 0.8rem;
+  }
+}

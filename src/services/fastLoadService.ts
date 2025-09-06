@@ -36,10 +36,15 @@ export class FastLoadService {
       const loadTime = Date.now() - startTime;
       console.log(`✅ Fast load complete: ${response.companies.length} companies in ${loadTime}ms`);
       
+      // Handle both direct total and pagination.total
+      const actualTotal = response.total || response.pagination?.total || response.companies.length;
+      
+      console.log(`🔢 TOTAL DEBUG: response.total=${response.total}, pagination.total=${response.pagination?.total}, actualTotal=${actualTotal}`);
+      
       return {
         companies: response.companies,
-        hasMore: response.pagination.total > 500,
-        total: response.pagination.total,
+        hasMore: actualTotal > 500,
+        total: actualTotal,
         loadTime: loadTime
       };
       

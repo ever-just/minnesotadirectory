@@ -7,11 +7,12 @@ import SkeletonLoader from './SkeletonLoader';
 interface CompanyGridProps {
   companies: Company[];
   loading: boolean;
+  showSkeleton?: boolean;
   onLoadMore?: () => void;
   hasMore?: boolean;
 }
 
-const CompanyGrid = ({ companies, loading, onLoadMore, hasMore }: CompanyGridProps) => {
+const CompanyGrid = ({ companies, loading, showSkeleton = false, onLoadMore, hasMore }: CompanyGridProps) => {
   const observerRef = useRef<IntersectionObserver>();
   
   // Debug logging
@@ -34,8 +35,8 @@ const CompanyGrid = ({ companies, loading, onLoadMore, hasMore }: CompanyGridPro
     if (node) observerRef.current.observe(node);
   }, [loading, hasMore, onLoadMore]);
 
-  if (loading && companies.length === 0) {
-    console.log('🎨 SHOWING SKELETON: loading=true, companies.length=0');
+  if (showSkeleton || (loading && companies.length === 0)) {
+    console.log('🎨 SHOWING SKELETON: showSkeleton=', showSkeleton, 'loading=', loading, 'companies.length=', companies.length);
     return (
       <div className="company-grid-container">
         <div className="company-grid">

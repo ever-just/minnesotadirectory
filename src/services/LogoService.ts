@@ -27,8 +27,11 @@ export class LogoService {
   // Main entry point - Get company logo with FAST-FIRST strategy
   async getCompanyLogo(domain: string | null, companyName: string, fastFirst: boolean = true): Promise<LogoMetadata> {
     if (!domain) {
+      console.log(`🔧 Logo Service: No domain for ${companyName}, generating placeholder`);
       return this.generateFallbackMetadata(companyName, 'No domain available');
     }
+    
+    console.log(`🔧 Logo Service: Fetching logo for ${companyName} (domain: ${domain})`);
 
     const cacheKey = this.getCacheKey(domain, companyName);
     

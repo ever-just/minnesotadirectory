@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Mail, Lock, User } from 'lucide-react';
+import { authService } from '../services/authService';
 import './AuthModal.css';
 
 interface AuthModalProps {
@@ -10,6 +11,7 @@ interface AuthModalProps {
 const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin }) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -21,16 +23,55 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    onLogin({
-      name: formData.name || 'User',
-      email: formData.email
-    });
-    
-    setLoading(false);
+    try {
+      // Validate form data
+      if (isSignUp) {
+        if (!formData.name.trim()) {
+          setError('Name is required');
+          return;
+        }
+        
+        if (formData.password !== formData.confirmPassword) {
+          setError('Passwords do not match');
+          return;
+        }
+      }
+      
+      if (!formData.email.trim()) {
+        setError('Email is required');
+        return;
+      }
+      
+      if (!formData.password) {
+        setError('Password is required');
+        return;
+      }
+      
+      // Call authentication service
+      let result;
+      if (isSignUp) {
+        result = await authService.register(formData.name.trim(), formData.email.trim(), formData.password);
+      } else {
+        result = await authService.login(formData.email.trim(), formData.password);
+      }
+      
+      if (result.success && result.user) {
+        onLogin({
+          name: result.user.name,
+          email: result.user.email
+        });
+      } else {
+        setError(result.error || 'Authentication failed');
+      }
+      
+    } catch (error) {
+      console.error('Auth error:', error);
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -59,6 +100,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLogin }) => {
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
+          {error && (
+            <div className="error-message">
+              {error}
+            </div>
+          )}
+          
           {isSignUp && (
             <div className="form-field">
               <label>Full Name</label>

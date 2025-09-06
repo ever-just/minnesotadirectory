@@ -74,7 +74,10 @@ const CompanyLogo = ({
 
   // Fetch logo metadata from service
   const fetchLogoMetadata = useCallback(async () => {
-    if (!company.domain && !company.url) {
+    const domain = company.domain || extractDomain(company.url);
+    
+    if (!domain) {
+      console.log(`🔧 CompanyLogo: No domain available for ${company.name}, showing placeholder`);
       setLoadingState({
         status: 'placeholder',
         currentSource: null,
@@ -90,7 +93,7 @@ const CompanyLogo = ({
       }));
       loadStartTime.current = Date.now();
 
-      const domain = company.domain || extractDomain(company.url);
+      console.log(`🔧 CompanyLogo: Fetching logo for ${company.name} with domain: ${domain}`);
       const metadata = await logoService.getCompanyLogo(domain, company.name);
       
       setLogoMetadata(metadata);

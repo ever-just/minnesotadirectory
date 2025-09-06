@@ -53,11 +53,21 @@ export class CompanyService {
       params.append('loadType', filters.loadType);
     }
 
-    const url = `${this.API_BASE}/companies-api?${params}`;
-    console.log(`🌐 API Request: ${url}`);
+    // Use real database API (get-companies endpoint)
+    let url = `${this.API_BASE}/get-companies?${params}`;
+    console.log(`🌐 API Request (Real Database): ${url}`);
     
     try {
-      const response = await fetch(url);
+      let response;
+      try {
+        response = await fetch(url);
+        if (!response.ok) throw new Error('Database API failed');
+      } catch (databaseError) {
+        console.log('🔄 Real database API failed, trying fallback...');
+        url = `${this.API_BASE}/companies-api-local?${params}`;
+        console.log(`🌐 API Request (Local Mock): ${url}`);
+        response = await fetch(url);
+      }
       
       if (!response.ok) {
         throw new Error(`API Error: ${response.status} ${response.statusText}`);
@@ -65,6 +75,33 @@ export class CompanyService {
       
       const data = await response.json();
       console.log(`📊 API Response: ${data.companies?.length} companies loaded`);
+      
+      // Normalize response format for get-companies endpoint
+      if (!data.pagination && data.total) {
+        console.log(`🔧 COMPANY SERVICE: Normalizing response - total=${data.total}, returned=${data.returned}`);
+        
+        return {
+          companies: data.companies || [],
+          total: data.total,  // ✅ Pass through the real total
+          hasMore: data.total > (data.returned || data.companies?.length || 0),
+          pagination: {
+            page: parseInt(filters.page || '1'),
+            limit: parseInt(filters.limit || '50'),
+            total: data.total || 0,
+            totalPages: Math.ceil((data.total || 0) / parseInt(filters.limit || '50'))
+          },
+          filters: {
+            industry: filters.industry || 'All Industries',
+            search: filters.search || ''
+          }
+        };
+      }
+      
+      // If data already has the right structure, ensure it has total and hasMore
+      if (data.total) {
+        data.hasMore = data.total > (data.returned || data.companies?.length || 0);
+        console.log(`🔧 COMPANY SERVICE: Enhanced response - total=${data.total}, hasMore=${data.hasMore}`);
+      }
       
       return data;
     } catch (error) {

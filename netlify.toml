@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  functions = "netlify/functions"
+  publish = "dist"
+
+[dev]
+  command = "npm run dev:vite"
+  port = 3000
+  publish = "dist"
+  functions = "netlify/functions"
+
+# Remove problematic plugins completely for local dev
+
+[functions]
+  external_node_modules = ["@netlify/neon", "bcryptjs", "jsonwebtoken"]
+  node_bundler = "esbuild"
+
+# Environment variables (will be injected from Netlify dashboard)
+[context.production.environment]
+  NODE_ENV = "production"
+
+[context.dev.environment] 
+  NODE_ENV = "development"

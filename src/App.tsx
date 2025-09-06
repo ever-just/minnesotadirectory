@@ -4,7 +4,8 @@ import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
 import VersionDisplay from './components/VersionDisplay';
-import UserIcon from './components/UserIcon';
+import UserMenu from './components/UserMenu';
+import SavedCompaniesPageOptimized from './components/SavedCompaniesPageOptimized';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
 import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
 import { CompanyService } from './services/companyService';
@@ -16,8 +17,10 @@ interface DirectoryPageProps {
   filteredCompanies: Company[];
   visibleCompanies: Company[];
   industries: IndustryOption[];
+  databaseTotal: number;
   loading: boolean;
   loadingMore: boolean;
+  showSkeleton: boolean;
   hasMore: boolean;
   handleSearch: (query: string) => void;
   handleIndustryChange: (industry: string) => void;
@@ -27,9 +30,11 @@ interface DirectoryPageProps {
 function DirectoryPage({ 
   filteredCompanies, 
   visibleCompanies,
-  industries, 
+  industries,
+  databaseTotal, 
   loading, 
   loadingMore,
+  showSkeleton,
   hasMore,
   handleSearch, 
   handleIndustryChange,
@@ -49,7 +54,7 @@ function DirectoryPage({
             onSearch={handleSearch}
             onIndustryChange={handleIndustryChange}
             industries={industries}
-            totalCompanies={filteredCompanies.length}
+            totalCompanies={databaseTotal}
             loading={loading}
           />
         </div>
@@ -61,6 +66,7 @@ function DirectoryPage({
         <CompanyGrid 
           companies={visibleCompanies}
           loading={loadingMore}
+          showSkeleton={showSkeleton}
           onLoadMore={handleLoadMore}
           hasMore={hasMore}
         />
@@ -92,11 +98,37 @@ function App() {
   const [filteredCompanies, setFilteredCompanies] = useState<Company[]>([]);
   const [loadedChunks, setLoadedChunks] = useState<number>(1);
   const [totalChunks, setTotalChunks] = useState<number>(0);
+  const [databaseTotal, setDatabaseTotal] = useState<number>(0); // Store actual database count
   
   // Keep existing filter state
   const [industries, setIndustries] = useState<IndustryOption[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [showSkeleton, setShowSkeleton] = useState<boolean>(true);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState<boolean>(true); // Track if more companies available
+  
+  // UI State Management for sophisticated features  
+  const [showSavedCompanies, setShowSavedCompanies] = useState<boolean>(false);
+  const [showUserProfile, setShowUserProfile] = useState<boolean>(false);
+
+  // Handle body scroll lock when modals are open
+  useEffect(() => {
+    if (showSavedCompanies || showUserProfile) {
+      // Prevent body scrolling when modal is open
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = '15px'; // Compensate for scrollbar
+    } else {
+      // Restore body scrolling when modal is closed
+      document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = '0px';
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = '0px';
+    };
+  }, [showSavedCompanies, showUserProfile]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedIndustry, setSelectedIndustry] = useState<string>('');
 
@@ -117,27 +149,42 @@ function App() {
     const validData = parsedData.filter((item: any) => item !== null);
     const processedData: Company[] = validData
       .filter(Boolean)
-      .map((company: any) => ({
-        name: company.name || '',
-        address: company.address || '',
-        city: company.city || '',
-        state: company.state || '',
-        postalCode: company.postalCode || '',
-        sales: company.sales || '',
-        employees: company.employees || '',
-        description: company.description || '',
-        industry: company.industry || '',
-        isHeadquarters: Boolean(company.isHeadquarters),
-        naicsDescription: company.naicsDescription || '',
-        tradestyle: company.tradestyle || '',
-        phone: company.phone || '',
-        url: company.url || '',
-        rawSales: company.sales || '',
-        ownership: company.ownership || '',
-        ticker: company.ticker || '',
-        employeesSite: company.employeesSite || '',
-        sicDescription: company.sicDescription || ''
-      }));
+      .map((company: any) => {
+        // Extract domain from URL for CSV data
+        const extractDomain = (url: string): string | null => {
+          if (!url) return null;
+          try {
+            const fullUrl = url.includes('http') ? url : `https://${url}`;
+            const domain = new URL(fullUrl).hostname;
+            return domain.replace('www.', '');
+          } catch {
+            return null;
+          }
+        };
+        
+        return {
+          name: company.name || '',
+          address: company.address || '',
+          city: company.city || '',
+          state: company.state || '',
+          postalCode: company.postalCode || '',
+          sales: company.sales || '',
+          employees: company.employees || '',
+          description: company.description || '',
+          industry: company.industry || '',
+          isHeadquarters: Boolean(company.isHeadquarters),
+          naicsDescription: company.naicsDescription || '',
+          tradestyle: company.tradestyle || '',
+          phone: company.phone || '',
+          url: company.url || '',
+          domain: extractDomain(company.url), // Extract domain for CSV data
+          rawSales: company.sales || '',
+          ownership: company.ownership || '',
+          ticker: company.ticker || '',
+          employeesSite: company.employeesSite || '',
+          sicDescription: company.sicDescription || ''
+        };
+      });
 
     // Sort full dataset by sales for progressive loading FIRST
     const sortedAllCompanies = [...processedData].sort((a, b) => {
@@ -184,6 +231,13 @@ function App() {
     
     console.log('✅ CSV fallback loading complete');
     console.log(`📊 Stats: ${smartFirstChunk.length} visible, ${sortedAllCompanies.length} total, ${chunks} chunks`);
+    
+    // Store the CSV total for UI display
+    setDatabaseTotal(sortedAllCompanies.length);
+    
+    // CRITICAL: Set loading states to false to show companies
+    setLoading(false);
+    setShowSkeleton(false);
   };
 
   // Fast Loading Data (Optimized for Speed)
@@ -216,6 +270,7 @@ function App() {
         const processedCompanies: Company[] = initialData.companies
           .filter(Boolean)
           .map((company: any) => ({
+            id: company.id, // ✅ Include the UUID from database
             name: company.name || '',
             address: company.address || '',
             city: company.city || '',
@@ -230,6 +285,7 @@ function App() {
             tradestyle: company.tradestyle || '',
             phone: company.phone || '',
             url: company.website || company.url || '',
+            domain: company.domain || null, // Add domain field from API
             rawSales: company.sales?.toString() || '',
             ownership: company.ownership || '',
             ticker: company.ticker || '',
@@ -246,15 +302,21 @@ function App() {
         
         // Show data to user IMMEDIATELY (no waiting for full dataset)
         console.log(`🔧 Setting state: ${sortedCompanies.length} companies, ${industriesData.industries.length} industries`);
+        console.log(`📊 TOTAL DEBUG: initialData.total=${initialData.total}, hasMore=${initialData.hasMore}`);
+        
+        // Store the correct database total for UI display
+        setDatabaseTotal(initialData.total || sortedCompanies.length);
         setVisibleCompanies(sortedCompanies);
         setFilteredCompanies(sortedCompanies);
         setAllCompanies(sortedCompanies); // Start with initial data
         setIndustries(industriesData.industries);
-        setTotalChunks(Math.ceil(initialData.total / 500));
-        // Add minimum skeleton display time (so users can see the animation)
-        setTimeout(() => {
-          setLoading(false); // ✅ USER SEES COMPANIES NOW
-        }, 800); // Show skeleton for at least 800ms
+        
+        // Calculate chunks based on actual total
+        const actualTotal = initialData.total || sortedCompanies.length;
+        setTotalChunks(Math.ceil(actualTotal / 500));
+        // Hide skeleton and show companies immediately (data is ready)
+        setShowSkeleton(false);
+        setLoading(false); // ✅ USER SEES COMPANIES NOW
         
         // Force re-render to ensure state updates
         setTimeout(() => {
@@ -263,6 +325,10 @@ function App() {
         
         console.log(`✅ FAST LOAD COMPLETE: User sees ${sortedCompanies.length} companies immediately`);
         console.log(`🎯 Total companies available: ${initialData.total}, Background loading: ${initialData.hasMore}`);
+        console.log(`📈 HASMORE STATUS: ${initialData.hasMore ? 'TRUE - More companies available' : 'FALSE - All loaded'}`);
+        
+        // Set hasMore state
+        setHasMore(initialData.hasMore || false);
         
         // Background loading: Load remaining companies (non-blocking)
         if (initialData.hasMore) {
@@ -276,8 +342,10 @@ function App() {
           await fallbackToCSVLoading();
         } catch (fallbackError) {
           console.error('Fallback to CSV also failed:', fallbackError);
+          // Even if fallback fails, stop loading to prevent infinite loading screen
+          setLoading(false);
+          setShowSkeleton(false);
         }
-        setLoading(false);
       }
     };
 
@@ -468,7 +536,7 @@ function App() {
     
   }, [allCompanies, selectedIndustry]);
 
-  const hasMore = visibleCompanies.length < filteredCompanies.length;
+  // hasMore is now handled by state
 
   return (
     <div className="app">
@@ -482,12 +550,14 @@ function App() {
                 filteredCompanies={filteredCompanies}
                 visibleCompanies={visibleCompanies}
                 industries={industries}
+                databaseTotal={databaseTotal}
                 loading={loading}
                 loadingMore={loadingMore}
+                showSkeleton={showSkeleton}
                 hasMore={hasMore}
-                handleSearch={handleSearch}
-                handleIndustryChange={handleIndustryChange}
-                handleLoadMore={loadMoreCompanies}
+              handleSearch={handleSearch}
+              handleIndustryChange={handleIndustryChange}
+              handleLoadMore={loadMoreCompanies}
               />
             } 
           />
@@ -495,9 +565,37 @@ function App() {
             path="/company/:companyName" 
             element={<DetailPageWrapper allCompanies={allCompanies} />} 
           />
+          <Route 
+            path="/saved" 
+            element={<SavedCompaniesPageOptimized />} 
+          />
         </Routes>
       </Router>
-      <UserIcon />
+      <UserMenu 
+        onShowProfile={() => setShowUserProfile(true)}
+      />
+      
+      {/* User Profile Modal (placeholder for future) */}
+      {showUserProfile && (
+        <div className="modal-overlay" onClick={() => setShowUserProfile(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>User Profile</h2>
+              <button onClick={() => setShowUserProfile(false)} className="modal-close">×</button>
+            </div>
+            <div className="modal-body">
+              <p>User profile management coming soon!</p>
+              <p>Features will include:</p>
+              <ul>
+                <li>Update name and email</li>
+                <li>Change password</li>
+                <li>Email preferences</li>
+                <li>Account deletion</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
       <VersionDisplay />
     </div>
   );

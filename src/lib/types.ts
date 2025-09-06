@@ -70,7 +70,7 @@ export interface Company {
   sicDescription?: string;
   
   // Advanced Logo Fields
-  id?: number;
+  id: string;  // UUID from database
   domain?: string;
   logoMetadata?: LogoMetadata;
   logoStatus?: 'pending' | 'loading' | 'loaded' | 'error' | 'fallback';

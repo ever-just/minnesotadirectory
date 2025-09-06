@@ -1,6 +1,7 @@
 import { Company, LogoMetadata } from '../lib/types';
 import { formatSales, formatNumber } from '../lib/utils';
 import CompanyLogo from './CompanyLogo';
+import FavoriteButton from './FavoriteButtonFixed';
 
 interface CompanyCardProps {
   company: Company;
@@ -33,7 +34,13 @@ const CompanyCard = ({ company, priority = false, showLogoQuality = false }: Com
         <div className="company-title-section-new">
           <h2 className="company-name">{company.name}</h2>
         </div>
-        <div className="company-logo-top-right">
+        <div className="company-logo-section">
+          <FavoriteButton
+            companyId={company.id}
+            companyName={company.name}
+            size="small"
+            className="company-favorite-button"
+          />
           <CompanyLogo
             company={company}
             size="small"

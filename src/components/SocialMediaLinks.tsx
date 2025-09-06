@@ -195,8 +195,10 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
                   className="social-icon reddit-logo"
                   style={{ width: '32px', height: '32px' }}
                 />
-              ) : (
+              ) : typeof IconComponent === 'function' ? (
                 <IconComponent className="social-icon" size={32} />
+              ) : (
+                <div className="social-icon" style={{ width: '32px', height: '32px', backgroundColor: 'currentColor' }} />
               )}
             </a>
           );

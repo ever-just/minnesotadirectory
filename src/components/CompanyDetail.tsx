@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CompanyLogo from './CompanyLogo';
-import WebsiteStructure from './WebsiteStructure';
+import CleanWebsiteDirectory from './CleanWebsiteDirectory';
 import SocialMediaLinks from './SocialMediaLinks';
 import './CompanyDetail.css';
 
@@ -275,9 +275,10 @@ const CompanyDetail = ({ company }: CompanyDetailProps) => {
           <SocialMediaLinks company={company} />
         </div>
 
-        {/* Website Structure Analysis - Separate Component */}
+        {/* Website Pages - Clean Minimal Version */}
         {company.url && (
-          <WebsiteStructure 
+          <CleanWebsiteDirectory 
+            company={company}
             companyUrl={company.url} 
             companyName={company.name}
           />
