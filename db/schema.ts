@@ -142,7 +142,7 @@ export const analysisQueue = pgTable('analysis_queue', {
 // Logo storage tables
 export const companyLogos = pgTable('company_logos', {
     id: uuid().primaryKey().defaultRandom(),
-    companyId: uuid().references(() => companies.id, { onDelete: 'cascade' }).notNull(),
+    companyId: uuid('company_id').references(() => companies.id, { onDelete: 'cascade' }).notNull(),
     logoData: text('logo_data'), // Base64 encoded binary data
     logoUrl: varchar('logo_url', { length: 1000 }), // Optional CDN/storage URL
     contentType: varchar('content_type', { length: 50 }).notNull(), // image/png, image/svg+xml, etc.

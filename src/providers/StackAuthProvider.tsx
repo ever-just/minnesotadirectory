@@ -1,14 +1,5 @@
-import React from 'react';
-import { StackProvider, StackTheme } from '@stackframe/stack';
+import { StackProvider, StackClientApp } from '@stackframe/stack';
 import { stackAuthConfig, isStackAuthConfigured } from '../config/stackAuth';
-
-const theme: StackTheme = {
-  colorPrimary: '#3498db',
-  colorSecondary: '#2ecc71', 
-  colorBackground: '#ffffff',
-  colorForeground: '#2c3e50',
-  borderRadius: '8px',
-};
 
 interface StackAuthProviderProps {
   children: React.ReactNode;
@@ -21,19 +12,14 @@ export function StackAuthProvider({ children }: StackAuthProviderProps) {
     return <>{children}</>;
   }
 
+  // Initialize Stack client app
+  const stackApp = new StackClientApp({
+    tokenStore: "nextjs-cookie", 
+    publishableClientKey: stackAuthConfig.publicKey,
+  });
+
   return (
-    <StackProvider
-      projectId={stackAuthConfig.projectId}
-      urls={{
-        signIn: '/auth/sign-in',
-        signUp: '/auth/sign-up',
-        afterSignIn: '/',
-        afterSignUp: '/',
-        afterSignOut: '/',
-        home: '/',
-      }}
-      theme={theme}
-    >
+    <StackProvider app={stackApp}>
       {children}
     </StackProvider>
   );

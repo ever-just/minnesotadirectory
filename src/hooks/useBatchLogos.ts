@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Company, LogoMetadata } from '../lib/types';
 import { logoService } from '../services/LogoService';
+import { databaseLogoService } from '../services/DatabaseLogoService';
 
 interface BatchLogoState {
   loading: boolean;
@@ -22,6 +23,7 @@ interface UseBatchLogosOptions {
   delayBetweenBatches: number;
   enableAutoLoad: boolean;
   priorityCompanies: string[]; // Company names to load first
+  useDatabase: boolean; // Use database service instead of external APIs
 }
 
 export const useBatchLogos = (
@@ -29,10 +31,11 @@ export const useBatchLogos = (
   options: Partial<UseBatchLogosOptions> = {}
 ) => {
   const defaultOptions: UseBatchLogosOptions = {
-    batchSize: 10, // Reduced from 20 to 10 for better browser stability
-    delayBetweenBatches: 500, // Increased from 200ms to 500ms to reduce browser stress
+    batchSize: 50, // Increased for database batch processing
+    delayBetweenBatches: 200, // Reduced since database is faster
     enableAutoLoad: true,
-    priorityCompanies: []
+    priorityCompanies: [],
+    useDatabase: true // Default to database service
   };
 
   const opts = { ...defaultOptions, ...options };
@@ -90,8 +93,15 @@ export const useBatchLogos = (
         domain: company.domain || extractDomain(company.url)
       }));
 
-      // Use the LogoService batch method
-      const results = await logoService.batchGetLogos(companyData);
+      // Use the appropriate service based on options
+      let results: LogoMetadata[];
+      if (opts.useDatabase) {
+        console.log(`🔧 Using database logo service for batch of ${companyData.length} companies`);
+        results = await databaseLogoService.batchGetLogosForCompanies(companies.slice(i, i + opts.batchSize));
+      } else {
+        console.log(`🔧 Using external API logo service for batch of ${companyData.length} companies`);
+        results = await logoService.batchGetLogos(companyData);
+      }
       
       if (signal.aborted) return;
 

@@ -1,5 +1,5 @@
 import { useUser, useStackApp } from '@stackframe/stack';
-import { stackAuthConfig, isStackAuthConfigured } from '../config/stackAuth';
+import { isStackAuthConfigured } from '../config/stackAuth';
 
 export function useStackAuth() {
   const user = useUser();
@@ -21,7 +21,13 @@ export function useStackAuth() {
     profileImageUrl: user?.profileImageUrl || null,
     
     // Auth methods
-    signOut: stackApp?.signOut || (() => console.warn('Stack Auth not configured')),
+    signOut: () => {
+      if (stackApp && typeof stackApp.signOut === 'function') {
+        stackApp.signOut();
+      } else {
+        console.warn('Stack Auth not configured or signOut method not available');
+      }
+    },
     
     // Status
     isLoading: false, // Stack Auth handles loading states internally

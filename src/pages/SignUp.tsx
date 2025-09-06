@@ -1,4 +1,3 @@
-import React from 'react';
 import { SignUp } from '@stackframe/stack';
 import { isStackAuthConfigured } from '../config/stackAuth';
 

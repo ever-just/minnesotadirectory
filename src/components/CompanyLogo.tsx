@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Company, LogoLoadingState, LogoMetadata } from '../lib/types';
 import { logoService } from '../services/LogoService';
+import { databaseLogoService } from '../services/DatabaseLogoService';
+import { extractDomain } from '../lib/utils';
 
 interface CompanyLogoProps {
   company: Company;
@@ -12,6 +14,7 @@ interface CompanyLogoProps {
   showQualityIndicator?: boolean; // Dev mode feature
   enableRetry?: boolean;
   lazy?: boolean;
+  useDatabase?: boolean; // Use database service instead of external APIs
 }
 
 const CompanyLogo = ({ 
@@ -23,7 +26,8 @@ const CompanyLogo = ({
   onError,
   showQualityIndicator = false,
   enableRetry = true,
-  lazy = true
+  lazy = true,
+  useDatabase = true // Default to database service
 }: CompanyLogoProps) => {
   // State management
   const [loadingState, setLoadingState] = useState<LogoLoadingState>({
@@ -76,7 +80,7 @@ const CompanyLogo = ({
   const fetchLogoMetadata = useCallback(async () => {
     const domain = company.domain || extractDomain(company.url);
     
-    if (!domain) {
+    if (!useDatabase && !domain) {
       console.log(`🔧 CompanyLogo: No domain available for ${company.name}, showing placeholder`);
       setLoadingState({
         status: 'placeholder',
@@ -93,8 +97,24 @@ const CompanyLogo = ({
       }));
       loadStartTime.current = Date.now();
 
-      console.log(`🔧 CompanyLogo: Fetching logo for ${company.name} with domain: ${domain}`);
-      const metadata = await logoService.getCompanyLogo(domain, company.name);
+      console.log(`🔧 CompanyLogo: Fetching logo for ${company.name} (useDatabase: ${useDatabase}, ID: ${company.id}, domain: ${domain})`);
+      
+      let metadata: LogoMetadata;
+      if (useDatabase && company.id) {
+        // Use database service with company ID
+        metadata = await databaseLogoService.getCompanyLogoById(company);
+      } else if (domain) {
+        // Fallback to external API service
+        metadata = await logoService.getCompanyLogo(domain, company.name);
+      } else {
+        // No ID or domain, show placeholder
+        setLoadingState({
+          status: 'placeholder',
+          currentSource: null,
+          retryCount: 0
+        });
+        return;
+      }
       
       setLogoMetadata(metadata);
       setLoadingState(prev => ({
@@ -132,7 +152,7 @@ const CompanyLogo = ({
         onError?.(error instanceof Error ? error : new Error('Unknown error'));
       }
     }
-  }, [company.name, company.domain, company.url, loadingState.retryCount, enableRetry, onLoad, onError]);
+  }, [company.name, company.domain, company.url, company.id, loadingState.retryCount, enableRetry, onLoad, onError, useDatabase]);
 
   // Reset logo state when company changes (fixes logo mismatch on filter changes)
   useEffect(() => {

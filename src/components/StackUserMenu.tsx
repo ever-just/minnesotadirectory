@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { UserButton, AccountSettings } from '@stackframe/stack';
 import useStackAuth from '../hooks/useStackAuth';
 
@@ -39,14 +39,15 @@ export function StackUserMenu() {
       
       <UserButton
         showDisplayName={false}
-        colorModeToggle={() => {}}
         extraItems={[
           {
-            title: "Account Settings",
+            text: "Account Settings",
+            icon: <>⚙️</>,
             onClick: () => setShowSettings(true),
           },
           {
-            title: "Sign Out", 
+            text: "Sign Out",
+            icon: <>🚪</>, 
             onClick: () => signOut(),
           }
         ]}
@@ -79,7 +80,7 @@ export function StackUserMenu() {
                       </p>
                     </div>
                   ),
-                  subpath: "/saved"
+                  id: "saved-companies"
                 }
               ]}
             />
