@@ -1,0 +1,74 @@
+[
+  {
+    "id": "63eb2858-1534-49b0-9d1d-323295b3e81d",
+    "user_id": "d0fdf322-f53f-4af7-b556-3602097720ea",
+    "company_id": "929f30c0-f88f-4361-adb6-bcd51cbe8f51",
+    "saved_at": "2025-09-06T19:18:25.106Z",
+    "notes": "Cargill - Agriculture leader",
+    "tags": "agriculture,food",
+    "created_at": "2025-09-06T19:18:25.106Z"
+  },
+  {
+    "id": "ef4eeeb5-f332-48a4-8e94-9c4cbdcfc37e",
+    "user_id": "d0fdf322-f53f-4af7-b556-3602097720ea",
+    "company_id": "99ec024e-c64f-4576-837c-c6433a5b5081",
+    "saved_at": "2025-09-06T19:19:56.745Z",
+    "notes": "UnitedHealth saved via fixed system",
+    "tags": "healthcare,favorite",
+    "created_at": "2025-09-06T19:18:01.455Z"
+  },
+  {
+    "id": "78ec9a98-2b27-4aec-bdcb-ed6cce0c3f64",
+    "user_id": "4fb9cc1a-f366-4c1f-839c-4b9e68cb6e4f",
+    "company_id": "ccc278eb-063d-4684-9164-7f76e35fbafb",
+    "saved_at": "2025-09-06T19:21:14.808Z",
+    "notes": "Saved from directory",
+    "tags": "favorite",
+    "created_at": "2025-09-06T19:21:14.808Z"
+  },
+  {
+    "id": "a6face95-2893-41ec-b3f8-86adb11780bc",
+    "user_id": "4fb9cc1a-f366-4c1f-839c-4b9e68cb6e4f",
+    "company_id": "de5cfd82-4532-43de-bf4e-b5f46f304e86",
+    "saved_at": "2025-09-06T19:23:02.983Z",
+    "notes": "Saved from directory",
+    "tags": "favorite",
+    "created_at": "2025-09-06T19:23:02.983Z"
+  },
+  {
+    "id": "4955f90a-dd35-4539-a31c-7a27e371e947",
+    "user_id": "4fb9cc1a-f366-4c1f-839c-4b9e68cb6e4f",
+    "company_id": "ac04d274-b8a9-45cd-953c-ff287c47b30c",
+    "saved_at": "2025-09-06T19:37:08.744Z",
+    "notes": "Saved from directory",
+    "tags": "favorite",
+    "created_at": "2025-09-06T19:37:08.744Z"
+  },
+  {
+    "id": "c8938f1d-f3cb-4739-afd8-d02aa5d1b421",
+    "user_id": "4fb9cc1a-f366-4c1f-839c-4b9e68cb6e4f",
+    "company_id": "929f30c0-f88f-4361-adb6-bcd51cbe8f51",
+    "saved_at": "2025-09-06T20:05:36.480Z",
+    "notes": "Saved from directory",
+    "tags": "favorite",
+    "created_at": "2025-09-06T20:05:36.480Z"
+  },
+  {
+    "id": "f31bce6d-42a6-4ea3-864c-fda93a50bff5",
+    "user_id": "4fb9cc1a-f366-4c1f-839c-4b9e68cb6e4f",
+    "company_id": "832a1e42-01c7-4413-a8a2-d8bb7f85d280",
+    "saved_at": "2025-09-06T20:05:41.618Z",
+    "notes": "Saved from directory",
+    "tags": "favorite",
+    "created_at": "2025-09-06T20:05:41.618Z"
+  },
+  {
+    "id": "c0b70ed8-2c53-4eee-9fa8-cad33b53c992",
+    "user_id": "4fb9cc1a-f366-4c1f-839c-4b9e68cb6e4f",
+    "company_id": "a729c246-8a49-46d2-996d-dd6ecf1d92e0",
+    "saved_at": "2025-09-06T22:03:07.165Z",
+    "notes": "Saved from directory",
+    "tags": "favorite",
+    "created_at": "2025-09-06T22:03:07.165Z"
+  }
+]

@@ -138,3 +138,64 @@ export const analysisQueue = pgTable('analysis_queue', {
     statusIdx: index('analysis_queue_status_idx').on(table.status),
     companyIdx: index('analysis_queue_company_idx').on(table.companyId)
 }));
+
+// Logo storage tables
+export const companyLogos = pgTable('company_logos', {
+    id: uuid().primaryKey().defaultRandom(),
+    companyId: uuid().references(() => companies.id, { onDelete: 'cascade' }).notNull(),
+    logoData: text('logo_data'), // Base64 encoded binary data
+    logoUrl: varchar('logo_url', { length: 1000 }), // Optional CDN/storage URL
+    contentType: varchar('content_type', { length: 50 }).notNull(), // image/png, image/svg+xml, etc.
+    fileExtension: varchar('file_extension', { length: 10 }).notNull(), // png, svg, jpg
+    fileSize: integer('file_size'), // Size in bytes
+    qualityScore: integer('quality_score').default(0), // 0-100 quality rating
+    source: varchar({ length: 50 }), // clearbit, google, manual, etc.
+    width: integer(),
+    height: integer(),
+    isPlaceholder: boolean('is_placeholder').default(false),
+    domain: varchar({ length: 255 }), // Store domain for easy lookup
+    createdAt: timestamp('created_at').defaultNow(),
+    updatedAt: timestamp('updated_at').defaultNow()
+}, (table) => ({
+    companyIdx: index('company_logos_company_idx').on(table.companyId),
+    domainIdx: index('company_logos_domain_idx').on(table.domain),
+    qualityIdx: index('company_logos_quality_idx').on(table.qualityScore),
+    sourceIdx: index('company_logos_source_idx').on(table.source),
+    // Unique constraint: one primary logo per company
+    uniqueCompanyLogo: index('company_logos_unique_company').on(table.companyId)
+}));
+
+export const logoSources = pgTable('logo_sources', {
+    id: uuid().primaryKey().defaultRandom(),
+    companyLogoId: uuid('company_logo_id').references(() => companyLogos.id, { onDelete: 'cascade' }).notNull(),
+    sourceName: varchar('source_name', { length: 50 }), // clearbit, google, favicon
+    sourceUrl: varchar('source_url', { length: 1000 }),
+    quality: integer().default(0),
+    loadTimeMs: integer('load_time_ms'),
+    lastTested: timestamp('last_tested'),
+    isWorking: boolean('is_working').default(true),
+    errorMessage: text('error_message'),
+    createdAt: timestamp('created_at').defaultNow()
+}, (table) => ({
+    companyLogoIdx: index('logo_sources_company_logo_idx').on(table.companyLogoId),
+    sourceNameIdx: index('logo_sources_source_name_idx').on(table.sourceName),
+    workingIdx: index('logo_sources_working_idx').on(table.isWorking)
+}));
+
+export const logoPerformance = pgTable('logo_performance', {
+    id: uuid().primaryKey().defaultRandom(),
+    companyId: uuid('company_id').references(() => companies.id, { onDelete: 'cascade' }).notNull(),
+    cacheKey: varchar('cache_key', { length: 255 }),
+    fetchAttempts: integer('fetch_attempts').default(0),
+    lastFetchAttempt: timestamp('last_fetch_attempt'),
+    averageLoadTimeMs: integer('average_load_time_ms'),
+    successRate: decimal('success_rate', { precision: 5, scale: 2 }),
+    totalRequests: integer('total_requests').default(0),
+    successfulRequests: integer('successful_requests').default(0),
+    createdAt: timestamp('created_at').defaultNow(),
+    updatedAt: timestamp('updated_at').defaultNow()
+}, (table) => ({
+    companyIdx: index('logo_performance_company_idx').on(table.companyId),
+    cacheKeyIdx: index('logo_performance_cache_key_idx').on(table.cacheKey),
+    performanceIdx: index('logo_performance_success_rate_idx').on(table.successRate)
+}));

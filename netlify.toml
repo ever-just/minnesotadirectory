@@ -3,6 +3,14 @@
   functions = "netlify/functions"
   publish = "dist"
 
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+  # Stack Auth Configuration (to be updated after Neon Auth setup)
+  STACK_PUBLIC_KEY = "pk_test_REPLACE_ME"
+  STACK_SECRET_KEY = "sk_test_REPLACE_ME"
+  STACK_PROJECT_URL = "https://REPLACE_ME.stackauth.com"
+
 [dev]
   command = "npm run dev:vite"
   port = 3000

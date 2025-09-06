@@ -47,6 +47,73 @@ export interface LogoServiceOptions {
   enableBatch: boolean;
 }
 
+// Database Logo Types
+export interface CompanyLogo {
+  id: string;
+  companyId: string;
+  logoData?: string; // Base64 encoded binary data
+  logoUrl?: string; // Optional CDN/storage URL
+  contentType: string; // image/png, image/svg+xml, etc.
+  fileExtension: string; // png, svg, jpg
+  fileSize?: number; // Size in bytes
+  qualityScore: number; // 0-100 quality rating
+  source?: string; // clearbit, google, manual, etc.
+  width?: number;
+  height?: number;
+  isPlaceholder: boolean;
+  domain?: string; // Store domain for easy lookup
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LogoSourceRecord {
+  id: string;
+  companyLogoId: string;
+  sourceName?: string; // clearbit, google, favicon
+  sourceUrl?: string;
+  quality: number;
+  loadTimeMs?: number;
+  lastTested?: string;
+  isWorking: boolean;
+  errorMessage?: string;
+  createdAt: string;
+}
+
+export interface LogoPerformance {
+  id: string;
+  companyId: string;
+  cacheKey?: string;
+  fetchAttempts: number;
+  lastFetchAttempt?: string;
+  averageLoadTimeMs?: number;
+  successRate?: number;
+  totalRequests: number;
+  successfulRequests: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// API Response Types
+export interface LogoApiResponse {
+  success: boolean;
+  logo?: CompanyLogo;
+  sources?: LogoSourceRecord[];
+  performance?: LogoPerformance;
+  error?: string;
+}
+
+export interface BatchLogoResponse {
+  success: boolean;
+  logos: { [companyId: string]: CompanyLogo };
+  errors: { [companyId: string]: string };
+  stats: {
+    total: number;
+    successful: number;
+    failed: number;
+    fromCache: number;
+  };
+}
+
 // Enhanced Company Interface
 export interface Company {
   name: string;
@@ -77,6 +144,10 @@ export interface Company {
   logoLastFetch?: string;
   logoQuality?: number;
   hasCustomLogo?: boolean;
+  
+  // Database Logo Fields
+  databaseLogo?: CompanyLogo; // Logo stored in database
+  hasLogo?: boolean; // Whether company has a logo in database
 }
 
 export interface IndustryOption {
