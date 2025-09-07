@@ -2,12 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import StackAuthProvider from './providers/StackAuthProvider'
+// import StackAuthProvider from './providers/StackAuthProvider' // Temporarily disabled
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <StackAuthProvider>
+    {/* <StackAuthProvider> */}
       <App />
-    </StackAuthProvider>
+    {/* </StackAuthProvider> */}
   </StrictMode>,
 )

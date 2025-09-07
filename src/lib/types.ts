@@ -1,6 +1,6 @@
 // Advanced Logo System Types
 export interface LogoSource {
-  name: 'clearbit' | 'brandfetch' | 'google' | 'direct' | 'apple-touch' | 'generated';
+  name: 'clearbit' | 'brandfetch' | 'google' | 'direct' | 'apple-touch' | 'generated' | 'database';
   url: string;
   priority: number;
   quality: number;
