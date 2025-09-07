@@ -35,13 +35,26 @@ export const handler: Handler = async (event) => {
   }
 
   try {
-    const { companyId } = event.pathParameters || {};
+    // Extract company ID from path parameters or path itself
+    let companyId = event.pathParameters?.companyId;
     
-    if (!companyId) {
+    // If no path parameters, try to extract from the path
+    if (!companyId && event.path) {
+      const pathParts = event.path.split('/');
+      companyId = pathParts[pathParts.length - 1];
+    }
+    
+    // Validate UUID format
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!companyId || !uuidRegex.test(companyId)) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Company ID is required' })
+        body: JSON.stringify({ 
+          error: 'Valid Company ID (UUID format) is required',
+          receivedPath: event.path,
+          receivedId: companyId 
+        })
       };
     }
 
