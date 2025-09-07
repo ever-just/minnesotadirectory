@@ -38,7 +38,6 @@ export function StackUserMenu() {
       </span>
       
       <UserButton
-        showDisplayName={false}
         extraItems={[
           {
             text: "Account Settings",

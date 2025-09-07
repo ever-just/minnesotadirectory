@@ -22,10 +22,11 @@ export function useStackAuth() {
     
     // Auth methods
     signOut: () => {
-      if (stackApp && typeof stackApp.signOut === 'function') {
-        stackApp.signOut();
+      if (stackApp) {
+        // Use Stack Auth's recommended signOut method
+        window.location.href = '/auth/sign-out';
       } else {
-        console.warn('Stack Auth not configured or signOut method not available');
+        console.warn('Stack Auth not configured');
       }
     },
     

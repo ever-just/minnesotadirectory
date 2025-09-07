@@ -1,0 +1,80 @@
+{
+  "importedAt": "2025-09-06T18:41:09.769Z",
+  "totalUsers": 8,
+  "successfulImports": 8,
+  "failedImports": 0,
+  "results": [
+    {
+      "originalId": "0035861e-862f-42aa-a76d-e3f175cffeaf",
+      "stackId": "cb9ae822-b655-402d-a1f6-b8b6dd5a1222",
+      "email": "weldon@everjust.com",
+      "name": "Weldon Makori",
+      "imported": true,
+      "error": null,
+      "importedAt": "2025-09-06T18:41:07.451Z"
+    },
+    {
+      "originalId": "66a65b58-bda8-4e4d-8048-316df61e59b3",
+      "stackId": "df8bd9b5-4213-4d67-a952-83d71f950bb3",
+      "email": "test123@example.com",
+      "name": "Test User",
+      "imported": true,
+      "error": null,
+      "importedAt": "2025-09-06T18:41:07.759Z"
+    },
+    {
+      "originalId": "e4a563e9-5f7c-431a-9186-0efd49fdb1d3",
+      "stackId": "73e95f9c-633a-45df-b7b7-e07ff390858f",
+      "email": "johndoe@test.com",
+      "name": "John Doe",
+      "imported": true,
+      "error": null,
+      "importedAt": "2025-09-06T18:41:08.152Z"
+    },
+    {
+      "originalId": "e2e6f505-eef6-43c9-bce4-c068dc00275d",
+      "stackId": "071ec34d-4694-408e-8bb7-cb94164d30c7",
+      "email": "frontend@test.com",
+      "name": "Frontend Test",
+      "imported": true,
+      "error": null,
+      "importedAt": "2025-09-06T18:41:08.427Z"
+    },
+    {
+      "originalId": "9ebce399-0dc7-4de2-8fa6-84d7d5a6d965",
+      "stackId": "0aa09f9b-5d1a-4a1d-9591-77d03db06419",
+      "email": "ui-test@test.com",
+      "name": "Frontend Auth Test",
+      "imported": true,
+      "error": null,
+      "importedAt": "2025-09-06T18:41:08.700Z"
+    },
+    {
+      "originalId": "4fb9cc1a-f366-4c1f-839c-4b9e68cb6e4f",
+      "stackId": "c0a0c729-7361-4c85-a29a-172393649b3b",
+      "email": "company@everjust.com",
+      "name": "everjust",
+      "imported": true,
+      "error": null,
+      "importedAt": "2025-09-06T18:41:09.007Z"
+    },
+    {
+      "originalId": "67d87577-242a-4d8f-b89c-21fa8042eaba",
+      "stackId": "7fcc104c-66dd-4b7e-ad5d-774b07b52902",
+      "email": "testnew@example.com",
+      "name": "Test User New",
+      "imported": true,
+      "error": null,
+      "importedAt": "2025-09-06T18:41:09.309Z"
+    },
+    {
+      "originalId": "d0fdf322-f53f-4af7-b556-3602097720ea",
+      "stackId": "bd6f221a-43a1-44c5-8e66-7dd2b23f886e",
+      "email": "live@test.com",
+      "name": "Test Live User",
+      "imported": true,
+      "error": null,
+      "importedAt": "2025-09-06T18:41:09.667Z"
+    }
+  ]
+}

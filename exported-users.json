@@ -1,0 +1,70 @@
+{
+  "exportedAt": "2025-09-06T18:33:31.384Z",
+  "userCount": 8,
+  "users": [
+    {
+      "id": "0035861e-862f-42aa-a76d-e3f175cffeaf",
+      "email": "weldon@everjust.com",
+      "name": "Weldon Makori",
+      "isEmailVerified": false,
+      "createdAt": "2025-09-06T00:31:38.723Z",
+      "lastLoginAt": "2025-09-06T00:32:04.392Z"
+    },
+    {
+      "id": "66a65b58-bda8-4e4d-8048-316df61e59b3",
+      "email": "test123@example.com",
+      "name": "Test User",
+      "isEmailVerified": false,
+      "createdAt": "2025-09-06T08:36:19.676Z",
+      "lastLoginAt": "2025-09-06T08:36:23.132Z"
+    },
+    {
+      "id": "e4a563e9-5f7c-431a-9186-0efd49fdb1d3",
+      "email": "johndoe@test.com",
+      "name": "John Doe",
+      "isEmailVerified": false,
+      "createdAt": "2025-09-06T08:37:56.733Z",
+      "lastLoginAt": "2025-09-06T08:37:59.106Z"
+    },
+    {
+      "id": "e2e6f505-eef6-43c9-bce4-c068dc00275d",
+      "email": "frontend@test.com",
+      "name": "Frontend Test",
+      "isEmailVerified": false,
+      "createdAt": "2025-09-06T08:38:18.295Z",
+      "lastLoginAt": "2025-09-06T18:32:23.995Z"
+    },
+    {
+      "id": "9ebce399-0dc7-4de2-8fa6-84d7d5a6d965",
+      "email": "ui-test@test.com",
+      "name": "Frontend Auth Test",
+      "isEmailVerified": false,
+      "createdAt": "2025-09-06T08:38:44.868Z",
+      "lastLoginAt": null
+    },
+    {
+      "id": "4fb9cc1a-f366-4c1f-839c-4b9e68cb6e4f",
+      "email": "company@everjust.com",
+      "name": "everjust",
+      "isEmailVerified": false,
+      "createdAt": "2025-09-06T08:41:25.238Z",
+      "lastLoginAt": "2025-09-06T21:38:31.624Z"
+    },
+    {
+      "id": "67d87577-242a-4d8f-b89c-21fa8042eaba",
+      "email": "testnew@example.com",
+      "name": "Test User New",
+      "isEmailVerified": false,
+      "createdAt": "2025-09-06T18:04:06.893Z",
+      "lastLoginAt": "2025-09-06T18:24:35.836Z"
+    },
+    {
+      "id": "d0fdf322-f53f-4af7-b556-3602097720ea",
+      "email": "live@test.com",
+      "name": "Test Live User",
+      "isEmailVerified": false,
+      "createdAt": "2025-09-06T18:35:12.485Z",
+      "lastLoginAt": "2025-09-06T19:19:56.661Z"
+    }
+  ]
+}

@@ -480,6 +480,21 @@ export class DatabaseLogoService {
       return false;
     }
   }
+
+  // Fallback to external APIs (for migration period)
+  private async fallbackToExternalAPIs(domain: string | null, companyName: string): Promise<LogoMetadata> {
+    if (!domain) {
+      return this.generateFallbackMetadata(companyName, 'No domain available for external API fallback');
+    }
+
+    console.log(`🔄 Falling back to external APIs for ${companyName}`);
+    
+    // Import the original LogoService for fallback
+    const { LogoService } = await import('./LogoService');
+    const externalService = new LogoService(this.defaultOptions);
+    
+    return await externalService.getCompanyLogo(domain, companyName, true);
+  }
 }
 
 // Export singleton instance

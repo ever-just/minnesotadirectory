@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 
 /**
- * Logo Database Population Script
+ * Logo URL Database Population Script (URL-Based Storage)
  * 
- * This script fetches logos for all companies and stores them in the database
- * instead of relying on external API calls. It uses the existing MCP logo server
- * and stores the results in the new logo database tables.
+ * This script stores logo URLs and metadata in the database instead of base64 data
+ * to avoid the 100MB database storage limit. Much more efficient and practical.
  * 
- * Usage: node scripts/populate-logo-database.js [options]
+ * Usage: node scripts/populate-logo-urls.js [options]
  * Options:
  *   --batch-size=100    Number of companies to process in each batch
  *   --delay=1000       Delay between batches in milliseconds
@@ -18,33 +17,32 @@
  */
 
 import { neon } from '@neondatabase/serverless';
-import fs from 'fs/promises';
-import path from 'path';
 import https from 'https';
 import http from 'http';
 import { URL } from 'url';
 
 // Configuration
 const config = {
-  batchSize: parseInt(process.env.BATCH_SIZE) || 50,
-  delay: parseInt(process.env.DELAY) || 2000,
+  batchSize: parseInt(process.env.BATCH_SIZE) || 100,
+  delay: parseInt(process.env.DELAY) || 1000,
   dryRun: process.argv.includes('--dry-run'),
   force: process.argv.includes('--force'),
   verbose: process.argv.includes('--verbose'),
   companyId: process.argv.find(arg => arg.startsWith('--company-id='))?.split('=')[1],
   maxRetries: 3,
-  timeout: 30000,
+  timeout: 15000, // Shorter timeout for URL validation
   logoSources: [
     { name: 'clearbit', url: 'https://logo.clearbit.com/{domain}', priority: 1 },
-    { name: 'logo-dev', url: 'https://img.logo.dev/{domain}?token=pk_X-HFGGJsQquTbZRUaIPhvw', priority: 2 },
-    { name: 'google-favicon', url: 'https://www.google.com/s2/favicons?domain={domain}&sz=128', priority: 3 }
+    { name: 'google-favicon', url: 'https://www.google.com/s2/favicons?domain={domain}&sz=128', priority: 2 }
   ]
 };
 
 // Initialize database connection
-const databaseUrl = process.env.DATABASE_URL || process.env.NEON_DATABASE_URL;
+const databaseUrl = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL || 
+  "postgresql://neondb_owner:npg_RaSZ09iyfWAm@ep-winter-recipe-aejsi9db-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require";
+
 if (!databaseUrl) {
-  console.error('❌ DATABASE_URL or NEON_DATABASE_URL environment variable is required');
+  console.error('❌ DATABASE_URL or NETLIFY_DATABASE_URL environment variable is required');
   process.exit(1);
 }
 
@@ -81,13 +79,7 @@ function extractDomain(url) {
   }
 }
 
-function getCompanyName(domain) {
-  if (!domain) return 'unknown';
-  const parts = domain.split('.');
-  return parts.length > 1 ? parts[0] : domain;
-}
-
-async function fetchLogoFromUrl(url, timeout = config.timeout) {
+async function validateLogoUrl(url, timeout = config.timeout) {
   return new Promise((resolve, reject) => {
     const startTime = Date.now();
     const urlObj = new URL(url);
@@ -99,7 +91,6 @@ async function fetchLogoFromUrl(url, timeout = config.timeout) {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
       }
     }, (response) => {
-      const chunks = [];
       const loadTime = Date.now() - startTime;
       
       if (response.statusCode !== 200) {
@@ -107,41 +98,26 @@ async function fetchLogoFromUrl(url, timeout = config.timeout) {
         return;
       }
       
-      response.on('data', (chunk) => chunks.push(chunk));
-      response.on('end', () => {
-        const buffer = Buffer.concat(chunks);
-        const contentType = response.headers['content-type'] || 'image/png';
-        
-        // Basic validation - check if it's actually an image
-        if (buffer.length < 100) {
-          reject(new Error('Response too small to be a valid image'));
-          return;
-        }
-        
-        // Check for common image signatures
-        const signature = buffer.toString('hex', 0, 8).toLowerCase();
-        const isValidImage = 
-          signature.startsWith('89504e47') || // PNG
-          signature.startsWith('ffd8ff') ||   // JPEG
-          signature.startsWith('47494638') || // GIF
-          buffer.toString('utf8', 0, 5) === '<?xml' || // SVG
-          signature.startsWith('424d'); // BMP
-        
-        if (!isValidImage) {
-          reject(new Error('Response does not appear to be a valid image'));
-          return;
-        }
-        
-        resolve({
-          data: buffer,
-          contentType: contentType,
-          size: buffer.length,
-          loadTime: loadTime,
-          dimensions: null // Could add image dimension detection here
-        });
+      const contentType = response.headers['content-type'] || 'image/png';
+      const contentLength = parseInt(response.headers['content-length'] || '0');
+      
+      // Basic validation - check if response looks like an image
+      if (contentLength < 100) {
+        reject(new Error('Response too small to be a valid image'));
+        return;
+      }
+      
+      resolve({
+        url: url,
+        contentType: contentType,
+        size: contentLength,
+        loadTime: loadTime,
+        status: response.statusCode
       });
       
-      response.on('error', reject);
+      // Drain the response to prevent memory issues
+      response.on('data', () => {});
+      response.on('end', () => {});
     });
     
     request.on('error', reject);
@@ -152,34 +128,34 @@ async function fetchLogoFromUrl(url, timeout = config.timeout) {
   });
 }
 
-async function fetchLogoForDomain(domain, companyName) {
+async function findBestLogoForDomain(domain, companyName) {
   const results = {
-    bestLogo: null,
+    bestLogoUrl: null,
     sources: [],
     errors: []
   };
   
-  verboseLog(`Fetching logo for ${companyName} (${domain})`);
+  verboseLog(`Finding best logo for ${companyName} (${domain})`);
   
   for (const source of config.logoSources) {
     const sourceUrl = source.url.replace('{domain}', domain);
     const startTime = Date.now();
     
     try {
-      verboseLog(`Trying ${source.name}: ${sourceUrl}`);
-      const logoData = await fetchLogoFromUrl(sourceUrl);
+      verboseLog(`Validating ${source.name}: ${sourceUrl}`);
+      const logoInfo = await validateLogoUrl(sourceUrl);
       const loadTime = Date.now() - startTime;
       
-      // Calculate quality score
-      let qualityScore = source.priority === 1 ? 90 : source.priority === 2 ? 75 : 60;
+      // Calculate quality score based on source priority and response
+      let qualityScore = source.priority === 1 ? 90 : 70;
       
-      // Adjust based on file size (larger usually better quality)
-      if (logoData.size > 10000) qualityScore += 10;
-      else if (logoData.size < 1000) qualityScore -= 20;
+      // Adjust based on file size (larger usually better for logos)
+      if (logoInfo.size > 5000) qualityScore += 10;
+      else if (logoInfo.size < 1000) qualityScore -= 10;
       
       // Adjust based on content type
-      if (logoData.contentType.includes('svg')) qualityScore += 15;
-      else if (logoData.contentType.includes('png')) qualityScore += 5;
+      if (logoInfo.contentType.includes('svg')) qualityScore += 10;
+      else if (logoInfo.contentType.includes('png')) qualityScore += 5;
       
       qualityScore = Math.max(0, Math.min(100, qualityScore));
       
@@ -196,35 +172,33 @@ async function fetchLogoForDomain(domain, companyName) {
       results.sources.push(logoSource);
       
       // If this is the best logo so far, use it
-      if (!results.bestLogo || qualityScore > results.bestLogo.qualityScore) {
-        const fileExtension = logoData.contentType.includes('svg') ? 'svg' :
-                            logoData.contentType.includes('png') ? 'png' :
-                            logoData.contentType.includes('jpeg') || logoData.contentType.includes('jpg') ? 'jpg' :
+      if (!results.bestLogoUrl || qualityScore > results.bestLogoUrl.qualityScore) {
+        const fileExtension = logoInfo.contentType.includes('svg') ? 'svg' :
+                            logoInfo.contentType.includes('png') ? 'png' :
+                            logoInfo.contentType.includes('jpeg') || logoInfo.contentType.includes('jpg') ? 'jpg' :
                             'png';
         
-        results.bestLogo = {
-          logoData: logoData.data.toString('base64'),
-          contentType: logoData.contentType,
+        results.bestLogoUrl = {
+          logoUrl: sourceUrl,
+          contentType: logoInfo.contentType,
           fileExtension: fileExtension,
-          fileSize: logoData.size,
+          fileSize: logoInfo.size,
           qualityScore: qualityScore,
           source: source.name,
-          width: logoData.dimensions?.width || null,
-          height: logoData.dimensions?.height || null,
           isPlaceholder: false,
           domain: domain
         };
       }
       
       // If we found a high-quality logo, we can stop searching
-      if (qualityScore >= 85) {
+      if (qualityScore >= 80) {
         verboseLog(`High-quality logo found from ${source.name}, stopping search`);
         break;
       }
       
     } catch (error) {
       const loadTime = Date.now() - startTime;
-      verboseLog(`Failed to fetch from ${source.name}: ${error.message}`);
+      verboseLog(`Failed to validate ${source.name}: ${error.message}`);
       
       results.sources.push({
         sourceName: source.name,
@@ -243,54 +217,46 @@ async function fetchLogoForDomain(domain, companyName) {
   return results;
 }
 
-async function generatePlaceholderLogo(companyName, domain) {
-  // Generate a simple placeholder logo
+async function generatePlaceholderLogoUrl(companyName, domain) {
+  // Generate a placeholder logo URL that can be computed on the fly
   const initial = companyName.charAt(0).toUpperCase();
   
-  // Create a simple SVG placeholder
-  const svg = `<svg width="128" height="128" xmlns="http://www.w3.org/2000/svg">
-    <rect width="128" height="128" fill="#f3f4f6" rx="8"/>
-    <text x="64" y="80" font-family="Arial, sans-serif" font-size="48" font-weight="bold" 
-          text-anchor="middle" fill="#6b7280">${initial}</text>
-  </svg>`;
-  
   return {
-    logoData: Buffer.from(svg).toString('base64'),
+    logoUrl: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f3f4f6" rx="8"/><text x="50" y="65" font-family="Arial" font-size="40" font-weight="bold" text-anchor="middle" fill="%236b7280">${initial}</text></svg>`,
     contentType: 'image/svg+xml',
     fileExtension: 'svg',
-    fileSize: svg.length,
-    qualityScore: 10,
+    fileSize: 200, // Estimated small size for placeholder
+    qualityScore: 20,
     source: 'generated',
-    width: 128,
-    height: 128,
+    width: 100,
+    height: 100,
     isPlaceholder: true,
     domain: domain
   };
 }
 
-async function saveLogoToDatabase(companyId, logoData, sources) {
+async function saveLogoUrlToDatabase(companyId, logoData, sources) {
   if (config.dryRun) {
-    log(`DRY RUN: Would save logo for company ${companyId}`, 'info');
+    log(`DRY RUN: Would save logo URL for company ${companyId} (${logoData.source}, ${logoData.qualityScore}/100)`, 'info');
     return;
   }
   
   try {
-    // Insert the logo record using direct SQL
+    // Insert the logo record using only URLs (no base64 data)
     const logoInsertResult = await sql`
       INSERT INTO company_logos (
-        company_id, logo_data, logo_url, content_type, file_extension, 
+        company_id, logo_url, content_type, file_extension, 
         file_size, quality_score, source, width, height, 
         is_placeholder, domain
       ) VALUES (
-        ${companyId}, ${logoData.logoData}, ${logoData.logoUrl || null}, 
-        ${logoData.contentType}, ${logoData.fileExtension}, ${logoData.fileSize},
-        ${logoData.qualityScore}, ${logoData.source}, ${logoData.width || null}, 
-        ${logoData.height || null}, ${logoData.isPlaceholder}, ${logoData.domain}
+        ${companyId}, ${logoData.logoUrl}, ${logoData.contentType}, ${logoData.fileExtension}, 
+        ${logoData.fileSize || null}, ${logoData.qualityScore}, ${logoData.source}, 
+        ${logoData.width || 100}, ${logoData.height || 100}, ${logoData.isPlaceholder}, ${logoData.domain}
       ) RETURNING id
     `;
     
     const logoId = logoInsertResult[0].id;
-    verboseLog(`Logo saved with ID: ${logoId}`);
+    verboseLog(`Logo URL saved with ID: ${logoId}`);
     
     // Insert source records
     if (sources.length > 0) {
@@ -301,35 +267,11 @@ async function saveLogoToDatabase(companyId, logoData, sources) {
             load_time_ms, last_tested, is_working, error_message
           ) VALUES (
             ${logoId}, ${source.sourceName}, ${source.sourceUrl}, ${source.quality},
-            ${source.loadTimeMs}, ${source.lastTested}, ${source.isWorking}, ${source.errorMessage}
+            ${source.loadTimeMs || null}, ${source.lastTested}, ${source.isWorking}, ${source.errorMessage}
           )
         `;
       }
       verboseLog(`Saved ${sources.length} logo sources`);
-    }
-    
-    // Update performance tracking (insert only, handle conflicts separately)
-    try {
-      await sql`
-        INSERT INTO logo_performance (
-          company_id, cache_key, fetch_attempts, last_fetch_attempt, 
-          total_requests, successful_requests, success_rate
-        ) VALUES (
-          ${companyId}, ${'logo_' + companyId}, ${sources.length}, NOW(),
-          1, ${logoData.qualityScore > 0 ? 1 : 0}, ${logoData.qualityScore > 0 ? 100 : 0}
-        )
-      `;
-    } catch (conflictError) {
-      // If conflict, update instead
-      await sql`
-        UPDATE logo_performance SET
-          fetch_attempts = ${sources.length},
-          last_fetch_attempt = NOW(),
-          total_requests = total_requests + 1,
-          successful_requests = successful_requests + ${logoData.qualityScore > 0 ? 1 : 0},
-          updated_at = NOW()
-        WHERE company_id = ${companyId}
-      `;
     }
     
     return { id: logoId };
@@ -345,27 +287,27 @@ async function processCompany(company) {
   
   if (!domain) {
     verboseLog(`No domain found for ${company.name}, generating placeholder`);
-    const placeholderLogo = await generatePlaceholderLogo(company.name, null);
-    await saveLogoToDatabase(company.id, placeholderLogo, []);
+    const placeholderLogo = await generatePlaceholderLogoUrl(company.name, null);
+    await saveLogoUrlToDatabase(company.id, placeholderLogo, []);
     return { success: true, type: 'placeholder' };
   }
   
   try {
-    const logoResult = await fetchLogoForDomain(domain, company.name);
+    const logoResult = await findBestLogoForDomain(domain, company.name);
     
-    if (logoResult.bestLogo) {
-      await saveLogoToDatabase(company.id, logoResult.bestLogo, logoResult.sources);
+    if (logoResult.bestLogoUrl) {
+      await saveLogoUrlToDatabase(company.id, logoResult.bestLogoUrl, logoResult.sources);
       return { 
         success: true, 
         type: 'fetched', 
-        quality: logoResult.bestLogo.qualityScore,
-        source: logoResult.bestLogo.source 
+        quality: logoResult.bestLogoUrl.qualityScore,
+        source: logoResult.bestLogoUrl.source 
       };
     } else {
       // No logo found, create placeholder
       verboseLog(`No logo found for ${company.name}, generating placeholder`);
-      const placeholderLogo = await generatePlaceholderLogo(company.name, domain);
-      await saveLogoToDatabase(company.id, placeholderLogo, logoResult.sources);
+      const placeholderLogo = await generatePlaceholderLogoUrl(company.name, domain);
+      await saveLogoUrlToDatabase(company.id, placeholderLogo, logoResult.sources);
       return { success: true, type: 'placeholder' };
     }
     
@@ -376,8 +318,9 @@ async function processCompany(company) {
 }
 
 async function main() {
-  log('🚀 Starting logo database population script');
+  log('🚀 Starting logo URL database population script');
   log(`Configuration: batchSize=${config.batchSize}, delay=${config.delay}ms, dryRun=${config.dryRun}`);
+  log('📊 Storage Strategy: URL-based (avoiding 100MB database limit)');
   
   const stats = {
     total: 0,
@@ -385,8 +328,7 @@ async function main() {
     successful: 0,
     failed: 0,
     placeholder: 0,
-    fetched: 0,
-    skipped: 0
+    fetched: 0
   };
   
   try {
@@ -409,13 +351,14 @@ async function main() {
         ORDER BY c.sales DESC NULLS LAST
       `;
     } else {
-      // Process all companies
+      // Process all companies (force mode)
       companiesList = await sql`
         SELECT id, name, website, industry 
         FROM companies 
         ORDER BY sales DESC NULLS LAST
       `;
     }
+    
     stats.total = companiesList.length;
     
     log(`Found ${stats.total} companies to process`);
@@ -472,17 +415,19 @@ async function main() {
     }
     
     // Final stats
-    log('🎉 Logo population completed!');
+    log('🎉 Logo URL population completed!');
     log(`📊 Final Stats:`);
     log(`   Total companies: ${stats.total}`);
     log(`   Processed: ${stats.processed}`);
     log(`   Successful: ${stats.successful} (${((stats.successful / stats.total) * 100).toFixed(1)}%)`);
     log(`   Failed: ${stats.failed}`);
-    log(`   Logos fetched: ${stats.fetched}`);
+    log(`   Logo URLs saved: ${stats.fetched}`);
     log(`   Placeholders: ${stats.placeholder}`);
     
     if (config.dryRun) {
       log('🔍 DRY RUN MODE - No changes were made to the database');
+    } else {
+      log('💾 All logo URLs stored successfully in database (space-efficient)');
     }
     
   } catch (error) {
@@ -495,11 +440,6 @@ async function main() {
 // Handle graceful shutdown
 process.on('SIGINT', () => {
   log('Received SIGINT, shutting down gracefully...');
-  process.exit(0);
-});
-
-process.on('SIGTERM', () => {
-  log('Received SIGTERM, shutting down gracefully...');
   process.exit(0);
 });
 

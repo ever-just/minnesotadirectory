@@ -1,11 +1,14 @@
 import fs from 'fs';
-import Papa from 'papaparse';
+import { neon } from '@neondatabase/serverless';
 
 const DOMAIN = 'https://minnesotadirectory.com'; // Update with actual domain when available
 const OUTPUT_PATH = 'public/sitemap.xml';
+const DATABASE_URL = process.env.DATABASE_URL || "postgresql://neondb_owner:npg_RaSZ09iyfWAm@ep-winter-recipe-aejsi9db-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require";
+
+const sql = neon(DATABASE_URL);
 
 async function generateSitemap() {
-  console.log('🗺️  Generating sitemap...');
+  console.log('🗺️  Generating sitemap with correct company URLs...');
   const urls = [];
   
   // Static routes
@@ -23,59 +26,103 @@ async function generateSitemap() {
     priority: '0.8'
   });
   
-  // Dynamic company routes
+  // Dynamic company routes - FROM DATABASE with correct URLs
   try {
+    console.log('📊 Fetching companies from database...');
+    const companies = await sql`
+      SELECT name 
+      FROM companies 
+      ORDER BY sales DESC NULLS LAST
+    `;
+    
+    let companyCount = 0;
+    companies.forEach((company) => {
+      if (company.name && company.name.trim() !== '') {
+        // Use actual company name (URL encoded) to match routing
+        const encodedName = encodeURIComponent(company.name);
+        urls.push({
+          loc: `${DOMAIN}/company/${encodedName}`,
+          lastmod: new Date().toISOString().split('T')[0],
+          changefreq: 'monthly',
+          priority: '0.6'
+        });
+        companyCount++;
+      }
+    });
+    
+    console.log(`✅ Added ${companyCount} companies with CORRECT URLs`);
+    
+    // Generate and save XML
+    const xml = generateXML(urls);
+    fs.writeFileSync(OUTPUT_PATH, xml);
+    console.log(`🎉 Sitemap generated successfully with ${urls.length} URLs`);
+    console.log(`📍 Saved to: ${OUTPUT_PATH}`);
+    console.log(`🔧 URLs now match actual routing: /company/:companyName`);
+    
+  } catch (error) {
+    console.error('❌ Database error:', error);
+    console.log('🔄 Falling back to CSV method...');
+    await generateFromCSVFallback();
+  }
+}
+
+// CSV fallback method (with correct URLs)
+async function generateFromCSVFallback() {
+  try {
+    const Papa = await import('papaparse');
     const csvPath = 'public/ForMinnesotacompanies.org $10M + 10+ ppl + MN Only.csv';
     
     if (!fs.existsSync(csvPath)) {
-      console.warn('⚠️  CSV file not found:', csvPath);
-      console.log('📄 Generating sitemap with static routes only...');
-    } else {
-      const csvData = fs.readFileSync(csvPath, 'utf8');
-      
-      Papa.parse(csvData, {
-        header: true,
-        skipEmptyLines: true,
-        complete: (results) => {
-          let companyCount = 0;
-          results.data.forEach((company, index) => {
-            if (company['Company Name'] && company['Company Name'].trim() !== '') {
-              urls.push({
-                loc: `${DOMAIN}/company/${index}`,
-                lastmod: new Date().toISOString().split('T')[0],
-                changefreq: 'monthly',
-                priority: '0.6'
-              });
-              companyCount++;
-            }
-          });
-          
-          console.log(`📊 Added ${companyCount} company pages to sitemap`);
-          
-          // Generate and save XML
-          const xml = generateXML(urls);
-          fs.writeFileSync(OUTPUT_PATH, xml);
-          console.log(`✅ Sitemap generated successfully with ${urls.length} URLs`);
-          console.log(`📍 Saved to: ${OUTPUT_PATH}`);
-        },
-        error: (error) => {
-          console.error('❌ Error parsing CSV:', error);
-          // Generate with just static routes
-          generateStaticSitemap();
-        }
-      });
+      console.warn('⚠️  CSV file not found, generating static routes only');
+      return generateStaticOnly();
     }
+    
+    const csvData = fs.readFileSync(csvPath, 'utf8');
+    const urls = [
+      { loc: `${DOMAIN}/`, lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: '1.0' },
+      { loc: `${DOMAIN}/directory`, lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily', priority: '0.8' }
+    ];
+    
+    Papa.parse(csvData, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (results) => {
+        let companyCount = 0;
+        results.data.forEach((company) => {
+          if (company['Company Name'] && company['Company Name'].trim() !== '') {
+            // Use actual company name (URL encoded) 
+            const encodedName = encodeURIComponent(company['Company Name']);
+            urls.push({
+              loc: `${DOMAIN}/company/${encodedName}`,
+              lastmod: new Date().toISOString().split('T')[0],
+              changefreq: 'monthly',
+              priority: '0.6'
+            });
+            companyCount++;
+          }
+        });
+        
+        console.log(`✅ CSV fallback: Added ${companyCount} companies with CORRECT URLs`);
+        const xml = generateXML(urls);
+        fs.writeFileSync(OUTPUT_PATH, xml);
+        console.log(`🎉 Fallback sitemap generated with ${urls.length} URLs`);
+      }
+    });
   } catch (error) {
-    console.error('❌ Error generating sitemap:', error);
-    // Fallback to static sitemap
-    generateStaticSitemap();
+    console.error('❌ CSV fallback failed:', error);
+    generateStaticOnly();
   }
+}
+
+function generateStaticOnly() {
+  const urls = [
+    { loc: `${DOMAIN}/`, lastmod: new Date().toISOString().split('T')[0], changefreq: 'weekly', priority: '1.0' },
+    { loc: `${DOMAIN}/directory`, lastmod: new Date().toISOString().split('T')[0], changefreq: 'daily', priority: '0.8' }
+  ];
   
-  function generateStaticSitemap() {
-    const xml = generateXML(urls);
-    fs.writeFileSync(OUTPUT_PATH, xml);
-    console.log(`✅ Static sitemap generated with ${urls.length} URLs`);
-  }
+  const xml = generateXML(urls);
+  fs.writeFileSync(OUTPUT_PATH, xml);
+  console.log(`✅ Static-only sitemap generated with ${urls.length} URLs`);
 }
 
 function generateXML(urls) {

@@ -1,15 +1,14 @@
 // Stack Auth Configuration
 export const stackAuthConfig = {
-  publicKey: process.env.STACK_PUBLIC_KEY || '',
-  secretKey: process.env.STACK_SECRET_KEY || '', // Server-side only
-  projectUrl: process.env.STACK_PROJECT_URL || '',
+  projectId: process.env.NEXT_PUBLIC_STACK_PROJECT_ID || '',
+  publishableClientKey: process.env.NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY || '',
+  secretServerKey: process.env.STACK_SECRET_SERVER_KEY || '', // Server-side only
 };
 
 export const isStackAuthConfigured = () => {
-  return !!(stackAuthConfig.publicKey && 
-           stackAuthConfig.projectUrl && 
-           !stackAuthConfig.publicKey.includes('REPLACE_ME') &&
-           !stackAuthConfig.projectUrl.includes('REPLACE_ME'));
+  return !!(stackAuthConfig.projectId && 
+           stackAuthConfig.publishableClientKey && 
+           stackAuthConfig.projectId !== '');
 };
 
 // Validate configuration

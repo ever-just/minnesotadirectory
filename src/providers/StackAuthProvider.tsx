@@ -14,8 +14,8 @@ export function StackAuthProvider({ children }: StackAuthProviderProps) {
 
   // Initialize Stack client app
   const stackApp = new StackClientApp({
-    tokenStore: "nextjs-cookie", 
-    publishableClientKey: stackAuthConfig.publicKey,
+    tokenStore: "memory", 
+    publishableClientKey: stackAuthConfig.publishableClientKey,
   });
 
   return (
