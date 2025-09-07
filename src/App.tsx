@@ -4,8 +4,8 @@ import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
 import VersionDisplay from './components/VersionDisplay';
-// import UserMenu from './components/UserMenu'; // Temporarily disabled due to Stack Auth issues
-// import SavedCompaniesPageOptimized from './components/SavedCompaniesPageOptimized'; // Temporarily disabled
+import UserMenu from './components/UserMenu'; 
+import SavedCompaniesPageOptimized from './components/SavedCompaniesPageOptimized';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
 import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
 import { CompanyService } from './services/companyService';
@@ -567,13 +567,13 @@ function App() {
           />
           <Route 
             path="/saved" 
-            element={<div>Saved Companies (temporarily disabled)</div>} 
+            element={<SavedCompaniesPageOptimized />} 
           />
         </Routes>
       </Router>
-      {/* <UserMenu 
+      <UserMenu 
         onShowProfile={() => setShowUserProfile(true)}
-      /> */}
+      />
       
       {/* User Profile Modal (placeholder for future) */}
       {showUserProfile && (
