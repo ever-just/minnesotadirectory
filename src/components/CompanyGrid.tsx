@@ -1,5 +1,5 @@
 import { Company } from '../lib/types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCallback, useRef } from 'react';
 import CompanyCard from './CompanyCard';
 import SkeletonLoader from './SkeletonLoader';
@@ -14,6 +14,7 @@ interface CompanyGridProps {
 
 const CompanyGrid = ({ companies, loading, showSkeleton = false, onLoadMore, hasMore }: CompanyGridProps) => {
   const observerRef = useRef<IntersectionObserver>();
+  const location = useLocation();
   
   // Debug logging
   console.log(`🔧 CompanyGrid render: loading=${loading}, companies.length=${companies.length}, hasMore=${hasMore}`);
@@ -67,7 +68,11 @@ const CompanyGrid = ({ companies, loading, showSkeleton = false, onLoadMore, has
           return (
             <Link 
               key={`${company.name}-${company.city}-${index}`}
-              to={`/company/${encodeURIComponent(company.name)}`} 
+              to={`/company/${encodeURIComponent(company.name)}`}
+              state={{ 
+                fromPath: location.pathname,
+                scrollY: window.scrollY 
+              }}
               className="company-card-link"
               style={{ textDecoration: 'none', color: 'inherit' }}
               ref={isLast ? lastCompanyRef : null}

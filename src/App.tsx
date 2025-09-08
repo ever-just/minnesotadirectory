@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
@@ -40,6 +40,24 @@ function DirectoryPage({
   handleIndustryChange,
   handleLoadMore 
 }: DirectoryPageProps) {
+  const location = useLocation();
+  
+  // Restore scroll position when returning to directory
+  useEffect(() => {
+    const savedPosition = sessionStorage.getItem(`scroll-${location.pathname}`);
+    if (savedPosition && location.pathname === '/') {
+      const scrollY = parseInt(savedPosition, 10);
+      // Delay restoration to ensure content is loaded
+      const timer = setTimeout(() => {
+        window.scrollTo({
+          top: scrollY,
+          behavior: 'instant'
+        });
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, visibleCompanies.length]); // Also depend on companies being loaded
   return (
     <>
       <div className="hero-section">
@@ -81,7 +99,16 @@ interface DetailPageWrapperProps {
 
 function DetailPageWrapper({ allCompanies }: DetailPageWrapperProps) {
   const { companyName } = useParams<{ companyName: string }>();
+  const location = useLocation();
   const company = allCompanies.find(c => c.name === decodeURIComponent(companyName || ''));
+  
+  // Store scroll position when navigating to company detail
+  useEffect(() => {
+    // Store the current scroll position for the previous page
+    if (location.state?.fromPath) {
+      sessionStorage.setItem(`scroll-${location.state.fromPath}`, location.state.scrollY || '0');
+    }
+  }, [location.state]);
   
   if (!company) {
     return <div className="loading-container">Company not found</div>;
@@ -542,7 +569,7 @@ function App() {
 
   return (
     <div className="app">
-      <Router>
+      <Router future={{ v7_startTransition: true }}>
         <Routes>
           <Route 
             path="/" 
