@@ -68,7 +68,7 @@ const CompanyGrid = ({ companies, loading, showSkeleton = false, onLoadMore, has
           return (
             <Link 
               key={`${company.name}-${company.city}-${index}`}
-              to={`/company/${encodeURIComponent(company.name)}`}
+              to={`/company/${encodeURIComponent(company.name)}`} 
               className="company-card-link"
               style={{ textDecoration: 'none', color: 'inherit' }}
               ref={isLast ? lastCompanyRef : null}

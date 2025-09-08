@@ -23,6 +23,7 @@ export const handler: Handler = async (event) => {
       SELECT id, name, industry, sales, employees, address, city, state, "postalCode", 
              phone, website, description, tradestyle, ticker, ownership,
              "naicsDescription", "sicDescription", "isHeadquarters", "employeesSite",
+             latitude, longitude, "geocodedAt", "geocodingSource", "geocodingAccuracy",
              CASE 
                WHEN website IS NOT NULL AND website != '' THEN
                  REGEXP_REPLACE(
@@ -42,7 +43,13 @@ export const handler: Handler = async (event) => {
       ...company,
       url: company.website,  // Map website → url for frontend compatibility
       employees: company.employees?.toString() || '0',  // Ensure string format
-      sales: company.sales?.toString() || '0'
+      sales: company.sales?.toString() || '0',
+      // Convert coordinate strings to numbers for map usage
+      latitude: company.latitude ? parseFloat(company.latitude) : undefined,
+      longitude: company.longitude ? parseFloat(company.longitude) : undefined,
+      geocodedAt: company.geocodedAt,
+      geocodingSource: company.geocodingSource,
+      geocodingAccuracy: company.geocodingAccuracy
     }));
 
     // Get total count from database

@@ -338,7 +338,13 @@ function App() {
             ownership: company.ownership || '',
             ticker: company.ticker || '',
             employeesSite: company.employeesSite || company.employees_site || '',
-            sicDescription: company.sicDescription || company.sic_description || ''
+            sicDescription: company.sicDescription || company.sic_description || '',
+            // Map coordinates for the new map feature
+            latitude: company.latitude ? Number(company.latitude) : undefined,
+            longitude: company.longitude ? Number(company.longitude) : undefined,
+            geocodedAt: company.geocodedAt,
+            geocodingSource: company.geocodingSource,
+            geocodingAccuracy: company.geocodingAccuracy
           }));
         
         // Sort by sales (preserve revenue ordering)

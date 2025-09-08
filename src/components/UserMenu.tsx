@@ -21,10 +21,10 @@ import './UserProfile.css';
 
 interface UserMenuProps {
   onNavigateToSaved?: () => void;
-  onShowProfile?: () => void;
+  // onShowProfile removed - component handles its own profile modal
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved, onShowProfile }) => {
+const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
@@ -100,10 +100,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved, onShowProfile })
   }, [showDropdown]);
 
   const handleIconClick = () => {
+    console.log('🔍 UserMenu clicked!', { isAuthenticated, showDropdown });
     if (isAuthenticated) {
-      setShowDropdown(!showDropdown);
+      const newDropdownState = !showDropdown;
+      setShowDropdown(newDropdownState);
+      console.log('🔄 Dropdown state changed to:', newDropdownState);
     } else {
       setShowAuthModal(true);
+      console.log('🔐 Showing auth modal for unauthenticated user');
     }
   };
 
@@ -125,9 +129,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved, onShowProfile })
   };
 
     const handleNavigateToSaved = () => {
+      console.log('🔗 Navigating to saved companies...');
       setShowDropdown(false);
-      // Navigate to dedicated saved companies page
-      window.location.href = '/saved';
+      // Use provided callback or fallback to direct navigation
+      if (onNavigateToSaved) {
+        onNavigateToSaved();
+      } else {
+        window.location.href = '/saved';
+      }
     };
 
   const handleShowProfile = () => {

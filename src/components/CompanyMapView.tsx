@@ -35,55 +35,108 @@ const MapBoundsController: React.FC<{ companies: Company[] }> = ({ companies }) 
   useEffect(() => {
     const validCompanies = companies.filter(c => c.latitude && c.longitude);
     
+    console.log(`🗺️ MapBoundsController: ${validCompanies.length} companies with coordinates:`, 
+      validCompanies.map(c => ({ name: c.name, lat: c.latitude, lng: c.longitude }))
+    );
+    
     if (validCompanies.length === 0) return;
     
     if (validCompanies.length === 1) {
       // Single company - center on it
       const company = validCompanies[0];
-      map.setView([company.latitude!, company.longitude!], 12);
-    } else {
-      // Multiple companies - fit bounds
+      console.log(`🎯 Centering map on ${company.name} at [${company.latitude}, ${company.longitude}]`);
+      map.setView([company.latitude!, company.longitude!], 14);
+    } else if (validCompanies.length > 1) {
+      // Multiple companies - fit bounds with Minnesota focus
       const bounds = L.latLngBounds(
         validCompanies.map(c => [c.latitude!, c.longitude!] as [number, number])
       );
-      map.fitBounds(bounds, { padding: [20, 20] });
+      console.log(`🗺️ Fitting bounds for ${validCompanies.length} companies`);
+      map.fitBounds(bounds, { 
+        padding: [40, 40], 
+        maxZoom: 9,   // Default closer zoom for Minnesota
+        minZoom: 8    // Keep focus on Minnesota
+      });
+    } else {
+      // No companies - show Minnesota business centers
+      map.setView([44.9778, -93.2650], 9); // Minneapolis-Saint Paul focus
     }
   }, [map, companies]);
   
   return null;
 };
 
-// Create custom logo marker
+// Create reliable company logo marker
 const createLogoMarker = (company: Company): L.DivIcon => {
+  // Extract domain for logo
+  const domain = company.domain || (company.url ? 
+    company.url.replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '') : 
+    null
+  );
+  
+  // Determine industry color
+  const industryColors = {
+    'Life and Health Insurance': '#10b981', // Green
+    'Department Stores': '#ef4444', // Red  
+    'Grocery Wholesale': '#f59e0b', // Orange
+    'Commercial Banking': '#3b82f6', // Blue
+    'Industrial Manufacturing': '#8b5cf6', // Purple
+    'default': '#6b7280' // Gray
+  };
+  
+  const color = industryColors[company.industry as keyof typeof industryColors] || industryColors.default;
+  
+  // Create marker with immediate logo attempt
   const logoHtml = `
-    <div class="company-map-marker">
-      <div class="marker-logo-container">
-        <div class="marker-logo" data-company-id="${company.id}">
-          <img 
-            src="data:image/svg+xml;base64,${btoa(`
-              <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="16" cy="16" r="15" fill="#3b82f6" stroke="#ffffff" stroke-width="2"/>
-                <text x="16" y="20" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">
-                  ${company.name.charAt(0).toUpperCase()}
-                </text>
-              </svg>
-            `)}" 
-            alt="${company.name}" 
-            style="width: 32px; height: 32px; border-radius: 50%;"
-            onerror="this.style.display='none'"
-          />
-        </div>
+    <div class="company-logo-marker" style="
+      width: 48px; 
+      height: 48px; 
+      background: white;
+      border: 3px solid ${color}; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      overflow: hidden;
+      position: relative;
+      z-index: 1000;
+    ">
+      <img 
+        src="https://logo.clearbit.com/${domain || 'example.com'}" 
+        alt="${company.name}"
+        style="
+          width: 38px; 
+          height: 38px; 
+          border-radius: 50%; 
+          object-fit: cover;
+        "
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+      <div style="
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, ${color}, ${color}aa);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      ">
+        ${company.name.charAt(0).toUpperCase()}
       </div>
-      <div class="marker-pulse"></div>
     </div>
   `;
   
   return L.divIcon({
     html: logoHtml,
-    className: 'custom-company-marker',
-    iconSize: [40, 40],
-    iconAnchor: [20, 35],
-    popupAnchor: [0, -35]
+    className: 'reliable-company-logo-marker',
+    iconSize: [48, 48],
+    iconAnchor: [24, 24],
+    popupAnchor: [0, -24]
   });
 };
 
@@ -184,7 +237,7 @@ export const CompanyMapView: React.FC<CompanyMapViewProps> = ({
   onCompanySelect,
   className
 }) => {
-  const [mapReady, setMapReady] = useState(false);
+  const [mapReady, setMapReady] = useState(true);
   const mapRef = useRef<L.Map | null>(null);
   
   // Filter companies with valid coordinates
@@ -197,11 +250,24 @@ export const CompanyMapView: React.FC<CompanyMapViewProps> = ({
     );
   }, [companies]);
   
-  // Minnesota center coordinates
-  const minnesotaCenter: [number, number] = [46.7296, -94.6859];
-  const defaultZoom = 7;
+  // Minnesota business center coordinates (Minneapolis-Saint Paul metro focus)
+  const minnesotaCenter: [number, number] = [45.0000, -93.2650];
+  const defaultZoom = 8;
   
   console.log(`🗺️ CompanyMapView: ${mappableCompanies.length}/${companies.length} companies with coordinates`);
+  console.log(`📍 Raw coordinate sample:`, companies.slice(0, 3).map(c => ({
+    name: c.name,
+    lat: c.latitude,
+    lng: c.longitude,
+    latType: typeof c.latitude,
+    lngType: typeof c.longitude
+  })));
+  console.log(`📍 Companies with coordinates:`, mappableCompanies.map(c => ({
+    name: c.name,
+    lat: c.latitude,
+    lng: c.longitude,
+    hasCoords: !!(c.latitude && c.longitude)
+  })));
   
   if (loading) {
     return (
@@ -262,36 +328,59 @@ export const CompanyMapView: React.FC<CompanyMapViewProps> = ({
             <>
               <MapBoundsController companies={mappableCompanies} />
               
+              {/* Company Logo Markers with Clustering */}
               <MarkerClusterGroup
                 chunkedLoading
-                maxClusterRadius={50}
+                maxClusterRadius={12}
+                disableClusteringAtZoom={8}
                 spiderfyOnMaxZoom={true}
                 showCoverageOnHover={false}
                 zoomToBoundsOnClick={true}
+                spiderLegPolylineOptions={{
+                  weight: 2,
+                  color: '#3b82f6',
+                  opacity: 0.8
+                }}
               >
-                {mappableCompanies.map((company) => (
-                  <Marker
-                    key={company.id}
-                    position={[company.latitude!, company.longitude!]}
-                    icon={createLogoMarker(company)}
-                    eventHandlers={{
-                      click: () => {
-                        if (onCompanySelect) {
-                          onCompanySelect(company);
+                {mappableCompanies.map((company) => {
+                  console.log(`🚩 Rendering marker for ${company.name} at [${company.latitude}, ${company.longitude}]`);
+                  
+                  // Validate coordinates
+                  const lat = Number(company.latitude);
+                  const lng = Number(company.longitude);
+                  
+                  if (isNaN(lat) || isNaN(lng)) {
+                    console.warn(`❌ Invalid coordinates for ${company.name}: lat=${company.latitude}, lng=${company.longitude}`);
+                    return null;
+                  }
+                  
+                  console.log(`✅ Valid coordinates for ${company.name}: [${lat}, ${lng}]`);
+                  
+                  return (
+                    <Marker
+                      key={company.id}
+                      position={[lat, lng]}
+                      icon={createLogoMarker(company)}
+                      eventHandlers={{
+                        click: () => {
+                          console.log(`🖱️ Marker clicked: ${company.name}`);
+                          if (onCompanySelect) {
+                            onCompanySelect(company);
+                          }
                         }
-                      }
-                    }}
-                  >
-                    <Popup 
-                      maxWidth={400}
-                      closeButton={true}
-                      autoClose={false}
-                      closeOnEscapeKey={true}
+                      }}
                     >
-                      <CompanyMapCard company={company} />
-                    </Popup>
-                  </Marker>
-                ))}
+                      <Popup 
+                        maxWidth={400}
+                        closeButton={true}
+                        autoClose={false}
+                        closeOnEscapeKey={true}
+                      >
+                        <CompanyMapCard company={company} />
+                      </Popup>
+                    </Marker>
+                  );
+                })}
               </MarkerClusterGroup>
             </>
           )}
