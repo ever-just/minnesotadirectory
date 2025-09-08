@@ -30,6 +30,7 @@ class AuthService {
   private token: string | null = null;
   private user: User | null = null;
   private refreshTimeout: NodeJS.Timeout | null = null;
+  private authChangeListeners: Array<(isAuthenticated: boolean, user: User | null) => void> = [];
 
   constructor() {
     this.initializeFromStorage();
@@ -75,6 +76,7 @@ class AuthService {
     }
 
     this.scheduleTokenRefresh(token);
+    this.notifyAuthChange(true, user);
   }
 
   private clearStorage() {
@@ -235,6 +237,33 @@ class AuthService {
         // Ignore logout endpoint errors
       });
     }
+    
+    this.token = null;
+    this.user = null;
+    this.notifyAuthChange(false, null);
+  }
+
+  // Authentication state change listeners
+  onAuthChange(callback: (isAuthenticated: boolean, user: User | null) => void): () => void {
+    this.authChangeListeners.push(callback);
+    
+    // Return unsubscribe function
+    return () => {
+      const index = this.authChangeListeners.indexOf(callback);
+      if (index > -1) {
+        this.authChangeListeners.splice(index, 1);
+      }
+    };
+  }
+
+  private notifyAuthChange(isAuthenticated: boolean, user: User | null): void {
+    this.authChangeListeners.forEach(callback => {
+      try {
+        callback(isAuthenticated, user);
+      } catch (error) {
+        console.error('Error in auth change callback:', error);
+      }
+    });
   }
 
   isAuthenticated(): boolean {

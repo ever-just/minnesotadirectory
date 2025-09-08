@@ -280,7 +280,14 @@ const SavedCompaniesPageOptimized: React.FC = () => {
 
                   <CardFooter className="card-footer-optimized">
                     <div className="actions-optimized">
-                      <Button variant="outline" size="sm" className="action-optimized">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="action-optimized"
+                        onClick={() => {
+                          window.location.href = `/company/${encodeURIComponent(savedCompany.company.name)}`;
+                        }}
+                      >
                         <Eye size={14} />
                         View
                       </Button>

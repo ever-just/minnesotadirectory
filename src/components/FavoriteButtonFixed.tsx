@@ -32,6 +32,18 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({
     if (companyId) {
       setIsSaved(optimizedSavedCompaniesService.isCompanySavedOptimized(companyId));
     }
+
+    // Listen for authentication changes
+    const unsubscribe = authService.onAuthChange((isAuthenticated, user) => {
+      setIsAuthenticated(isAuthenticated);
+      
+      // Update saved status when auth state changes
+      if (companyId) {
+        setIsSaved(optimizedSavedCompaniesService.isCompanySavedOptimized(companyId));
+      }
+    });
+
+    return unsubscribe;
   }, [companyId]);
 
   const handleToggleSave = async (e: React.MouseEvent) => {
