@@ -140,9 +140,41 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
     };
 
   const handleShowProfile = () => {
+    console.log('⚙️ Opening Account Settings...');
     setShowDropdown(false);
     setShowProfile(true);
-    // Only use internal profile modal now - onShowProfile removed
+  };
+
+  const handleActivity = () => {
+    console.log('📊 Opening Activity page...');
+    setShowDropdown(false);
+    // For now, show an alert - can be replaced with actual activity page later
+    alert('Activity page coming soon! This will show your browsing history, saved companies activity, and engagement metrics.');
+  };
+
+  const handleBookmarks = () => {
+    console.log('🔖 Opening Bookmarks...');
+    setShowDropdown(false);
+    // For now, navigate to saved companies (bookmarks are essentially saved companies)
+    if (onNavigateToSaved) {
+      onNavigateToSaved();
+    } else {
+      window.location.href = '/saved';
+    }
+  };
+
+  const handleEmailPreferences = () => {
+    console.log('✉️ Opening Email Preferences...');
+    setShowDropdown(false);
+    // For now, show an alert - can be replaced with email preferences modal later
+    alert('Email Preferences coming soon! This will let you manage email notifications, weekly digests, and marketing preferences.');
+  };
+
+  const handlePrivacySecurity = () => {
+    console.log('🔒 Opening Privacy & Security...');
+    setShowDropdown(false);
+    // For now, show an alert - can be replaced with privacy settings modal later  
+    alert('Privacy & Security settings coming soon! This will include two-factor authentication, password changes, and privacy controls.');
   };
 
   // Show loading state briefly while checking authentication
@@ -197,12 +229,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
               )}
             </button>
             
-            <button onClick={() => {/* TODO: Activity page */}} className="dropdown-item">
+            <button onClick={handleActivity} className="dropdown-item">
               <Activity size={18} />
               <span>Activity</span>
             </button>
             
-            <button onClick={() => {/* TODO: Bookmarks */}} className="dropdown-item">
+            <button onClick={handleBookmarks} className="dropdown-item">
               <Bookmark size={18} />
               <span>Bookmarks</span>
             </button>
@@ -216,12 +248,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
               <span>Account Settings</span>
             </button>
             
-            <button onClick={() => {/* TODO: Email preferences */}} className="dropdown-item">
+            <button onClick={handleEmailPreferences} className="dropdown-item">
               <Mail size={18} />
               <span>Email Preferences</span>
             </button>
             
-            <button onClick={() => {/* TODO: Privacy settings */}} className="dropdown-item">
+            <button onClick={handlePrivacySecurity} className="dropdown-item">
               <Shield size={18} />
               <span>Privacy & Security</span>
             </button>
