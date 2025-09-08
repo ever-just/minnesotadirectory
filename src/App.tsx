@@ -109,11 +109,11 @@ function App() {
   
   // UI State Management for sophisticated features  
   const [showSavedCompanies, setShowSavedCompanies] = useState<boolean>(false);
-  const [showUserProfile, setShowUserProfile] = useState<boolean>(false);
+  // showUserProfile removed - UserMenu now handles its own profile modal
 
   // Handle body scroll lock when modals are open
   useEffect(() => {
-    if (showSavedCompanies || showUserProfile) {
+    if (showSavedCompanies) {
       // Prevent body scrolling when modal is open
       document.body.style.overflow = 'hidden';
       document.body.style.paddingRight = '15px'; // Compensate for scrollbar
@@ -128,7 +128,7 @@ function App() {
       document.body.style.overflow = 'unset';
       document.body.style.paddingRight = '0px';
     };
-  }, [showSavedCompanies, showUserProfile]);
+  }, [showSavedCompanies]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedIndustry, setSelectedIndustry] = useState<string>('');
 
@@ -574,7 +574,6 @@ function App() {
       </Router>
       <UserMenu 
         onNavigateToSaved={() => window.location.href = '/saved'}
-        onShowProfile={() => setShowUserProfile(true)}
       />
       
       {/* Old placeholder modal removed - UserMenu now handles enhanced profile modal */}
