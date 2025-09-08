@@ -1,13 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, useParams, useLocation, ScrollRestoration } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useParams, useLocation } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
+import CompanyMapView from './components/CompanyMapView';
 import VersionDisplay from './components/VersionDisplay';
 import UserMenu from './components/UserMenu'; 
 import SavedCompaniesPageOptimized from './components/SavedCompaniesPageOptimized';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
 import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
+import { Grid3X3, Map, ToggleLeft, ToggleRight } from 'lucide-react';
 // import { CompanyService } from './services/companyService';
 import { FastLoadService } from './services/fastLoadService';
 import './App.css';
@@ -22,13 +24,16 @@ interface DirectoryPageProps {
   loadingMore: boolean;
   showSkeleton: boolean;
   hasMore: boolean;
+  currentSearchTerm: string;
+  currentIndustry: string;
   handleSearch: (query: string) => void;
   handleIndustryChange: (industry: string) => void;
   handleLoadMore: () => void;
 }
 
 function DirectoryPage({ 
-  // filteredCompanies, 
+  allCompanies,
+  filteredCompanies, 
   visibleCompanies,
   industries,
   databaseTotal, 
@@ -36,10 +41,13 @@ function DirectoryPage({
   loadingMore,
   showSkeleton,
   hasMore,
+  currentSearchTerm,
+  currentIndustry,
   handleSearch, 
   handleIndustryChange,
   handleLoadMore 
 }: DirectoryPageProps) {
+  const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
   const location = useLocation();
   
   // React Router's ScrollRestoration handles scroll management automatically
@@ -60,19 +68,51 @@ function DirectoryPage({
             totalCompanies={databaseTotal}
             loading={loading}
           />
+          
+          {/* View Toggle */}
+          <div className="view-toggle-container">
+            <div className="view-toggle">
+              <button 
+                className={`view-toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
+                onClick={() => setViewMode('list')}
+                title="List View"
+              >
+                <Grid3X3 className="w-4 h-4" />
+                <span>List</span>
+              </button>
+              <button 
+                className={`view-toggle-btn ${viewMode === 'map' ? 'active' : ''}`}
+                onClick={() => setViewMode('map')}
+                title="Map View"
+              >
+                <Map className="w-4 h-4" />
+                <span>Map</span>
+              </button>
+            </div>
+          </div>
         </div>
         
         <div className="spacer-bottom"></div>
       </div>
       
       <main className="main-content">
-        <CompanyGrid 
-          companies={visibleCompanies}
-          loading={loadingMore}
-          showSkeleton={showSkeleton}
-          onLoadMore={handleLoadMore}
-          hasMore={hasMore}
-        />
+        {viewMode === 'list' ? (
+          <CompanyGrid 
+            companies={visibleCompanies}
+            loading={loadingMore}
+            showSkeleton={showSkeleton}
+            onLoadMore={handleLoadMore}
+            hasMore={hasMore}
+          />
+        ) : (
+          <CompanyMapView 
+            companies={filteredCompanies}
+            loading={loading}
+            selectedIndustry={currentIndustry || undefined}
+            searchTerm={currentSearchTerm || undefined}
+            className="directory-map-view"
+          />
+        )}
       </main>
     </>
   );
@@ -563,7 +603,9 @@ function App() {
                 loadingMore={loadingMore}
                 showSkeleton={showSkeleton}
                 hasMore={hasMore}
-              handleSearch={handleSearch}
+                currentSearchTerm={searchQuery}
+                currentIndustry={selectedIndustry}
+                handleSearch={handleSearch}
               handleIndustryChange={handleIndustryChange}
               handleLoadMore={loadMoreCompanies}
               />
@@ -578,12 +620,6 @@ function App() {
             element={<SavedCompaniesPageOptimized />} 
           />
         </Routes>
-        <ScrollRestoration 
-          getKey={(location) => {
-            // Create unique keys for different pages to enable proper restoration
-            return location.pathname === '/' ? 'home' : location.pathname;
-          }}
-        />
       </Router>
       <UserMenu 
         onNavigateToSaved={() => window.location.href = '/saved'}

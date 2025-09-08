@@ -1,0 +1,322 @@
+/* CompanyMapView - Interactive Map Styles */
+
+.company-map-container {
+  @apply w-full h-full flex flex-col;
+  min-height: 600px;
+}
+
+.map-header {
+  @apply bg-white border-b border-gray-200 px-6 py-4;
+}
+
+.map-title {
+  @apply text-xl font-semibold text-gray-900 flex items-center gap-2;
+}
+
+.map-count {
+  @apply text-sm font-normal text-gray-500;
+}
+
+.map-filter-info {
+  @apply text-sm text-blue-600 mt-1;
+}
+
+.map-wrapper {
+  @apply flex-1 relative;
+}
+
+.company-leaflet-map {
+  @apply w-full h-full z-0;
+  min-height: 500px;
+}
+
+.map-footer {
+  @apply bg-gray-50 border-t border-gray-200 px-6 py-3;
+}
+
+/* Loading State */
+.company-map-loading {
+  @apply w-full h-full flex items-center justify-center;
+  min-height: 600px;
+}
+
+.map-skeleton {
+  @apply w-full h-full bg-gray-100 rounded-lg relative overflow-hidden;
+}
+
+.loading-overlay {
+  @apply absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-90;
+}
+
+.loading-spinner {
+  @apply w-8 h-8 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-3;
+}
+
+/* Empty State */
+.company-map-empty {
+  @apply w-full h-full flex items-center justify-center;
+  min-height: 600px;
+}
+
+.empty-map-state {
+  @apply text-center p-8;
+}
+
+/* Custom Marker Styles */
+.custom-company-marker {
+  background: none !important;
+  border: none !important;
+}
+
+.company-map-marker {
+  @apply relative flex items-center justify-center;
+  width: 40px;
+  height: 40px;
+}
+
+.marker-logo-container {
+  @apply relative z-10 bg-white rounded-full p-1 shadow-lg border-2 border-blue-500;
+  width: 32px;
+  height: 32px;
+}
+
+.marker-logo {
+  @apply w-full h-full rounded-full overflow-hidden flex items-center justify-center;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.marker-logo img {
+  @apply w-full h-full object-cover rounded-full;
+}
+
+/* Pulse animation for markers */
+.marker-pulse {
+  @apply absolute top-0 left-0 w-full h-full rounded-full bg-blue-400 opacity-20 animate-ping;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+/* Hover effects for markers */
+.company-map-marker:hover .marker-logo-container {
+  @apply border-blue-600 shadow-xl;
+  transform: scale(1.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.company-map-marker:hover .marker-pulse {
+  @apply opacity-30;
+}
+
+/* Cluster styles */
+.marker-cluster-small {
+  @apply bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold text-sm;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.marker-cluster-medium {
+  @apply bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold text-sm;
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.marker-cluster-large {
+  @apply bg-blue-700 text-white rounded-full flex items-center justify-center font-semibold text-base;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Popup Styles */
+.leaflet-popup-content-wrapper {
+  @apply rounded-lg shadow-xl border-0 overflow-hidden;
+  padding: 0;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-popup-content {
+  @apply m-0 p-0;
+}
+
+.company-map-popup {
+  @apply border-0 shadow-none;
+  min-width: 300px;
+  max-width: 400px;
+}
+
+.company-logo-container {
+  @apply w-12 h-12 flex-shrink-0;
+}
+
+.map-popup-logo {
+  @apply w-full h-full rounded-lg;
+}
+
+/* Popup card content */
+.company-map-popup .card-header {
+  @apply bg-gray-50 border-b border-gray-100;
+}
+
+.company-map-popup .card-content {
+  @apply bg-white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .company-map-container {
+    min-height: 400px;
+  }
+  
+  .company-leaflet-map {
+    min-height: 350px;
+  }
+  
+  .map-header {
+    @apply px-4 py-3;
+  }
+  
+  .map-title {
+    @apply text-lg;
+  }
+  
+  .map-footer {
+    @apply px-4 py-2;
+  }
+  
+  .company-map-popup {
+    min-width: 250px;
+    max-width: 280px;
+  }
+  
+  .marker-logo-container {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .company-map-marker {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .map-header {
+    @apply bg-gray-900 border-gray-700;
+  }
+  
+  .map-title {
+    @apply text-gray-100;
+  }
+  
+  .map-count {
+    @apply text-gray-400;
+  }
+  
+  .map-footer {
+    @apply bg-gray-900 border-gray-700;
+  }
+  
+  .map-stats {
+    @apply text-gray-300;
+  }
+  
+  .marker-logo-container {
+    @apply bg-gray-800 border-blue-400;
+  }
+  
+  .company-map-popup {
+    @apply bg-gray-800 text-gray-100;
+  }
+  
+  .company-map-popup .card-header {
+    @apply bg-gray-700 border-gray-600;
+  }
+  
+  .company-map-popup .card-content {
+    @apply bg-gray-800;
+  }
+}
+
+/* Animation for map loading */
+@keyframes map-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.company-leaflet-map {
+  animation: map-fade-in 0.5s ease-in-out;
+}
+
+/* Custom scrollbar for mobile */
+.leaflet-popup-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.leaflet-popup-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.leaflet-popup-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.leaflet-popup-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Fix leaflet controls in dark mode */
+.leaflet-control-zoom a {
+  @apply bg-white border-gray-200 text-gray-700;
+}
+
+.leaflet-control-zoom a:hover {
+  @apply bg-gray-50;
+}
+
+/* Ensure proper z-index stacking */
+.company-map-container .leaflet-control-container {
+  z-index: 1000;
+}
+
+.company-map-container .leaflet-popup-pane {
+  z-index: 1200;
+}
+
+/* Industry-specific marker colors */
+.marker-technology .marker-logo-container {
+  @apply border-purple-500;
+}
+
+.marker-technology .marker-logo {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.marker-healthcare .marker-logo-container {
+  @apply border-green-500;
+}
+
+.marker-healthcare .marker-logo {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.marker-finance .marker-logo-container {
+  @apply border-yellow-500;
+}
+
+.marker-finance .marker-logo {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.marker-manufacturing .marker-logo-container {
+  @apply border-red-500;
+}
+
+.marker-manufacturing .marker-logo {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}

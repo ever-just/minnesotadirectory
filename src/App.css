@@ -1115,6 +1115,93 @@ body {
   }
 }
 
+/* View Toggle Styles */
+.view-toggle-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.view-toggle {
+  display: flex;
+  background: white;
+  border-radius: 12px;
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.view-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  white-space: nowrap;
+}
+
+.view-toggle-btn:hover {
+  color: var(--primary-color);
+  background: #f8fafc;
+}
+
+.view-toggle-btn.active {
+  color: white;
+  background: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.view-toggle-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Map view specific styles */
+.directory-map-view {
+  width: 100%;
+  height: calc(100vh - 200px);
+  min-height: 600px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+/* Responsive view toggle */
+@media (max-width: 768px) {
+  .view-toggle-container {
+    margin-top: 1rem;
+  }
+  
+  .view-toggle-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .view-toggle-btn span {
+    display: none;
+  }
+  
+  .view-toggle-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .directory-map-view {
+    height: calc(100vh - 150px);
+    min-height: 400px;
+    border-radius: 12px;
+  }
+}
+
 /* Smart Chunking & Infinite Scroll Styles */
 .company-grid-container {
   display: flex;
