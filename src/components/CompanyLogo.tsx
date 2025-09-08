@@ -27,7 +27,7 @@ const CompanyLogo = ({
   showQualityIndicator = false,
   enableRetry = true,
   lazy = true,
-  useDatabase = true // Default to database service
+  useDatabase = false // Use external APIs until routing fixed
 }: CompanyLogoProps) => {
   // State management
   const [loadingState, setLoadingState] = useState<LogoLoadingState>({

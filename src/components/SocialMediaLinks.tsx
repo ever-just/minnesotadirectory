@@ -195,6 +195,8 @@ const SocialMediaLinks: React.FC<SocialMediaLinksProps> = ({ company }) => {
                   className="social-icon reddit-logo"
                   style={{ width: '32px', height: '32px' }}
                 />
+              ) : social.platform === 'google-alerts' ? (
+                <Bell className="social-icon" size={32} />
               ) : typeof IconComponent === 'function' ? (
                 <IconComponent className="social-icon" size={32} />
               ) : (

@@ -2,10 +2,7 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 9999; /* Much higher z-index */
-  background: red; /* Temporary debug background */
-  padding: 4px; /* Make it visible */
-  border-radius: 8px;
+  z-index: 1000;
 }
 
 .user-menu-button {

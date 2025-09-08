@@ -47,14 +47,23 @@
 .social-icon {
   color: var(--icon-color);
   transition: color 0.2s ease;
-  /* Enforce consistent sizing for all icons */
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  min-height: 32px !important;
-  max-width: 32px !important;
-  max-height: 32px !important;
+  /* Consistent sizing for all icons */
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
+}
+
+/* SVG icons (like Bell for Google Alerts) need proper rendering */
+.social-icon svg {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+/* Image icons need object-fit */
+.social-icon img {
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   display: block;
 }

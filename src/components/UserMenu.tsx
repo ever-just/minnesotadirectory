@@ -13,9 +13,11 @@ import {
   Shield
 } from 'lucide-react';
 import AuthModal from './AuthModal';
+import UserProfile from './UserProfile';
 import { authService } from '../services/authService';
 import { optimizedSavedCompaniesService } from '../services/optimizedSavedCompaniesService';
 import './UserMenu.css';
+import './UserProfile.css';
 
 interface UserMenuProps {
   onNavigateToSaved?: () => void;
@@ -25,6 +27,7 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved, onShowProfile }) => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<{name: string, email: string} | null>(null);
   const [loading, setLoading] = useState(true);
@@ -129,6 +132,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved, onShowProfile })
 
   const handleShowProfile = () => {
     setShowDropdown(false);
+    setShowProfile(true);
     onShowProfile?.();
   };
 
@@ -156,7 +160,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved, onShowProfile })
             <ChevronDown className="dropdown-arrow" size={16} />
           </>
         ) : (
-          <LogIn className="user-icon" size={24} />
+          <User className="user-icon" size={24} />
         )}
       </button>
       
@@ -228,6 +232,15 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved, onShowProfile })
         <AuthModal 
           onClose={() => setShowAuthModal(false)}
           onLogin={handleLogin}
+        />
+      )}
+      
+      {/* Enhanced User Profile Modal (Neon Auth Integration) */}
+      {showProfile && user && (
+        <UserProfile
+          onClose={() => setShowProfile(false)}
+          userEmail={user.email}
+          userName={user.name}
         />
       )}
     </div>
