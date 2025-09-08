@@ -284,12 +284,12 @@ const SavedCompaniesPageOptimized: React.FC = () => {
                         variant="outline" 
                         size="sm" 
                         className="action-optimized"
-                        onClick={() => {
-                          window.location.href = `/company/${encodeURIComponent(savedCompany.company.name)}`;
-                        }}
+                        asChild
                       >
-                        <Eye size={14} />
-                        View
+                        <Link to={`/company/${encodeURIComponent(savedCompany.company.name)}`}>
+                          <Eye size={14} />
+                          View
+                        </Link>
                       </Button>
                       
                       {savedCompany.company.website && (

@@ -577,27 +577,7 @@ function App() {
         onShowProfile={() => setShowUserProfile(true)}
       />
       
-      {/* User Profile Modal (placeholder for future) */}
-      {showUserProfile && (
-        <div className="modal-overlay" onClick={() => setShowUserProfile(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2>User Profile</h2>
-              <button onClick={() => setShowUserProfile(false)} className="modal-close">×</button>
-            </div>
-            <div className="modal-body">
-              <p>User profile management coming soon!</p>
-              <p>Features will include:</p>
-              <ul>
-                <li>Update name and email</li>
-                <li>Change password</li>
-                <li>Email preferences</li>
-                <li>Account deletion</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Old placeholder modal removed - UserMenu now handles enhanced profile modal */}
       <VersionDisplay />
     </div>
   );

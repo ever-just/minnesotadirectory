@@ -133,7 +133,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved, onShowProfile })
   const handleShowProfile = () => {
     setShowDropdown(false);
     setShowProfile(true);
-    onShowProfile?.();
+    // Only use internal profile modal now - onShowProfile removed
   };
 
   // Show loading state briefly while checking authentication
