@@ -1,4 +1,4 @@
-import { SignUp } from '@stackframe/stack';
+// import { SignUp } from '@stackframe/stack';
 import { isStackAuthConfigured } from '../config/stackAuth';
 
 export function SignUpPage() {

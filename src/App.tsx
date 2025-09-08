@@ -8,7 +8,7 @@ import UserMenu from './components/UserMenu';
 import SavedCompaniesPageOptimized from './components/SavedCompaniesPageOptimized';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
 import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
-import { CompanyService } from './services/companyService';
+// import { CompanyService } from './services/companyService';
 import { FastLoadService } from './services/fastLoadService';
 import './App.css';
 
@@ -28,7 +28,7 @@ interface DirectoryPageProps {
 }
 
 function DirectoryPage({ 
-  filteredCompanies, 
+  // filteredCompanies, 
   visibleCompanies,
   industries,
   databaseTotal, 
@@ -108,7 +108,7 @@ function App() {
   const [hasMore, setHasMore] = useState<boolean>(true); // Track if more companies available
   
   // UI State Management for sophisticated features  
-  const [showSavedCompanies, setShowSavedCompanies] = useState<boolean>(false);
+  const [showSavedCompanies] = useState<boolean>(false);
   // showUserProfile removed - UserMenu now handles its own profile modal
 
   // Handle body scroll lock when modals are open
@@ -163,6 +163,7 @@ function App() {
         };
         
         return {
+          id: company.id || `company-${Date.now()}-${Math.random()}`,
           name: company.name || '',
           address: company.address || '',
           city: company.city || '',

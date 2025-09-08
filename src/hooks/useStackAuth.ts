@@ -1,33 +1,28 @@
-import { useUser, useStackApp } from '@stackframe/stack';
+// import { useUser, useStackApp } from '@stackframe/stack';
 import { isStackAuthConfigured } from '../config/stackAuth';
 
 export function useStackAuth() {
-  const user = useUser();
-  const stackApp = useStackApp();
+  // const user = useUser();
+  // const stackApp = useStackApp();
   
-  const isConfigured = isStackAuthConfigured();
-  const isAuthenticated = isConfigured && !!user;
+  const isConfigured = false; // isStackAuthConfigured();
+  const isAuthenticated = false;
   
   return {
     // User data
-    user: user || null,
+    user: null,
     isAuthenticated,
     isConfigured,
     
     // User properties (safe access)
-    userId: user?.id || null,
-    email: user?.primaryEmail || null,
-    name: user?.displayName || null,
-    profileImageUrl: user?.profileImageUrl || null,
+    userId: null,
+    email: null,
+    name: null,
+    profileImageUrl: null,
     
     // Auth methods
     signOut: () => {
-      if (stackApp) {
-        // Use Stack Auth's recommended signOut method
-        window.location.href = '/auth/sign-out';
-      } else {
-        console.warn('Stack Auth not configured');
-      }
+      console.warn('Stack Auth not configured');
     },
     
     // Status
