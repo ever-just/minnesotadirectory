@@ -9,14 +9,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: {
-    proxy: {
-      '/.netlify/functions': {
-        target: 'http://localhost:8888',
-        changeOrigin: true,
-        secure: false,
-        followRedirects: true
-      }
-    }
-  }
+  // server proxy removed - Netlify dev handles function routing automatically
 })
