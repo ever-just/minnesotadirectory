@@ -28,3 +28,5 @@ COMMENT ON COLUMN companies.description_generated_at IS 'Timestamp when new desc
 COMMENT ON COLUMN companies.description_approved_at IS 'Timestamp when new description was approved for use';
 COMMENT ON COLUMN companies.description_source IS 'Source of information: llm_api, wikipedia, manual, hybrid';
 COMMENT ON COLUMN companies.description_version IS 'Version number for tracking description iterations';
+
+
