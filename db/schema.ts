@@ -20,6 +20,12 @@ export const companies = pgTable('companies', {
     sicDescription: text(),
     isHeadquarters: boolean().default(false),
     employeesSite: varchar({ length: 50 }),
+    // Geographic coordinates for mapping
+    latitude: decimal({ precision: 10, scale: 8 }),
+    longitude: decimal({ precision: 11, scale: 8 }),
+    geocodedAt: timestamp(),
+    geocodingSource: varchar({ length: 50 }),
+    geocodingAccuracy: varchar({ length: 20 }),
     createdAt: timestamp().defaultNow(),
     updatedAt: timestamp().defaultNow()
 });

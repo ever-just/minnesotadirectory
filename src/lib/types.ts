@@ -136,6 +136,13 @@ export interface Company {
   employeesSite?: string;
   sicDescription?: string;
   
+  // Geographic coordinates for mapping
+  latitude?: number;
+  longitude?: number;
+  geocodedAt?: string;
+  geocodingSource?: string;
+  geocodingAccuracy?: string;
+  
   // Advanced Logo Fields
   id: string;  // UUID from database
   domain?: string;

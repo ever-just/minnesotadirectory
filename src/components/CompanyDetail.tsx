@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Company, LogoMetadata } from '../lib/types';
 import { formatSales, formatNumber } from '../lib/utils';
-import { Link, useNavigationType } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CompanyLogo from './CompanyLogo';
@@ -14,15 +14,8 @@ interface CompanyDetailProps {
 }
 
 const CompanyDetail = ({ company }: CompanyDetailProps) => {
-  const navigationType = useNavigationType();
-  
-  // Only scroll to top for fresh visits, not when navigating back
-  useEffect(() => {
-    // Only scroll to top if this is not a back/forward navigation
-    if (navigationType !== 'POP') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [company.name, navigationType]);
+  // Let React Router's ScrollRestoration handle all scroll management
+  // No manual scrollTo calls - this allows proper back button scroll restoration
 
   // Extract clean domain from URL (remove www. and protocol)
   const getCleanDomain = (url: string): string => {
