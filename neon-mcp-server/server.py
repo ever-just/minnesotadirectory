@@ -174,72 +174,74 @@ async def handle_list_tools() -> List[Tool]:
                 "required": ["query"]
             }
         ),
-        Tool(
-            name="get_website_structure",
-            description="Get website structure analysis for a company",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "company_id": {"type": "string", "description": "Company UUID"},
-                    "domain": {"type": "string", "description": "Domain to analyze (optional)"}
-                }
-            }
-        ),
-        Tool(
-            name="queue_sitemap_analysis",
-            description="Queue a company for sitemap analysis",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "company_id": {"type": "string", "description": "Company UUID"},
-                    "priority": {"type": "integer", "description": "Priority (1-10)", "default": 5}
-                },
-                "required": ["company_id"]
-            }
-        ),
+        # Commented out - these tables don't exist in current database
+        # Tool(
+        #     name="get_website_structure",
+        #     description="Get website structure analysis for a company",
+        #     inputSchema={
+        #         "type": "object",
+        #         "properties": {
+        #             "company_id": {"type": "string", "description": "Company UUID"},
+        #             "domain": {"type": "string", "description": "Domain to analyze (optional)"}
+        #         }
+        #     }
+        # ),
+        # Tool(
+        #     name="queue_sitemap_analysis",
+        #     description="Queue a company for sitemap analysis",
+        #     inputSchema={
+        #         "type": "object",
+        #         "properties": {
+        #             "company_id": {"type": "string", "description": "Company UUID"},
+        #             "priority": {"type": "integer", "description": "Priority (1-10)", "default": 5}
+        #         },
+        #         "required": ["company_id"]
+        #     }
+        # ),
         Tool(
             name="get_database_stats",
             description="Get comprehensive database statistics",
             inputSchema={"type": "object", "properties": {}}
         ),
-        Tool(
-            name="get_business_intelligence_summary",
-            description="Get business intelligence summary with careers-first prioritization",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "tier": {"type": "integer", "description": "Filter by BI tier (1=Critical, 2=High Value, etc.)", "minimum": 1, "maximum": 6},
-                    "classification": {"type": "string", "description": "Filter by BI classification (careers, services, products, etc.)"},
-                    "limit": {"type": "integer", "description": "Maximum number of results", "default": 100}
-                }
-            }
-        ),
-        Tool(
-            name="analyze_hiring_activity",
-            description="Analyze company hiring activity and growth indicators (Tier 1 BI)",
-            inputSchema={
-                "type": "object", 
-                "properties": {
-                    "industry": {"type": "string", "description": "Filter by industry"},
-                    "min_career_pages": {"type": "integer", "description": "Minimum number of career pages", "default": 1},
-                    "company_size": {"type": "string", "description": "Filter by company size (small, medium, large)"},
-                    "limit": {"type": "integer", "description": "Maximum number of results", "default": 50}
-                }
-            }
-        ),
-        Tool(
-            name="get_high_value_pages",
-            description="Get high-value business intelligence pages (Tiers 1-2 only)",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "company_domain": {"type": "string", "description": "Filter by specific company domain"},
-                    "page_types": {"type": "array", "items": {"type": "string"}, "description": "Filter by page types (careers, services, products, about, team, news)"},
-                    "tier": {"type": "integer", "description": "BI tier (1=Critical, 2=High Value)", "minimum": 1, "maximum": 2},
-                    "limit": {"type": "integer", "description": "Maximum number of results", "default": 100}
-                }
-            }
-        )
+        # Commented out - these tools rely on website_structures and website_pages tables that don't exist
+        # Tool(
+        #     name="get_business_intelligence_summary",
+        #     description="Get business intelligence summary with careers-first prioritization",
+        #     inputSchema={
+        #         "type": "object",
+        #         "properties": {
+        #             "tier": {"type": "integer", "description": "Filter by BI tier (1=Critical, 2=High Value, etc.)", "minimum": 1, "maximum": 6},
+        #             "classification": {"type": "string", "description": "Filter by BI classification (careers, services, products, etc.)"},
+        #             "limit": {"type": "integer", "description": "Maximum number of results", "default": 100}
+        #         }
+        #     }
+        # ),
+        # Tool(
+        #     name="analyze_hiring_activity",
+        #     description="Analyze company hiring activity and growth indicators (Tier 1 BI)",
+        #     inputSchema={
+        #         "type": "object", 
+        #         "properties": {
+        #             "industry": {"type": "string", "description": "Filter by industry"},
+        #             "min_career_pages": {"type": "integer", "description": "Minimum number of career pages", "default": 1},
+        #             "company_size": {"type": "string", "description": "Filter by company size (small, medium, large)"},
+        #             "limit": {"type": "integer", "description": "Maximum number of results", "default": 50}
+        #         }
+        #     }
+        # ),
+        # Tool(
+        #     name="get_high_value_pages",
+        #     description="Get high-value business intelligence pages (Tiers 1-2 only)",
+        #     inputSchema={
+        #         "type": "object",
+        #         "properties": {
+        #             "company_domain": {"type": "string", "description": "Filter by specific company domain"},
+        #             "page_types": {"type": "array", "items": {"type": "string"}, "description": "Filter by page types (careers, services, products, about, team, news)"},
+        #             "tier": {"type": "integer", "description": "BI tier (1=Critical, 2=High Value)", "minimum": 1, "maximum": 2},
+        #             "limit": {"type": "integer", "description": "Maximum number of results", "default": 100}
+        #         }
+        #     }
+        # )
     ]
 
 @server.call_tool()
@@ -262,18 +264,18 @@ async def handle_call_tool(name: str, arguments: dict) -> Sequence[TextContent]:
             return await delete_company(pool, arguments)
         elif name == "execute_sql_query":
             return await execute_sql_query(pool, arguments)
-        elif name == "get_website_structure":
-            return await get_website_structure(pool, arguments)
-        elif name == "queue_sitemap_analysis":
-            return await queue_sitemap_analysis(pool, arguments)
+        # elif name == "get_website_structure":
+        #     return await get_website_structure(pool, arguments)
+        # elif name == "queue_sitemap_analysis":
+        #     return await queue_sitemap_analysis(pool, arguments)
         elif name == "get_database_stats":
             return await get_database_stats(pool, arguments)
-        elif name == "get_business_intelligence_summary":
-            return await get_business_intelligence_summary(pool, arguments)
-        elif name == "analyze_hiring_activity":
-            return await analyze_hiring_activity(pool, arguments)
-        elif name == "get_high_value_pages":
-            return await get_high_value_pages(pool, arguments)
+        # elif name == "get_business_intelligence_summary":
+        #     return await get_business_intelligence_summary(pool, arguments)
+        # elif name == "analyze_hiring_activity":
+        #     return await analyze_hiring_activity(pool, arguments)
+        # elif name == "get_high_value_pages":
+        #     return await get_high_value_pages(pool, arguments)
         else:
             raise ValueError(f"Unknown tool: {name}")
             
@@ -342,10 +344,10 @@ async def query_companies(pool: asyncpg.Pool, args: dict) -> Sequence[TextConten
     
     query = f"""
         SELECT id, name, industry, sales, employees, city, state, website, description,
-               tradestyle, ticker, ownership, phone, address, "postalCode",
-               "naicsDescription", "sicDescription",
-               "isHeadquarters", "employeesSite",
-               "createdAt", "updatedAt"
+               tradestyle, ticker, ownership, phone, address, postal_code,
+               naics_description, sic_description,
+               is_headquarters, employees_site,
+               created_at, latitude, longitude, geocodedat
         FROM companies 
         {where_clause}
         ORDER BY sales DESC NULLS LAST
@@ -378,10 +380,10 @@ async def get_company_by_id(pool: asyncpg.Pool, args: dict) -> Sequence[TextCont
     
     query = """
         SELECT id, name, industry, sales, employees, city, state, website, description,
-               tradestyle, ticker, ownership, phone, address, "postalCode",
-               "naicsDescription", "sicDescription",
-               "isHeadquarters", "employeesSite",
-               "createdAt", "updatedAt"
+               tradestyle, ticker, ownership, phone, address, postal_code,
+               naics_description, sic_description,
+               is_headquarters, employees_site,
+               created_at, latitude, longitude, geocodedat
         FROM companies 
         WHERE id = $1
     """
@@ -467,8 +469,6 @@ async def update_company(pool: asyncpg.Pool, args: dict) -> Sequence[TextContent
     for field, value in args.items():
         if value is not None:
             param_count += 1
-            if field == 'postal_code':
-                field = 'postalCode'
             set_clauses.append(f"{field} = ${param_count}")
             params.append(value)
     
@@ -606,12 +606,14 @@ async def get_database_stats(pool: asyncpg.Pool, args: dict) -> Sequence[TextCon
         # Get table counts
         companies_count = await conn.fetchval("SELECT COUNT(*) FROM companies")
         industries_count = await conn.fetchval("SELECT COUNT(DISTINCT industry) FROM companies WHERE industry IS NOT NULL")
-        website_structures_count = await conn.fetchval("SELECT COUNT(*) FROM website_structures")
-        website_pages_count = await conn.fetchval("SELECT COUNT(*) FROM website_pages")
-        queue_count = await conn.fetchval("SELECT COUNT(*) FROM analysis_queue")
+        users_count = await conn.fetchval("SELECT COUNT(*) FROM users")
+        saved_companies_count = await conn.fetchval("SELECT COUNT(*) FROM saved_companies")
         
         # Get companies with websites
         companies_with_websites = await conn.fetchval("SELECT COUNT(*) FROM companies WHERE website IS NOT NULL AND website != ''")
+        
+        # Get companies with coordinates
+        companies_with_coords = await conn.fetchval("SELECT COUNT(*) FROM companies WHERE latitude IS NOT NULL AND longitude IS NOT NULL")
         
         # Get top industries
         top_industries = await conn.fetch("""
@@ -633,17 +635,29 @@ async def get_database_stats(pool: asyncpg.Pool, args: dict) -> Sequence[TextCon
             FROM companies 
             WHERE sales IS NOT NULL
         """)
+        
+        # Get employee statistics
+        employee_stats = await conn.fetchrow("""
+            SELECT 
+                AVG(employees) as avg_employees,
+                MIN(employees) as min_employees,
+                MAX(employees) as max_employees,
+                COUNT(employees) as companies_with_employees
+            FROM companies 
+            WHERE employees IS NOT NULL
+        """)
     
     stats = {
         "database_statistics": {
             "companies_total": companies_count,
             "companies_with_websites": companies_with_websites,
+            "companies_with_coordinates": companies_with_coords,
             "unique_industries": industries_count,
-            "website_structures_analyzed": website_structures_count,
-            "website_pages_discovered": website_pages_count,
-            "analysis_queue_items": queue_count,
+            "users_total": users_count,
+            "saved_companies_total": saved_companies_count,
             "top_industries": [dict(row) for row in top_industries],
-            "sales_statistics": dict(sales_stats)
+            "sales_statistics": dict(sales_stats) if sales_stats else {},
+            "employee_statistics": dict(employee_stats) if employee_stats else {}
         },
         "success": True
     }

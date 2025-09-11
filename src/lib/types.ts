@@ -155,6 +155,10 @@ export interface Company {
   // Database Logo Fields
   databaseLogo?: CompanyLogo; // Logo stored in database
   hasLogo?: boolean; // Whether company has a logo in database
+  logo_url?: string; // Direct logo URL from database
+  logo_source?: string; // Source of the logo (clearbit, google, etc)
+  logo_quality?: number; // Quality score of the logo
+  logo_is_placeholder?: boolean; // Whether the logo is a placeholder
 }
 
 export interface IndustryOption {

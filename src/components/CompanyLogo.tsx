@@ -78,6 +78,42 @@ const CompanyLogo = ({
 
   // Fetch logo metadata from service
   const fetchLogoMetadata = useCallback(async () => {
+    // Check if company already has logo_url from database
+    if (company.logo_url) {
+      console.log(`🔧 CompanyLogo: Using database logo for ${company.name}`);
+      const metadata: LogoMetadata = {
+        sources: [{
+          name: company.logo_source || 'database',
+          url: company.logo_url,
+          priority: 100,
+          quality: company.logo_quality || 80,
+          format: company.logo_url.includes('svg') ? 'svg' : 'png',
+          lastTested: new Date().toISOString()
+        }],
+        bestSource: {
+          name: company.logo_source || 'database',
+          url: company.logo_url,
+          priority: 100,
+          quality: company.logo_quality || 80,
+          format: company.logo_url.includes('svg') ? 'svg' : 'png',
+          lastTested: new Date().toISOString()
+        },
+        qualityScore: company.logo_quality || 80,
+        lastUpdated: new Date().toISOString(),
+        cacheExpiry: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        fetchAttempts: 1,
+        errors: []
+      };
+      setLogoMetadata(metadata);
+      setLoadingState({
+        status: 'loaded',
+        currentSource: metadata.bestSource,
+        retryCount: 0
+      });
+      onLoad?.(metadata);
+      return;
+    }
+    
     const domain = company.domain || extractDomain(company.url);
     
     if (!useDatabase && !domain) {
