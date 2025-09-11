@@ -13,3 +13,8 @@ WHERE standardized_address IS NOT NULL;
 
 -- Add comment to document purpose
 COMMENT ON COLUMN companies.standardized_address IS 'Cleaned and standardized version of address field for improved geocoding accuracy. Removes suite numbers, building designations, and standardizes corporate campus names.';
+
+
+
+
+

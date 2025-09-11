@@ -21,9 +21,6 @@
   functions = "netlify/functions"
 
 # Remove problematic plugins completely for local dev
-[[plugins]]
-  package = "neon-buildhooks"
-  disabled = true
 
 [functions]
   external_node_modules = ["@netlify/neon", "bcryptjs", "jsonwebtoken"]

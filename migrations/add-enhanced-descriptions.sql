@@ -30,3 +30,8 @@ COMMENT ON COLUMN companies.description_source IS 'Source of information: llm_ap
 COMMENT ON COLUMN companies.description_version IS 'Version number for tracking description iterations';
 
 
+
+
+
+
+
