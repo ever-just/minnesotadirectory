@@ -9,10 +9,10 @@
   DATABASE_URL = "postgresql://neondb_owner:npg_iof5LtlVy7eY@ep-shiny-breeze-ae06mvuz-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require"
   GOOGLE_PLACES_API_KEY = "AIzaSyDtR2sZLXQ4l-P33jS70r9OEQFStSa3ikA"
   GOOGLE_MAPS_API_KEY = "AIzaSyDtR2sZLXQ4l-P33jS70r9OEQFStSa3ikA"
+  JWT_SECRET = "your-super-secret-jwt-key-change-in-production"
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["@netlify/neon", "bcryptjs", "jsonwebtoken"]
   included_files = ["**"]
 
 [dev]
