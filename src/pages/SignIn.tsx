@@ -1,4 +1,4 @@
-// import { SignIn } from '@stackframe/stack';
+import { SignIn } from '@stackframe/stack';
 import { isStackAuthConfigured } from '../config/stackAuth';
 
 export function SignInPage() {

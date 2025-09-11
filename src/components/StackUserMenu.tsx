@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import { UserButton, AccountSettings } from '@stackframe/stack';
+import { UserButton, AccountSettings } from '@stackframe/stack';
 import useStackAuth from '../hooks/useStackAuth';
 
 export function StackUserMenu() {

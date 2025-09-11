@@ -1,4 +1,4 @@
-// import { StackProvider, StackClientApp } from '@stackframe/stack';
+import { StackProvider, StackClientApp } from '@stackframe/stack';
 import { stackAuthConfig, isStackAuthConfigured } from '../config/stackAuth';
 
 interface StackAuthProviderProps {

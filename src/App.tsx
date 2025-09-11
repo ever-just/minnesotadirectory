@@ -5,8 +5,11 @@ import CompanyGrid from './components/CompanyGrid';
 import CompanyDetail from './components/CompanyDetail';
 import CompanyMapView from './components/CompanyMapView';
 import VersionDisplay from './components/VersionDisplay';
-import UserMenu from './components/UserMenu'; 
+// import UserMenu from './components/UserMenu';
+import { StackUserMenu } from './components/StackUserMenu'; 
 import SavedCompaniesPageOptimized from './components/SavedCompaniesPageOptimized';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
 import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
 import { Grid3X3, Map, ToggleLeft, ToggleRight } from 'lucide-react';
@@ -625,11 +628,11 @@ function App() {
             path="/saved" 
             element={<SavedCompaniesPageOptimized />} 
           />
+          <Route path="/auth/sign-in" element={<SignIn />} />
+          <Route path="/auth/sign-up" element={<SignUp />} />
         </Routes>
       </Router>
-      <UserMenu 
-        onNavigateToSaved={() => window.location.href = '/saved'}
-      />
+      <StackUserMenu />
       
       {/* Old placeholder modal removed - UserMenu now handles enhanced profile modal */}
       <VersionDisplay />

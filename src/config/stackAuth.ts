@@ -1,8 +1,8 @@
 // Stack Auth Configuration
 export const stackAuthConfig = {
-  projectId: process.env.NEXT_PUBLIC_STACK_PROJECT_ID || '',
-  publishableClientKey: process.env.NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY || '',
-  secretServerKey: process.env.STACK_SECRET_SERVER_KEY || '', // Server-side only
+  projectId: import.meta.env.VITE_STACK_PROJECT_ID || '0a08a082-f36e-4983-8e82-f090cad88df1',
+  publishableClientKey: import.meta.env.VITE_STACK_PUBLISHABLE_CLIENT_KEY || 'pck_36egmmz37c6zkkkmd40g96vgzqfpxt20dj321pv9yge7r',
+  secretServerKey: import.meta.env.VITE_STACK_SECRET_SERVER_KEY || '', // Server-side only
 };
 
 export const isStackAuthConfigured = () => {
