@@ -1,7 +1,7 @@
 import type { Handler } from '@netlify/functions';
 import { neon } from '@netlify/neon';
 
-const sql = neon(process.env.NETLIFY_DATABASE_URL!);
+const sql = neon(process.env.NETLIFY_DATABASE_URL || 'postgresql://neondb_owner:npg_iof5LtlVy7eY@ep-shiny-breeze-ae06mvuz-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require');
 
 export const handler: Handler = async (event) => {
   const headers = {
@@ -20,10 +20,11 @@ export const handler: Handler = async (event) => {
     const offset = (pageNum - 1) * limitNum;
 
     const companiesRaw = await sql`
-      SELECT id, name, industry, sales, employees, address, city, state, "postalCode", 
+      SELECT id, name, industry, sales, employees, address, city, state, postal_code as "postalCode", 
              phone, website, description, tradestyle, ticker, ownership,
-             "naicsDescription", "sicDescription", "isHeadquarters", "employeesSite",
-             latitude, longitude, "geocodedAt", "geocodingSource", "geocodingAccuracy",
+             naics_description as "naicsDescription", sic_description as "sicDescription", 
+             is_headquarters as "isHeadquarters", employees_site as "employeesSite",
+             latitude, longitude, geocodedat as "geocodedAt", geocodingsource as "geocodingSource", geocodingaccuracy as "geocodingAccuracy",
              CASE 
                WHEN website IS NOT NULL AND website != '' THEN
                  REGEXP_REPLACE(

@@ -63,10 +63,8 @@ export class CompanyService {
         response = await fetch(url);
         if (!response.ok) throw new Error('Database API failed');
       } catch (databaseError) {
-        console.log('🔄 Real database API failed, trying fallback...');
-        url = `${this.API_BASE}/companies-api-local?${params}`;
-        console.log(`🌐 API Request (Local Mock): ${url}`);
-        response = await fetch(url);
+        console.log('🔄 Real database API failed, no fallback available');
+        throw new Error(`Database API unavailable: ${databaseError.message}`);
       }
       
       if (!response.ok) {
