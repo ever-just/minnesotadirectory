@@ -20,21 +20,24 @@ export const handler: Handler = async (event) => {
     const offset = (pageNum - 1) * limitNum;
 
     const companiesRaw = await sql`
-      SELECT id, name, industry, sales, employees, address, city, state, postal_code as "postalCode", 
-             phone, website, description, tradestyle, ticker, ownership,
-             naics_description as "naicsDescription", sic_description as "sicDescription", 
-             is_headquarters as "isHeadquarters", employees_site as "employeesSite",
-             latitude, longitude, geocodedat as "geocodedAt", geocodingsource as "geocodingSource", geocodingaccuracy as "geocodingAccuracy",
+      SELECT c.id, c.name, c.industry, c.sales, c.employees, c.address, c.city, c.state, c.postal_code as "postalCode", 
+             c.phone, c.website, c.description, c.tradestyle, c.ticker, c.ownership,
+             c.naics_description as "naicsDescription", c.sic_description as "sicDescription", 
+             c.is_headquarters as "isHeadquarters", c.employees_site as "employeesSite",
+             c.latitude, c.longitude, c.geocodedat as "geocodedAt", c.geocodingsource as "geocodingSource", c.geocodingaccuracy as "geocodingAccuracy",
+             cl.logo_url, cl.source as logo_source, cl.quality_score as logo_quality,
+             cl.is_placeholder as logo_is_placeholder,
              CASE 
-               WHEN website IS NOT NULL AND website != '' THEN
+               WHEN c.website IS NOT NULL AND c.website != '' THEN
                  REGEXP_REPLACE(
-                   REGEXP_REPLACE(website, '^https?://(www\.)?', '', 'i'),
+                   REGEXP_REPLACE(c.website, '^https?://(www\.)?', '', 'i'),
                    '/.*$', ''
                  )
                ELSE NULL
              END as domain
-      FROM companies 
-      ORDER BY sales DESC NULLS LAST
+      FROM companies c
+      LEFT JOIN company_logos cl ON c.id = cl.company_id
+      ORDER BY c.sales DESC NULLS LAST
       LIMIT ${limitNum}
       OFFSET ${offset}
     `;
@@ -50,7 +53,13 @@ export const handler: Handler = async (event) => {
       longitude: company.longitude ? parseFloat(company.longitude) : undefined,
       geocodedAt: company.geocodedAt,
       geocodingSource: company.geocodingSource,
-      geocodingAccuracy: company.geocodingAccuracy
+      geocodingAccuracy: company.geocodingAccuracy,
+      // Logo fields from database
+      logo_url: company.logo_url || null,
+      logo_source: company.logo_source || null,
+      logo_quality: company.logo_quality || 0,
+      logo_is_placeholder: company.logo_is_placeholder || false,
+      has_logo: !!company.logo_url
     }));
 
     // Get total count from database
