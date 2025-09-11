@@ -1,6 +1,6 @@
 [build]
-  command = "npm run build && cd netlify/functions && npm install"
-  functions = "netlify/functions"
+  command = "npm run build"
+  functions = "netlify/functions"  
   publish = "dist"
 
 [functions]
