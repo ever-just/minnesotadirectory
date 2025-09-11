@@ -3,32 +3,23 @@
   functions = "netlify/functions"  
   publish = "dist"
 
-[functions]
-  node_bundler = "esbuild"
-  included_files = ["**"]
-
 [build.environment]
   NODE_VERSION = "18"
   NPM_VERSION = "9"
-  # Stack Auth Configuration - Neon Auth Integration
-  NEXT_PUBLIC_STACK_PROJECT_ID = "0a08a082-f36e-4983-8e82-f090cad88df1"
-  NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY = "pck_36egmmz37c6zkkkmd40g96vgzqfpxt20dj321pv9yge7r"
-  STACK_SECRET_SERVER_KEY = "ssk_53fe28h3jyy4bqthg42x2kbd7pwh9s3hzs1gwwve96pk0"
   DATABASE_URL = "postgresql://neondb_owner:npg_iof5LtlVy7eY@ep-shiny-breeze-ae06mvuz-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require"
   GOOGLE_PLACES_API_KEY = "AIzaSyDtR2sZLXQ4l-P33jS70r9OEQFStSa3ikA"
   GOOGLE_MAPS_API_KEY = "AIzaSyDtR2sZLXQ4l-P33jS70r9OEQFStSa3ikA"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["@netlify/neon", "bcryptjs", "jsonwebtoken"]
+  included_files = ["**"]
 
 [dev]
   command = "npm run dev:vite"
   port = 8888
   publish = "dist"
   functions = "netlify/functions"
-
-# Remove problematic plugins completely for local dev
-
-[functions]
-  external_node_modules = ["@netlify/neon", "bcryptjs", "jsonwebtoken"]
-  node_bundler = "esbuild"
 
 # Environment variables (will be injected from Netlify dashboard)
 [context.production.environment]
