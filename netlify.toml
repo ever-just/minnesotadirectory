@@ -3,6 +3,10 @@
   functions = "netlify/functions"
   publish = "dist"
 
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = []
+
 [build.environment]
   NODE_VERSION = "18"
   NPM_VERSION = "9"
