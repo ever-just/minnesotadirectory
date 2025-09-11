@@ -83,7 +83,7 @@ const CompanyLogo = ({
       console.log(`🔧 CompanyLogo: Using database logo for ${company.name}`);
       const metadata: LogoMetadata = {
         sources: [{
-          name: company.logo_source || 'database',
+          name: (company.logo_source as any) || 'database',
           url: company.logo_url,
           priority: 100,
           quality: company.logo_quality || 80,
@@ -91,7 +91,7 @@ const CompanyLogo = ({
           lastTested: new Date().toISOString()
         }],
         bestSource: {
-          name: company.logo_source || 'database',
+          name: (company.logo_source as any) || 'database',
           url: company.logo_url,
           priority: 100,
           quality: company.logo_quality || 80,

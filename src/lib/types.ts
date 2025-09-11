@@ -145,7 +145,7 @@ export interface Company {
   
   // Advanced Logo Fields
   id: string;  // UUID from database
-  domain?: string;
+  domain?: string | null;
   logoMetadata?: LogoMetadata;
   logoStatus?: 'pending' | 'loading' | 'loaded' | 'error' | 'fallback';
   logoLastFetch?: string;

@@ -1,9 +1,10 @@
 import fs from 'fs';
 import { neon } from '@neondatabase/serverless';
+import Papa from 'papaparse';
 
 const DOMAIN = 'https://minnesotadirectory.com'; // Update with actual domain when available
 const OUTPUT_PATH = 'public/sitemap.xml';
-const DATABASE_URL = process.env.DATABASE_URL || "postgresql://neondb_owner:npg_RaSZ09iyfWAm@ep-winter-recipe-aejsi9db-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require";
+const DATABASE_URL = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL || "postgresql://neondb_owner:npg_iof5LtlVy7eY@ep-shiny-breeze-ae06mvuz-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
 
 const sql = neon(DATABASE_URL);
 
