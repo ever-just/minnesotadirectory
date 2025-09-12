@@ -108,3 +108,4 @@ For production on Netlify:
 ✅ User login endpoint working
 ✅ Frontend can communicate with auth backend
 ✅ Authentication flow complete
+

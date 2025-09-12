@@ -3,7 +3,17 @@
  * This replaces the simulator with REAL company-specific sitemap data
  */
 
-import realPagesData from '../data/real-pages-lookup.json';
+// Lazy load the large JSON data to reduce bundle size
+let realPagesData: any = null;
+
+async function loadRealPagesData() {
+  if (!realPagesData) {
+    // Fetch from API endpoint to avoid bundling
+    const response = await fetch('/.netlify/functions/get-real-pages');
+    realPagesData = await response.json();
+  }
+  return realPagesData;
+}
 
 interface RealPage {
   id: string;
@@ -44,8 +54,11 @@ export class RealPagesService {
     console.log(`🎯 Loading REAL pages for ${companyName} (${domain}) from database extract...`);
     
     try {
+      // Load the data dynamically
+      const data = await loadRealPagesData();
+      
       // Look up the domain in our real data
-      const domainData = (realPagesData as any)[domain];
+      const domainData = (data as any)[domain];
       
       if (!domainData || !domainData.pages || domainData.pages.length === 0) {
         console.log(`❌ No real pages found for ${domain} in database`);
@@ -104,24 +117,27 @@ export class RealPagesService {
   /**
    * Check if a domain has real data available
    */
-  static hasRealData(domain: string): boolean {
-    return !!(realPagesData as any)[domain]?.pages?.length;
+  static async hasRealData(domain: string): Promise<boolean> {
+    const data = await loadRealPagesData();
+    return !!(data as any)[domain]?.pages?.length;
   }
   
   /**
    * Get list of all domains with real data
    */
-  static getDomainsWithData(): string[] {
-    return Object.keys(realPagesData);
+  static async getDomainsWithData(): Promise<string[]> {
+    const data = await loadRealPagesData();
+    return Object.keys(data);
   }
   
   /**
    * Get stats about the real data
    */
-  static getDataStats(): { totalDomains: number; totalPages: number; avgPagesPerDomain: number } {
-    const domains = Object.keys(realPagesData);
+  static async getDataStats(): Promise<{ totalDomains: number; totalPages: number; avgPagesPerDomain: number }> {
+    const data = await loadRealPagesData();
+    const domains = Object.keys(data);
     const totalPages = domains.reduce((sum, domain) => {
-      return sum + ((realPagesData as any)[domain]?.pages?.length || 0);
+      return sum + ((data as any)[domain]?.pages?.length || 0);
     }, 0);
     
     return {
