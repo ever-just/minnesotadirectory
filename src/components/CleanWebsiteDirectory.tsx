@@ -96,17 +96,54 @@ const CleanWebsiteDirectory = ({ company, companyUrl, companyName }: CleanWebsit
         
         const cleanPages: CleanPage[] = prioritizedPages
           .filter(page => page.validationStatus !== 'invalid')
-          .map(page => ({
-            id: page.id,
-            url: page.url,
-            title: page.title
-          }));
+          .map(page => {
+            // Handle sitemap.xml entries with better titles
+            if (page.title.toLowerCase() === 'sitemap.xml' && page.url.includes('sitemap.xml')) {
+              // Extract language/region from URL if possible
+              const urlMatch = page.url.match(/\/([a-z]{2}-[a-z]{2})\/sitemap\.xml/i);
+              if (urlMatch) {
+                const locale = urlMatch[1].toUpperCase();
+                return {
+                  id: page.id,
+                  url: page.url,
+                  title: `Sitemap (${locale})`
+                };
+              }
+            }
+            
+            return {
+              id: page.id,
+              url: page.url,
+              title: page.title
+            };
+          })
+          // Filter out duplicate sitemap entries if we have too many
+          .filter((page, index, self) => {
+            // If we have more than 10 sitemaps, only show first 5
+            if (page.title.startsWith('Sitemap') && 
+                self.filter(p => p.title.startsWith('Sitemap')).length > 10) {
+              return self.filter(p => p.title.startsWith('Sitemap')).indexOf(page) < 5;
+            }
+            return true;
+          });
         
-        setAllPages(cleanPages);
-        setPages(cleanPages.slice(0, showingCount));
+        // Check if all pages are sitemaps
+        const allAreSitemaps = cleanPages.every(page => 
+          page.title.toLowerCase().includes('sitemap') || 
+          page.url.toLowerCase().includes('sitemap.xml')
+        );
         
-        console.log(`✅ Loaded ${cleanPages.length} pages for ${companyName} (${mainPages.length} main pages)`);
-        console.log(`🏠 Main pages: ${mainPages.slice(0, 3).map(p => p.title).join(', ')}`);
+        if (allAreSitemaps && cleanPages.length > 0) {
+          // If we only have sitemap entries, show a special message
+          setError(`Only sitemap references found for ${companyName}. Detailed page data not available.`);
+          setPages([]);
+          setAllPages([]);
+        } else {
+          setAllPages(cleanPages);
+          setPages(cleanPages.slice(0, showingCount));
+          console.log(`✅ Loaded ${cleanPages.length} pages for ${companyName} (${mainPages.length} main pages)`);
+          console.log(`🏠 Main pages: ${mainPages.slice(0, 3).map(p => p.title).join(', ')}`);
+        }
       } else {
         setError(`No pages found for ${companyName}`);
       }
