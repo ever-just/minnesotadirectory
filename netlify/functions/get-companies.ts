@@ -1,5 +1,7 @@
 import type { Handler } from '@netlify/functions';
-import { sql } from './utils/database';
+import { neon } from '@netlify/neon';
+
+const sql = neon(process.env.NETLIFY_DATABASE_URL || 'postgresql://neondb_owner:npg_iof5LtlVy7eY@ep-shiny-breeze-ae06mvuz-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require');
 
 export const handler: Handler = async (event) => {
   const headers = {
