@@ -343,6 +343,102 @@ app.post('/.netlify/functions/auth-logout', (req, res) => {
   });
 });
 
+// Profile endpoints (for UserProfile component compatibility)
+app.get('/.netlify/functions/profile-get', async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({
+        success: false,
+        error: 'No token provided'
+      });
+    }
+    
+    const token = authHeader.substring(7);
+    
+    // Verify token
+    const decoded = jwt.verify(token, JWT_SECRET);
+    
+    // Get user from database
+    const users = await sql`
+      SELECT id, email, name, is_email_verified, created_at
+      FROM users 
+      WHERE id = ${decoded.userId}
+    `;
+    
+    const user = users[0];
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+    
+    // Get saved preferences from localStorage simulation
+    // In production, this would come from database
+    const profile = {
+      success: true,
+      profile: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        profileImage: '',
+        preferences: {
+          emailNotifications: true,
+          smsNotifications: false,
+          marketingEmails: false,
+          weeklyDigest: true
+        },
+        security: {
+          twoFactorEnabled: false
+        },
+        createdAt: user.created_at
+      }
+    };
+    
+    res.status(200).json(profile);
+    
+  } catch (error) {
+    console.error('Profile get error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to get profile'
+    });
+  }
+});
+
+app.put('/.netlify/functions/profile-update', async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({
+        success: false,
+        error: 'No token provided'
+      });
+    }
+    
+    const token = authHeader.substring(7);
+    const decoded = jwt.verify(token, JWT_SECRET);
+    
+    // In a real app, update the database
+    // For now, just return success
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully'
+    });
+    
+  } catch (error) {
+    console.error('Profile update error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to update profile'
+    });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Development auth server running on http://localhost:${PORT}`);
