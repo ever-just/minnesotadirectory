@@ -68,3 +68,5 @@ Modified to only query existing tables:
 - Total Companies: 2,762
 - Companies with coordinates: 2,762
 - Companies with websites: 2,655
+
+

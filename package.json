@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "netlify dev",
     "dev:vite": "vite",
-    "build": "npm run generate-sitemap && npx vite build",
+    "build": "npm run generate-sitemap && NODE_OPTIONS='--max-old-space-size=4096' npx vite build",
     "build:skip-tsc": "npm run generate-sitemap && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
