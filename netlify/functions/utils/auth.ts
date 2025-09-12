@@ -1,24 +1,9 @@
 import { Handler } from '@netlify/functions';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { drizzle } from 'drizzle-orm/neon-http';
-import { neon } from '@neondatabase/serverless';
-import { users } from '../../../db/schema';
-import { eq } from 'drizzle-orm';
+import { sql } from './database';
 
-// Initialize database connection
-export const DATABASE_URL = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL || "postgresql://neondb_owner:npg_iof5LtlVy7eY@ep-shiny-breeze-ae06mvuz-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require";
-
-let sql, db;
-try {
-  sql = neon(DATABASE_URL);
-  db = drizzle(sql);
-} catch (error) {
-  console.error('Database initialization error:', error);
-  // Initialize with fallback
-  sql = neon("postgresql://neondb_owner:npg_iof5LtlVy7eY@ep-shiny-breeze-ae06mvuz-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require");
-  db = drizzle(sql);
-}
+// Note: We're using raw SQL queries instead of Drizzle ORM to reduce bundle size
 
 // JWT configuration
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
