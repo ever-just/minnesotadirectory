@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { neon } from '@netlify/neon';
 
-const sql = neon(process.env.NETLIFY_DATABASE_URL || 'postgresql://neondb_owner:npg_iof5LtlVy7eY@ep-shiny-breeze-ae06mvuz-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require');
+const sql = neon(process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL || 'postgresql://neondb_owner:npg_iof5LtlVy7eY@ep-shiny-breeze-ae06mvuz-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require');
 
 // Note: We're using raw SQL queries instead of Drizzle ORM to reduce bundle size
 

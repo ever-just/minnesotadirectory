@@ -16,7 +16,6 @@
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["@neondatabase/serverless", "@netlify/neon", "bcryptjs", "jsonwebtoken"]
   included_files = ["data/**"]
 
 [dev]
