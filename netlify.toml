@@ -10,6 +10,7 @@
   GOOGLE_PLACES_API_KEY = "AIzaSyDtR2sZLXQ4l-P33jS70r9OEQFStSa3ikA"
   GOOGLE_MAPS_API_KEY = "AIzaSyDtR2sZLXQ4l-P33jS70r9OEQFStSa3ikA"
   JWT_SECRET = "your-super-secret-jwt-key-change-in-production"
+  NODE_OPTIONS = "--max-old-space-size=4096"
 
 [functions]
   node_bundler = "esbuild"
