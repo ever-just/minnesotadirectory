@@ -20,7 +20,7 @@ export const handler: Handler = async (event) => {
 
   try {
     // Read the file at runtime to avoid bundling
-    const filePath = path.join(process.cwd(), 'src/data/real-pages-lookup.json');
+    const filePath = path.join(process.cwd(), 'data/real-pages-lookup.json');
     const fileContent = await fs.readFile(filePath, 'utf-8');
     const realPagesData = JSON.parse(fileContent);
     

@@ -109,3 +109,4 @@ For production on Netlify:
 ✅ Frontend can communicate with auth backend
 ✅ Authentication flow complete
 
+

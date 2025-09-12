@@ -33,17 +33,28 @@ export default defineConfig({
             if (id.includes('@fortawesome') || id.includes('leaflet')) {
               return 'ui-vendor';
             }
+            // Split UI components
+            if (id.includes('radix-ui') || id.includes('lucide')) {
+              return 'ui-components';
+            }
             // All other vendor libraries
             return 'vendor';
           }
         },
+        // More aggressive chunk splitting
+        experimentalMinChunkSize: 10_000,
       },
     },
     // Increase chunk size warning limit
     chunkSizeWarningLimit: 1000,
     // Optimize CSS
     cssCodeSplit: true,
-    // Enable minification with esbuild (default)
+    // Enable minification with esbuild (faster than terser)
     minify: 'esbuild',
+    // Reduce memory usage during build
+    sourcemap: false,
+    // Additional optimizations
+    assetsInlineLimit: 4096,
+    reportCompressedSize: false,
   },
 })

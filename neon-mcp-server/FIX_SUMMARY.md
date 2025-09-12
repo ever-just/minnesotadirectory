@@ -69,3 +69,4 @@ Modified to only query existing tables:
 - Companies with coordinates: 2,762
 - Companies with websites: 2,655
 
+
