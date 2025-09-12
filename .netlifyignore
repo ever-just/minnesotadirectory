@@ -1,0 +1,15 @@
+# Ignore non-production functions during build
+netlify/functions/add-coordinate-variance.ts
+netlify/functions/add-map-columns.ts
+netlify/functions/assess-damage.js
+netlify/functions/check-env.ts
+netlify/functions/check-status.js
+netlify/functions/check-status.ts
+netlify/functions/cleanup-duplicates.ts
+netlify/functions/companies-api-local.ts
+netlify/functions/companies-api.ts
+
+# Keep these production functions:
+# auth-*.ts
+# favorites-*.ts
+# get-companies.ts
