@@ -85,7 +85,12 @@ export const isValidPassword = (password: string): { valid: boolean; message?: s
 // Get user by email
 export const getUserByEmail = async (email: string) => {
   try {
-    const result = await db.select().from(users).where(eq(users.email, email.toLowerCase())).limit(1);
+    const result = await sql`
+      SELECT id, name, email, password_hash as "passwordHash", is_email_verified, created_at
+      FROM users 
+      WHERE email = ${email.toLowerCase()} 
+      LIMIT 1
+    `;
     return result[0] || null;
   } catch (error) {
     console.error('Error getting user by email:', error);
@@ -96,7 +101,12 @@ export const getUserByEmail = async (email: string) => {
 // Get user by ID
 export const getUserById = async (userId: string) => {
   try {
-    const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+    const result = await sql`
+      SELECT id, name, email, is_email_verified, created_at
+      FROM users 
+      WHERE id = ${userId} 
+      LIMIT 1
+    `;
     return result[0] || null;
   } catch (error) {
     console.error('Error getting user by ID:', error);
@@ -107,18 +117,11 @@ export const getUserById = async (userId: string) => {
 // Create new user
 export const createUser = async (name: string, email: string, passwordHash: string) => {
   try {
-    const result = await db.insert(users).values({
-      name: name.trim(),
-      email: email.toLowerCase().trim(),
-      passwordHash,
-      isEmailVerified: false,
-    }).returning({
-      id: users.id,
-      name: users.name,
-      email: users.email,
-      isEmailVerified: users.isEmailVerified,
-      createdAt: users.createdAt,
-    });
+    const result = await sql`
+      INSERT INTO users (name, email, password_hash, is_email_verified)
+      VALUES (${name.trim()}, ${email.toLowerCase().trim()}, ${passwordHash}, false)
+      RETURNING id, name, email, is_email_verified, created_at
+    `;
     
     return result[0];
   } catch (error) {
@@ -130,12 +133,11 @@ export const createUser = async (name: string, email: string, passwordHash: stri
 // Update user last login
 export const updateUserLastLogin = async (userId: string) => {
   try {
-    await db.update(users)
-      .set({ 
-        lastLoginAt: new Date(),
-        updatedAt: new Date()
-      })
-      .where(eq(users.id, userId));
+    await sql`
+      UPDATE users 
+      SET last_login_at = NOW(), updated_at = NOW() 
+      WHERE id = ${userId}
+    `;
   } catch (error) {
     console.error('Error updating user last login:', error);
     // Don't throw error for login timestamp update failure
@@ -148,8 +150,8 @@ export const formatUserResponse = (user: any): User => {
     id: user.id,
     email: user.email,
     name: user.name,
-    isEmailVerified: user.isEmailVerified || false,
-    createdAt: user.createdAt || new Date(),
+    isEmailVerified: user.is_email_verified || false,
+    createdAt: user.created_at || new Date(),
   };
 };
 
