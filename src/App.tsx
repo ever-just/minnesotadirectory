@@ -1,12 +1,13 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useParams, useLocation } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
-import CompanyGrid from './components/CompanyGrid';
-import CompanyDetail from './components/CompanyDetail';
-import CompanyMapView from './components/CompanyMapView';
+// Lazy load heavy components to reduce initial bundle size
+const CompanyGrid = React.lazy(() => import('./components/CompanyGrid'));
+const CompanyDetail = React.lazy(() => import('./components/CompanyDetail'));
+const CompanyMapView = React.lazy(() => import('./components/CompanyMapView'));
 import VersionDisplay from './components/VersionDisplay';
 import UserMenu from './components/UserMenu';
-import SavedCompaniesPageOptimized from './components/SavedCompaniesPageOptimized';
+const SavedCompaniesPageOptimized = React.lazy(() => import('./components/SavedCompaniesPageOptimized'));
 import { Company, IndustryOption, IndustryIndex } from './lib/types';
 import { parseCSVData, getUniqueIndustries, buildIndustryIndex, createSmartChunk, validateIndustryCoverage } from './lib/utils';
 import { Grid3X3, Map, ToggleLeft, ToggleRight } from 'lucide-react';
@@ -96,23 +97,25 @@ function DirectoryPage({
       </div>
       
       <main className="main-content">
-        {viewMode === 'list' ? (
-          <CompanyGrid 
-            companies={visibleCompanies}
-            loading={loadingMore}
-            showSkeleton={showSkeleton}
-            onLoadMore={handleLoadMore}
-            hasMore={hasMore}
-          />
-        ) : (
-          <CompanyMapView 
-            companies={filteredCompanies}
-            loading={loading}
-            selectedIndustry={currentIndustry || undefined}
-            searchTerm={currentSearchTerm || undefined}
-            className="directory-map-view"
-          />
-        )}
+        <Suspense fallback={<div className="flex items-center justify-center h-64">Loading...</div>}>
+          {viewMode === 'list' ? (
+            <CompanyGrid 
+              companies={visibleCompanies}
+              loading={loadingMore}
+              showSkeleton={showSkeleton}
+              onLoadMore={handleLoadMore}
+              hasMore={hasMore}
+            />
+          ) : (
+            <CompanyMapView 
+              companies={filteredCompanies}
+              loading={loading}
+              selectedIndustry={currentIndustry || undefined}
+              searchTerm={currentSearchTerm || undefined}
+              className="directory-map-view"
+            />
+          )}
+        </Suspense>
       </main>
     </>
   );
@@ -133,7 +136,11 @@ function DetailPageWrapper({ allCompanies }: DetailPageWrapperProps) {
     return <div className="loading-container">Company not found</div>;
   }
   
-  return <CompanyDetail company={company} />;
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-64">Loading company details...</div>}>
+      <CompanyDetail company={company} />
+    </Suspense>
+  );
 }
 
 function App() {
@@ -623,7 +630,11 @@ function App() {
           />
           <Route 
             path="/saved" 
-            element={<SavedCompaniesPageOptimized />} 
+            element={
+              <Suspense fallback={<div className="flex items-center justify-center h-64">Loading saved companies...</div>}>
+                <SavedCompaniesPageOptimized />
+              </Suspense>
+            } 
           />
         </Routes>
       </Router>

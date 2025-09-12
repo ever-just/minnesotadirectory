@@ -17,5 +17,39 @@ export default defineConfig({
         changeOrigin: true,
       }
     }
-  }
+  },
+  build: {
+    // Optimize bundle size
+    rollupOptions: {
+      output: {
+        // Split vendor chunks for better caching
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // Split React and related libraries
+            if (id.includes('react')) {
+              return 'react-vendor';
+            }
+            // Split large libraries
+            if (id.includes('@fortawesome') || id.includes('leaflet')) {
+              return 'ui-vendor';
+            }
+            // All other vendor libraries
+            return 'vendor';
+          }
+        },
+      },
+    },
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 1000,
+    // Optimize CSS
+    cssCodeSplit: true,
+    // Enable minification
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  },
 })
