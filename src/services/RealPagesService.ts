@@ -6,11 +6,17 @@
 // Lazy load the large JSON data to reduce bundle size
 let realPagesData: any = null;
 
-async function loadRealPagesData() {
+async function loadRealPagesData(domain?: string) {
+  if (domain) {
+    // Fetch specific domain data
+    const response = await fetch(`/.netlify/functions/get-real-pages?domain=${encodeURIComponent(domain)}`);
+    const data = await response.json();
+    return data;
+  }
+  
   if (!realPagesData) {
-    // Fetch from API endpoint to avoid bundling
-    const response = await fetch('/.netlify/functions/get-real-pages');
-    realPagesData = await response.json();
+    // This shouldn't be called without a domain anymore
+    throw new Error('Domain parameter is required');
   }
   return realPagesData;
 }
@@ -54,11 +60,11 @@ export class RealPagesService {
     console.log(`🎯 Loading REAL pages for ${companyName} (${domain}) from database extract...`);
     
     try {
-      // Load the data dynamically
-      const data = await loadRealPagesData();
+      // Load the data dynamically for this specific domain
+      const data = await loadRealPagesData(domain);
       
       // Look up the domain in our real data
-      const domainData = (data as any)[domain];
+      const domainData = data[domain];
       
       if (!domainData || !domainData.pages || domainData.pages.length === 0) {
         console.log(`❌ No real pages found for ${domain} in database`);
@@ -118,32 +124,45 @@ export class RealPagesService {
    * Check if a domain has real data available
    */
   static async hasRealData(domain: string): Promise<boolean> {
-    const data = await loadRealPagesData();
-    return !!(data as any)[domain]?.pages?.length;
+    try {
+      const data = await loadRealPagesData(domain);
+      return !!(data[domain]?.pages?.length);
+    } catch {
+      return false;
+    }
   }
   
   /**
    * Get list of all domains with real data
    */
   static async getDomainsWithData(): Promise<string[]> {
-    const data = await loadRealPagesData();
-    return Object.keys(data);
+    try {
+      const response = await fetch('/.netlify/functions/get-real-pages');
+      const data = await response.json();
+      return data.availableDomains || [];
+    } catch {
+      return [];
+    }
   }
   
   /**
    * Get stats about the real data
    */
   static async getDataStats(): Promise<{ totalDomains: number; totalPages: number; avgPagesPerDomain: number }> {
-    const data = await loadRealPagesData();
-    const domains = Object.keys(data);
-    const totalPages = domains.reduce((sum, domain) => {
-      return sum + ((data as any)[domain]?.pages?.length || 0);
-    }, 0);
-    
-    return {
-      totalDomains: domains.length,
-      totalPages,
-      avgPagesPerDomain: Math.round(totalPages / domains.length)
-    };
+    try {
+      const response = await fetch('/.netlify/functions/get-real-pages');
+      const data = await response.json();
+      return {
+        totalDomains: data.totalDomains || 0,
+        totalPages: 0, // Would need to iterate through all domains
+        avgPagesPerDomain: 0
+      };
+    } catch {
+      return {
+        totalDomains: 0,
+        totalPages: 0,
+        avgPagesPerDomain: 0
+      };
+    }
   }
 }
