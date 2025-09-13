@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { neon } from '@netlify/neon';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 const DATABASE_URL = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL || "postgresql://neondb_owner:npg_RaSZ09iyfWAm@ep-winter-recipe-aejsi9db-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require";
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
@@ -64,13 +64,13 @@ export const handler: Handler = async (event, context) => {
     console.log(`🗑️ FAVORITES: Removing ${companyId} for user ${decoded.userId}`);
 
     // Remove saved company using snake_case column names
-    const result = await sql.query(`
+    const result = await sql`
       DELETE FROM saved_companies 
-      WHERE user_id = $1 AND company_id = $2
-      RETURNING id;
-    `, [decoded.userId, companyId]);
+      WHERE user_id = ${decoded.userId} AND company_id = ${companyId}
+      RETURNING id
+    `;
 
-    const removedCount = result.rows?.length || 0;
+    const removedCount = result?.length || 0;
     console.log(`✅ FAVORITES: Removed ${removedCount} saved company`);
 
     return {

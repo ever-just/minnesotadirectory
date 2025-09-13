@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { drizzle } from 'drizzle-orm/neon-http';
-import { neon } from '@neondatabase/serverless';
+import { neon } from '@netlify/neon';
 
 export const handler: Handler = async (event, context) => {
   try {
