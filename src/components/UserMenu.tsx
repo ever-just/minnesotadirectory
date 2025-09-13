@@ -6,18 +6,15 @@ import {
   Settings, 
   LogOut, 
   ChevronDown, 
-  Activity, 
-  Bookmark,
   UserCircle,
   Mail,
   Shield
 } from 'lucide-react';
 import AuthModal from './AuthModal';
-import UserProfile from './UserProfile';
+import UserSettings from './UserSettings';
 import { authService } from '../services/authService';
 import { optimizedSavedCompaniesService } from '../services/optimizedSavedCompaniesService';
 import './UserMenu.css';
-import './UserProfile.css';
 
 interface UserMenuProps {
   onNavigateToSaved?: () => void;
@@ -27,7 +24,8 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [activeSettingsTab, setActiveSettingsTab] = useState<'profile' | 'email' | 'privacy'>('profile');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<{name: string, email: string} | null>(null);
   const [loading, setLoading] = useState(true);
@@ -140,41 +138,25 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
     };
 
   const handleShowProfile = () => {
-    console.log('⚙️ Opening Account Settings...');
+    console.log('👤 Opening Profile Settings...');
     setShowDropdown(false);
-    setShowProfile(true);
+    setActiveSettingsTab('profile');
+    setShowSettings(true);
   };
 
-  const handleActivity = () => {
-    console.log('📊 Opening Activity page...');
-    setShowDropdown(false);
-    // For now, show an alert - can be replaced with actual activity page later
-    alert('Activity page coming soon! This will show your browsing history, saved companies activity, and engagement metrics.');
-  };
-
-  const handleBookmarks = () => {
-    console.log('🔖 Opening Bookmarks...');
-    setShowDropdown(false);
-    // For now, navigate to saved companies (bookmarks are essentially saved companies)
-    if (onNavigateToSaved) {
-      onNavigateToSaved();
-    } else {
-      window.location.href = '/saved';
-    }
-  };
 
   const handleEmailPreferences = () => {
     console.log('✉️ Opening Email Preferences...');
     setShowDropdown(false);
-    // For now, show an alert - can be replaced with email preferences modal later
-    alert('Email Preferences coming soon! This will let you manage email notifications, weekly digests, and marketing preferences.');
+    setActiveSettingsTab('email');
+    setShowSettings(true);
   };
 
   const handlePrivacySecurity = () => {
     console.log('🔒 Opening Privacy & Security...');
     setShowDropdown(false);
-    // For now, show an alert - can be replaced with privacy settings modal later  
-    alert('Privacy & Security settings coming soon! This will include two-factor authentication, password changes, and privacy controls.');
+    setActiveSettingsTab('privacy');
+    setShowSettings(true);
   };
 
   // Show loading state briefly while checking authentication
@@ -228,16 +210,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
                 <span className="saved-count">{savedCount}</span>
               )}
             </button>
-            
-            <button onClick={handleActivity} className="dropdown-item">
-              <Activity size={18} />
-              <span>Activity</span>
-            </button>
-            
-            <button onClick={handleBookmarks} className="dropdown-item">
-              <Bookmark size={18} />
-              <span>Bookmarks</span>
-            </button>
           </div>
           
           <div className="dropdown-divider" />
@@ -245,7 +217,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
           <div className="dropdown-section">
             <button onClick={handleShowProfile} className="dropdown-item">
               <Settings size={18} />
-              <span>Account Settings</span>
+              <span>Profile</span>
             </button>
             
             <button onClick={handleEmailPreferences} className="dropdown-item">
@@ -276,10 +248,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
         />
       )}
       
-      {/* Enhanced User Profile Modal (Neon Auth Integration) */}
-      {showProfile && user && (
-        <UserProfile
-          onClose={() => setShowProfile(false)}
+      {/* User Settings Modal */}
+      {showSettings && user && (
+        <UserSettings
+          onClose={() => setShowSettings(false)}
           userEmail={user.email}
           userName={user.name}
         />
