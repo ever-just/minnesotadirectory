@@ -55,7 +55,7 @@
         "Create detailed PR description",
         "Self-review changes"
       ],
-      "status": "pending",
+      "status": "completed",
       "retries": 1
     }
   ],
