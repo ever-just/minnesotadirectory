@@ -1,0 +1,83 @@
+{
+  "summary": {
+    "total": "35",
+    "good_length": "35",
+    "high_quality": "35",
+    "has_errors": "0",
+    "avg_score": "87.2285714285714286"
+  },
+  "issues": [],
+  "samples": [
+    {
+      "name": "nVent Electric PLC",
+      "agent_description": "nVent Electric PLC is a large enterprise specializing in Motor Vehicle Repair And Maintenance in St Louis Park, Minnesota. They provide comprehensive solutions in motor vehicle repair and maintenance. With 1,000+ employees, the company has established a strong market presence. The company generates $3.0B in annual revenue. Operating in a specialized market with 1 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Motor Vehicle Repair and Maintenance",
+      "employees": 12100
+    },
+    {
+      "name": "Best Buy Co., Inc.",
+      "agent_description": "Best Buy Co., Inc. is a large enterprise specializing in Electronics And Appliances Stores in Richfield, Minnesota. They provide comprehensive solutions in electronics and appliances stores. With 1,000+ employees, the company has established a strong market presence. The company generates $41.5B in annual revenue. Operating in a specialized market with 4 similar businesses in Minnesota.",
+      "description_quality_score": 88,
+      "industry": "Electronics and Appliances Stores",
+      "employees": 85000
+    },
+    {
+      "name": "Carlson Holdings, Inc.",
+      "agent_description": "Carlson Holdings, Inc. is a large enterprise specializing in Travel And Reservation Services in Minnetonka, Minnesota. They provide comprehensive solutions in travel and reservation services. With 1,000+ employees, the company has established a strong market presence. The company generates $456M in annual revenue. Operating in a specialized market with 1 similar businesses in Minnesota.",
+      "description_quality_score": 88,
+      "industry": "Travel and Reservation Services",
+      "employees": 191838
+    },
+    {
+      "name": "APi Group Corporation",
+      "agent_description": "APi Group Corporation is a large enterprise specializing in Building And Dwelling Services in New Brighton, Minnesota. They provide comprehensive solutions in building and dwelling services. With 1,000+ employees, the company has established a strong market presence. The company generates $7.0B in annual revenue. Operating in a specialized market with 6 similar businesses in Minnesota.",
+      "description_quality_score": 88,
+      "industry": "Building and Dwelling Services",
+      "employees": 29000
+    },
+    {
+      "name": "Goodwill Industries, Inc.",
+      "agent_description": "Goodwill Industries, Inc. is a large enterprise specializing in Social And Rehabilitation Services in Saint Paul, Minnesota. They provide comprehensive solutions in social and rehabilitation services. With 1,000+ employees, the company has established a strong market presence. The company generates $64.1M in annual revenue. Operating in a competitive market with 85 similar businesses in Minnesota.",
+      "description_quality_score": 88,
+      "industry": "Social and Rehabilitation Services",
+      "employees": 22000
+    },
+    {
+      "name": "Office of The Board of Regents",
+      "agent_description": "Office of The Board of Regents is a large enterprise specializing in Colleges And Universities in Minneapolis, Minnesota. They provide comprehensive solutions in colleges and universities. With 1,000+ employees, the company has established a strong market presence. The company generates $3.1B in annual revenue. Operating in a specialized market with 29 similar businesses in Minnesota.",
+      "description_quality_score": 88,
+      "industry": "Colleges and Universities",
+      "employees": 25988
+    },
+    {
+      "name": "Life Time Group Holdings, Inc.",
+      "agent_description": "Life Time Group Holdings, Inc. is a large enterprise specializing in Miscellaneous Amusement And Recreation in Chanhassen, Minnesota. They provide comprehensive solutions in miscellaneous amusement and recreation. With 1,000+ employees, the company has established a strong market presence. The company generates $2.6B in annual revenue. Operating in a specialized market with 9 similar businesses in Minnesota.",
+      "description_quality_score": 88,
+      "industry": "Miscellaneous Amusement and Recreation",
+      "employees": 42000
+    },
+    {
+      "name": "UnitedHealth Group Incorporated",
+      "agent_description": "UnitedHealth Group Incorporated is a large enterprise specializing in Life And Health Insurance in Eden Prairie, Minnesota. They provide comprehensive solutions in life and health insurance. With 1,000+ employees, the company has established a strong market presence. The company generates $400.3B in annual revenue. Operating in a specialized market with 15 similar businesses in Minnesota.",
+      "description_quality_score": 88,
+      "industry": "Life and Health Insurance",
+      "employees": 400000
+    },
+    {
+      "name": "State of Minnesota",
+      "agent_description": "State of Minnesota is a large enterprise specializing in Executive And Legislature in Saint Paul, Minnesota. They provide comprehensive solutions in executive and legislature. With 1,000+ employees, the company has established a strong market presence. The company generates $58.5B in annual revenue. Operating in a competitive market with 188 similar businesses in Minnesota.",
+      "description_quality_score": 88,
+      "industry": "Executive and Legislature",
+      "employees": 35217
+    },
+    {
+      "name": "C.H. Robinson Worldwide, Inc.",
+      "agent_description": "C.H. Robinson Worldwide, Inc. is a large enterprise specializing in Road Transportation Services in Eden Prairie, Minnesota. They provide comprehensive solutions in road transportation services. With 1,000+ employees, the company has established a strong market presence. The company generates $17.7B in annual revenue. Operating in a specialized market with 14 similar businesses in Minnesota.",
+      "description_quality_score": 88,
+      "industry": "Road Transportation Services",
+      "employees": 11565
+    }
+  ],
+  "timestamp": "2025-09-13T03:42:30.339Z"
+}

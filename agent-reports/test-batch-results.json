@@ -1,0 +1,66 @@
+{
+  "results": [
+    {
+      "success": true,
+      "company": "Target Corporation",
+      "description": "Target Corporation is a large enterprise specializing in Department Stores in Minneapolis, Minnesota. They provide comprehensive solutions in department stores. With 1,000+ employees, the company has established a strong market presence. The company generates $106.6B in annual revenue. Operating in a specialized market with 1 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    },
+    {
+      "success": true,
+      "company": "UnitedHealth Group Incorporated",
+      "description": "UnitedHealth Group Incorporated is a large enterprise specializing in Life And Health Insurance in Eden Prairie, Minnesota. They provide comprehensive solutions in life and health insurance. With 1,000+ employees, the company has established a strong market presence. The company generates $400.3B in annual revenue. Operating in a specialized market with 15 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    },
+    {
+      "success": true,
+      "company": "Carlson Holdings, Inc.",
+      "description": "Carlson Holdings, Inc. is a large enterprise specializing in Travel And Reservation Services in Minnetonka, Minnesota. They provide comprehensive solutions in travel and reservation services. With 1,000+ employees, the company has established a strong market presence. The company generates $456M in annual revenue. Operating in a specialized market with 1 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    },
+    {
+      "success": true,
+      "company": "Cargill, Incorporated",
+      "description": "Cargill, Incorporated is a large enterprise specializing in Grocery Wholesale in Wayzata, Minnesota. They provide comprehensive solutions in grocery wholesale. With 1,000+ employees, the company has established a strong market presence. The company generates $159.6B in annual revenue. Operating in a specialized market with 38 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    },
+    {
+      "success": true,
+      "company": "Best Buy Co., Inc.",
+      "description": "Best Buy Co., Inc. is a large enterprise specializing in Electronics And Appliances Stores in Richfield, Minnesota. They provide comprehensive solutions in electronics and appliances stores. With 1,000+ employees, the company has established a strong market presence. The company generates $41.5B in annual revenue. Operating in a specialized market with 4 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    },
+    {
+      "success": true,
+      "company": "Mayo Clinic",
+      "description": "Mayo Clinic is a large enterprise specializing in Physicians And Health Practitioners in Rochester, Minnesota. They provide comprehensive solutions in physicians and health practitioners. With 1,000+ employees, the company has established a strong market presence. The company generates $16.3B in annual revenue. Operating in a specialized market with 35 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    },
+    {
+      "success": true,
+      "company": "U.S. Bancorp",
+      "description": "U.S. Bancorp is a large enterprise specializing in Banking in Minneapolis, Minnesota. They provide comprehensive solutions in banking. With 1,000+ employees, the company has established a strong market presence. The company generates $42.7B in annual revenue. Operating in a competitive market with 91 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    },
+    {
+      "success": true,
+      "company": "3M Company",
+      "description": "3M Company is a large enterprise specializing in Medical Equipment And Supplies in Saint Paul, Minnesota. They provide comprehensive solutions in medical equipment and supplies. With 1,000+ employees, the company has established a strong market presence. The company generates $32.7B in annual revenue. Operating in a specialized market with 16 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    },
+    {
+      "success": true,
+      "company": "Ecolab Inc.",
+      "description": "Ecolab Inc. is a large enterprise specializing in Miscellaneous Chemical Manufacturing in Saint Paul, Minnesota. They provide comprehensive solutions in miscellaneous chemical manufacturing. With 1,000+ employees, the company has established a strong market presence. The company generates $15.7B in annual revenue. Operating in a specialized market with 15 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    },
+    {
+      "success": true,
+      "company": "Life Time Group Holdings, Inc.",
+      "description": "Life Time Group Holdings, Inc. is a large enterprise specializing in Miscellaneous Amusement And Recreation in Chanhassen, Minnesota. They provide comprehensive solutions in miscellaneous amusement and recreation. With 1,000+ employees, the company has established a strong market presence. The company generates $2.6B in annual revenue. Operating in a specialized market with 9 similar businesses in Minnesota.",
+      "strategy": "enhanced_data_driven"
+    }
+  ],
+  "successRate": 1,
+  "timestamp": "2025-09-13T03:42:25.950Z"
+}

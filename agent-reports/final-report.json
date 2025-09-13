@@ -1,0 +1,18 @@
+{
+  "summary": {
+    "total_companies": "35",
+    "processed": "35",
+    "avg_quality": "87.2285714285714286",
+    "min_length": 334,
+    "max_length": 411,
+    "avg_length": "375.4571428571428571",
+    "excellent": "0",
+    "good": "35",
+    "needs_improvement": "0"
+  },
+  "processingTime": 6787,
+  "tasksCompleted": 2,
+  "totalTasks": 5,
+  "successRate": "100.0",
+  "timestamp": "2025-09-13T03:42:30.392Z"
+}

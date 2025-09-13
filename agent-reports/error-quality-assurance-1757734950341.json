@@ -1,0 +1,6 @@
+{
+  "task": "Quality Validation",
+  "error": "results.avg_score.toFixed is not a function",
+  "stack": "TypeError: results.avg_score.toFixed is not a function\n    at AutonomousProcessor.executeQualityAssurance (file:///workspace/scripts/autonomous-agent-processor.js:609:80)\n    at async AutonomousProcessor.executeAllTasks (file:///workspace/scripts/autonomous-agent-processor.js:65:25)\n    at async main (file:///workspace/scripts/autonomous-agent-processor.js:921:5)",
+  "timestamp": "2025-09-13T03:42:30.341Z"
+}
