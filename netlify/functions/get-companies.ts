@@ -21,12 +21,18 @@ export const handler: Handler = async (event) => {
 
     const companiesRaw = await sql`
       SELECT c.id, c.name, c.industry, c.sales, c.employees, c.address, c.city, c.state, c.postal_code as "postalCode", 
-             c.phone, c.website, c.description, c.tradestyle, c.ticker, c.ownership,
+             c.phone, c.website, 
+             COALESCE(c.agent_description, c.description) as description,
+             c.tradestyle, c.ticker, c.ownership,
              c.naics_description as "naicsDescription", c.sic_description as "sicDescription", 
              c.is_headquarters as "isHeadquarters", c.employees_site as "employeesSite",
              c.latitude, c.longitude, c.geocodedat as "geocodedAt", c.geocodingsource as "geocodingSource", c.geocodingaccuracy as "geocodingAccuracy",
              cl.logo_url, cl.source as logo_source, cl.quality_score as logo_quality,
              cl.is_placeholder as logo_is_placeholder,
+             c.wikipedia_title as "wikipediaTitle", c.wikipedia_url as "wikipediaUrl", 
+             c.wikipedia_summary as "wikipediaSummary", c.wikipedia_description as "wikipediaDescription",
+             c.wikipedia_metrics as "wikipediaMetrics", c.wikipedia_last_updated as "wikipediaLastUpdated",
+             c.wikipedia_status as "wikipediaStatus",
              CASE 
                WHEN c.website IS NOT NULL AND c.website != '' THEN
                  REGEXP_REPLACE(
