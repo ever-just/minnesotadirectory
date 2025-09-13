@@ -1,83 +1,83 @@
 {
   "summary": {
-    "total": "35",
-    "good_length": "35",
-    "high_quality": "35",
+    "total": "2010",
+    "good_length": "2010",
+    "high_quality": "2010",
     "has_errors": "0",
-    "avg_score": "87.2285714285714286"
+    "avg_score": "87.3422885572139303"
   },
   "issues": [],
   "samples": [
     {
-      "name": "nVent Electric PLC",
-      "agent_description": "nVent Electric PLC is a large enterprise specializing in Motor Vehicle Repair And Maintenance in St Louis Park, Minnesota. They provide comprehensive solutions in motor vehicle repair and maintenance. With 1,000+ employees, the company has established a strong market presence. The company generates $3.0B in annual revenue. Operating in a specialized market with 1 similar businesses in Minnesota.",
+      "name": "Gerten Greenhouses & Garden Center, Inc.",
+      "agent_description": "Gerten Greenhouses & Garden Center, Inc. is a mid-size company specializing in Home And Garden Retail in Inver Grove Heights, Minnesota. They provide comprehensive solutions in home and garden retail. With 450+ employees, the company has established a strong market presence. The company generates $45.4M in annual revenue. Operating in a specialized market with 14 similar businesses in Minnesota.",
       "description_quality_score": 89,
-      "industry": "Motor Vehicle Repair and Maintenance",
-      "employees": 12100
+      "industry": "Home and Garden Retail",
+      "employees": 450
     },
     {
-      "name": "Best Buy Co., Inc.",
-      "agent_description": "Best Buy Co., Inc. is a large enterprise specializing in Electronics And Appliances Stores in Richfield, Minnesota. They provide comprehensive solutions in electronics and appliances stores. With 1,000+ employees, the company has established a strong market presence. The company generates $41.5B in annual revenue. Operating in a specialized market with 4 similar businesses in Minnesota.",
-      "description_quality_score": 88,
-      "industry": "Electronics and Appliances Stores",
-      "employees": 85000
+      "name": "Washington County IND School DIST 831",
+      "agent_description": "Washington County IND School DIST 831 is a large enterprise specializing in Primary And Secondary Education in Forest Lake, Minnesota. They provide comprehensive solutions in primary and secondary education. With 1,000+ employees, the company has established a strong market presence. The company generates $106M in annual revenue. Operating in a competitive market with 308 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Primary and Secondary Education",
+      "employees": 1100
     },
     {
-      "name": "Carlson Holdings, Inc.",
-      "agent_description": "Carlson Holdings, Inc. is a large enterprise specializing in Travel And Reservation Services in Minnetonka, Minnesota. They provide comprehensive solutions in travel and reservation services. With 1,000+ employees, the company has established a strong market presence. The company generates $456M in annual revenue. Operating in a specialized market with 1 similar businesses in Minnesota.",
-      "description_quality_score": 88,
-      "industry": "Travel and Reservation Services",
-      "employees": 191838
+      "name": "ST. PETER PUBLIC SCHOOL DISTRICT",
+      "agent_description": "ST. PETER PUBLIC SCHOOL DISTRICT is a large enterprise specializing in Primary And Secondary Education in Saint Peter, Minnesota. They provide comprehensive solutions in primary and secondary education. With 1,000+ employees, the company has established a strong market presence. The company generates $38.3M in annual revenue. Operating in a competitive market with 308 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Primary and Secondary Education",
+      "employees": 1959
     },
     {
-      "name": "APi Group Corporation",
-      "agent_description": "APi Group Corporation is a large enterprise specializing in Building And Dwelling Services in New Brighton, Minnesota. They provide comprehensive solutions in building and dwelling services. With 1,000+ employees, the company has established a strong market presence. The company generates $7.0B in annual revenue. Operating in a specialized market with 6 similar businesses in Minnesota.",
-      "description_quality_score": 88,
-      "industry": "Building and Dwelling Services",
-      "employees": 29000
+      "name": "Special School District No 6",
+      "agent_description": "Special School District No 6 is a mid-size company specializing in Primary And Secondary Education in South Saint Paul, Minnesota. They provide comprehensive solutions in primary and secondary education. With 500+ employees, the company has established a strong market presence. The company generates $55.0M in annual revenue. Operating in a competitive market with 308 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Primary and Secondary Education",
+      "employees": 500
     },
     {
-      "name": "Goodwill Industries, Inc.",
-      "agent_description": "Goodwill Industries, Inc. is a large enterprise specializing in Social And Rehabilitation Services in Saint Paul, Minnesota. They provide comprehensive solutions in social and rehabilitation services. With 1,000+ employees, the company has established a strong market presence. The company generates $64.1M in annual revenue. Operating in a competitive market with 85 similar businesses in Minnesota.",
-      "description_quality_score": 88,
-      "industry": "Social and Rehabilitation Services",
-      "employees": 22000
+      "name": "Equus Computer Systems, Inc.",
+      "agent_description": "Equus Computer Systems, Inc. is a mid-size company specializing in Computer, Office Equipment And Software Merchant Wholesalers in Bloomington, Minnesota. They provide comprehensive solutions in computer, office equipment and software merchant wholesalers. With 400+ employees, the company has established a strong market presence. The company generates $66.5M in annual revenue. Operating in a specialized market with 20 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Computer, Office Equipment and Software Merchant Wholesalers",
+      "employees": 400
     },
     {
-      "name": "Office of The Board of Regents",
-      "agent_description": "Office of The Board of Regents is a large enterprise specializing in Colleges And Universities in Minneapolis, Minnesota. They provide comprehensive solutions in colleges and universities. With 1,000+ employees, the company has established a strong market presence. The company generates $3.1B in annual revenue. Operating in a specialized market with 29 similar businesses in Minnesota.",
-      "description_quality_score": 88,
-      "industry": "Colleges and Universities",
-      "employees": 25988
+      "name": "Northland Aluminum Products, Inc.",
+      "agent_description": "Northland Aluminum Products, Inc. is a mid-size company specializing in Rubber And Plastic Product Manufacturing in St Louis Park, Minnesota. They provide comprehensive solutions in rubber and plastic product manufacturing. With 300+ employees, the company has established a strong market presence. The company generates $24.0M in annual revenue. Operating in a specialized market with 32 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Rubber and Plastic Product Manufacturing",
+      "employees": 303
     },
     {
-      "name": "Life Time Group Holdings, Inc.",
-      "agent_description": "Life Time Group Holdings, Inc. is a large enterprise specializing in Miscellaneous Amusement And Recreation in Chanhassen, Minnesota. They provide comprehensive solutions in miscellaneous amusement and recreation. With 1,000+ employees, the company has established a strong market presence. The company generates $2.6B in annual revenue. Operating in a specialized market with 9 similar businesses in Minnesota.",
-      "description_quality_score": 88,
-      "industry": "Miscellaneous Amusement and Recreation",
-      "employees": 42000
+      "name": "Cass Lake Bena Independent School District 115 (Inc)",
+      "agent_description": "Cass Lake Bena Independent School District 115 (Inc) is a established business specializing in Primary And Secondary Education in Cass Lake, Minnesota. They provide comprehensive solutions in primary and secondary education. With 250+ employees, the company has established a strong market presence. The company generates $33.5M in annual revenue. Operating in a competitive market with 308 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Primary and Secondary Education",
+      "employees": 230
     },
     {
-      "name": "UnitedHealth Group Incorporated",
-      "agent_description": "UnitedHealth Group Incorporated is a large enterprise specializing in Life And Health Insurance in Eden Prairie, Minnesota. They provide comprehensive solutions in life and health insurance. With 1,000+ employees, the company has established a strong market presence. The company generates $400.3B in annual revenue. Operating in a specialized market with 15 similar businesses in Minnesota.",
-      "description_quality_score": 88,
-      "industry": "Life and Health Insurance",
-      "employees": 400000
+      "name": "Saint Paul Public Schools, District 625",
+      "agent_description": "Saint Paul Public Schools, District 625 is a large enterprise specializing in Primary And Secondary Education in Saint Paul, Minnesota. They provide comprehensive solutions in primary and secondary education. With 1,000+ employees, the company has established a strong market presence. The company generates $858M in annual revenue. Operating in a competitive market with 308 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Primary and Secondary Education",
+      "employees": 6500
     },
     {
-      "name": "State of Minnesota",
-      "agent_description": "State of Minnesota is a large enterprise specializing in Executive And Legislature in Saint Paul, Minnesota. They provide comprehensive solutions in executive and legislature. With 1,000+ employees, the company has established a strong market presence. The company generates $58.5B in annual revenue. Operating in a competitive market with 188 similar businesses in Minnesota.",
-      "description_quality_score": 88,
-      "industry": "Executive and Legislature",
-      "employees": 35217
+      "name": "Christensen Farms & Feedlots, Inc.",
+      "agent_description": "Christensen Farms & Feedlots, Inc. is a large enterprise specializing in Crop And Animal Production in Sleepy Eye, Minnesota. They provide comprehensive solutions in crop and animal production. With 1,000+ employees, the company has established a strong market presence. The company generates $87.8M in annual revenue. Operating in a specialized market with 10 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Crop and Animal Production",
+      "employees": 1000
     },
     {
-      "name": "C.H. Robinson Worldwide, Inc.",
-      "agent_description": "C.H. Robinson Worldwide, Inc. is a large enterprise specializing in Road Transportation Services in Eden Prairie, Minnesota. They provide comprehensive solutions in road transportation services. With 1,000+ employees, the company has established a strong market presence. The company generates $17.7B in annual revenue. Operating in a specialized market with 14 similar businesses in Minnesota.",
-      "description_quality_score": 88,
-      "industry": "Road Transportation Services",
-      "employees": 11565
+      "name": "Community Action Partnership Of Ramsey And Washington Counties",
+      "agent_description": "Community Action Partnership Of Ramsey And Washington Counties is a mid-size company specializing in Child Day Care Services in Saint Paul, Minnesota. They provide comprehensive solutions in child day care services. With 300+ employees, the company has established a strong market presence. The company generates $35.3M in annual revenue. Operating in a specialized market with 7 similar businesses in Minnesota.",
+      "description_quality_score": 89,
+      "industry": "Child Day Care Services",
+      "employees": 300
     }
   ],
-  "timestamp": "2025-09-13T03:42:30.339Z"
+  "timestamp": "2025-09-13T03:48:41.910Z"
 }

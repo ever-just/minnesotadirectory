@@ -1,18 +1,18 @@
 {
   "summary": {
-    "total_companies": "35",
-    "processed": "35",
-    "avg_quality": "87.2285714285714286",
-    "min_length": 334,
-    "max_length": 411,
-    "avg_length": "375.4571428571428571",
+    "total_companies": "2010",
+    "processed": "2010",
+    "avg_quality": "87.3422885572139303",
+    "min_length": 283,
+    "max_length": 483,
+    "avg_length": "387.2631840796019900",
     "excellent": "0",
-    "good": "35",
+    "good": "2010",
     "needs_improvement": "0"
   },
-  "processingTime": 6787,
-  "tasksCompleted": 2,
+  "processingTime": 378361,
+  "tasksCompleted": 4,
   "totalTasks": 5,
   "successRate": "100.0",
-  "timestamp": "2025-09-13T03:42:30.392Z"
+  "timestamp": "2025-09-13T03:48:41.966Z"
 }
