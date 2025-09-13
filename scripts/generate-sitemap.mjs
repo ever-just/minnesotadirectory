@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { neon } from '@neondatabase/serverless';
+import { neon } from '@netlify/neon';
 import Papa from 'papaparse';
 
 const DOMAIN = 'https://minnesotadirectory.com'; // Update with actual domain when available
