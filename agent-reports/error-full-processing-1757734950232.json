@@ -1,0 +1,6 @@
+{
+  "task": "Full Batch Processing (2000 companies)",
+  "error": "report.avg_quality.toFixed is not a function",
+  "stack": "TypeError: report.avg_quality.toFixed is not a function\n    at AutonomousProcessor.generateProgressReport (file:///workspace/scripts/autonomous-agent-processor.js:538:80)\n    at async AutonomousProcessor.executeFullProcessing (file:///workspace/scripts/autonomous-agent-processor.js:481:21)\n    at async AutonomousProcessor.executeAllTasks (file:///workspace/scripts/autonomous-agent-processor.js:62:25)\n    at async main (file:///workspace/scripts/autonomous-agent-processor.js:921:5)",
+  "timestamp": "2025-09-13T03:42:30.232Z"
+}
