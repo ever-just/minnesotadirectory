@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { neon } from '@netlify/neon';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 const DATABASE_URL = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL || "postgresql://neondb_owner:npg_RaSZ09iyfWAm@ep-winter-recipe-aejsi9db-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require";
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
@@ -65,18 +65,18 @@ export const handler: Handler = async (event, context) => {
     console.log(`💾 FAVORITES: Saving ${companyId} for user ${decoded.userId}`);
 
     // Use UPSERT with snake_case column names (matching database schema)
-    const result = await sql.query(`
+    const result = await sql`
       INSERT INTO saved_companies (user_id, company_id, notes, tags, saved_at) 
-      VALUES ($1, $2, $3, $4, NOW())
+      VALUES (${decoded.userId}, ${companyId}, ${notes}, ${tags}, NOW())
       ON CONFLICT (user_id, company_id) 
       DO UPDATE SET 
         notes = EXCLUDED.notes,
         tags = EXCLUDED.tags,
         saved_at = NOW()
-      RETURNING id, saved_at;
-    `, [decoded.userId, companyId, notes, tags]);
+      RETURNING id, saved_at
+    `;
 
-    console.log(`✅ FAVORITES: Save successful`, result.rows?.[0]);
+    console.log(`✅ FAVORITES: Save successful`, result?.[0]);
 
     return {
       statusCode: 201,
@@ -84,7 +84,7 @@ export const handler: Handler = async (event, context) => {
       body: JSON.stringify({
         success: true,
         message: 'Company saved to favorites',
-        savedCompany: result.rows?.[0] || { id: 'saved', saved_at: new Date() }
+        savedCompany: result?.[0] || { id: 'saved', saved_at: new Date() }
       })
     };
 

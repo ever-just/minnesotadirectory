@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
 import { neon } from '@netlify/neon';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 const DATABASE_URL = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL || "postgresql://neondb_owner:npg_RaSZ09iyfWAm@ep-winter-recipe-aejsi9db-pooler.c-2.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require";
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production';
@@ -53,7 +53,7 @@ export const handler: Handler = async (event, context) => {
     console.log(`📋 FAVORITES: Getting saved companies for user ${decoded.userId}`);
 
     // Get saved companies using snake_case column names
-    const savedCompanies = await sql.query(`
+    const savedCompanies = await sql`
       SELECT 
         sc.id as saved_id,
         sc.saved_at,
@@ -70,11 +70,11 @@ export const handler: Handler = async (event, context) => {
         c.description
       FROM saved_companies sc
       JOIN companies c ON sc.company_id = c.id
-      WHERE sc.user_id = $1
-      ORDER BY sc.saved_at DESC;
-    `, [decoded.userId]);
+      WHERE sc.user_id = ${decoded.userId}
+      ORDER BY sc.saved_at DESC
+    `;
 
-    const savedList = savedCompanies.rows || [];
+    const savedList = savedCompanies || [];
     console.log(`✅ FAVORITES: Found ${savedList.length} saved companies`);
 
     // Format response for frontend
