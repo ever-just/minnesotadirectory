@@ -1,0 +1,22 @@
+# Commit Message Template
+# 
+# Format: <type>(<scope>): <subject>
+# 
+# Types:
+#   feat:     A new feature
+#   fix:      A bug fix
+#   docs:     Documentation only changes
+#   style:    Changes that don't affect code meaning (formatting, etc)
+#   refactor: Code change that neither fixes a bug nor adds a feature
+#   perf:     Performance improvement
+#   test:     Adding missing tests
+#   chore:    Changes to build process or auxiliary tools
+#   version:  Version bump
+#
+# Scope: Optional, can be anything specifying the place of the commit change
+#
+# Subject: Short description (50 chars or less)
+#
+# Body: Detailed explanation (72 chars per line)
+#
+# Footer: References to issues, breaking changes, etc.

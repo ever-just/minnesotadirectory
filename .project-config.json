@@ -1,0 +1,91 @@
+{
+  "name": "Minnesota Directory",
+  "description": "Comprehensive business directory for Minnesota companies",
+  "versioning": {
+    "enabled": true,
+    "autoIncrement": true,
+    "strategy": "semantic",
+    "rules": {
+      "major": ["breaking change", "breaking:", "BREAKING CHANGE:", "major:"],
+      "minor": ["feat:", "feature:", "add:", "new:"],
+      "patch": ["fix:", "bugfix:", "patch:", "perf:", "refactor:", "style:", "docs:", "test:", "chore:", "build:", "ci:"]
+    },
+    "hooks": {
+      "preCommit": true,
+      "postCommit": true,
+      "prePush": false
+    },
+    "files": [
+      "package.json",
+      "src/version.json",
+      "public/version.json"
+    ]
+  },
+  "git": {
+    "commitTemplate": ".gitmessage",
+    "enforceConventionalCommits": true,
+    "autoStageVersionFiles": true
+  },
+  "development": {
+    "linting": {
+      "enabled": true,
+      "preCommit": true,
+      "rules": "eslint.config.js"
+    },
+    "testing": {
+      "enabled": false,
+      "preCommit": false
+    }
+  },
+  "deployment": {
+    "platform": "Netlify",
+    "autoDeployOnPush": true,
+    "branch": "main",
+    "buildCommand": "npm run build",
+    "publishDirectory": "dist"
+  },
+  "database": {
+    "provider": "Neon",
+    "orm": "Drizzle",
+    "migrations": {
+      "directory": "./migrations",
+      "autoRun": false
+    }
+  },
+  "projectRules": [
+    "Always increment version number with each commit",
+    "Use semantic versioning (major.minor.patch)",
+    "Follow conventional commit messages (feat:, fix:, docs:, etc.)",
+    "Auto-stage version files when committing",
+    "Display version info after each commit",
+    "Version should be synchronized across package.json and version.json files",
+    "Breaking changes should trigger major version bumps",
+    "New features should trigger minor version bumps",
+    "Bug fixes and other changes should trigger patch version bumps"
+  ],
+  "codeStandards": {
+    "formatting": {
+      "indent": 2,
+      "quotes": "single",
+      "semicolons": true,
+      "trailingComma": "es5"
+    },
+    "naming": {
+      "components": "PascalCase",
+      "functions": "camelCase",
+      "constants": "UPPER_SNAKE_CASE",
+      "files": {
+        "components": "PascalCase",
+        "utilities": "camelCase",
+        "styles": "kebab-case"
+      }
+    }
+  },
+  "lastUpdated": "2024-09-15",
+  "maintainers": [
+    {
+      "role": "Lead Developer",
+      "github": "ever-just"
+    }
+  ]
+}

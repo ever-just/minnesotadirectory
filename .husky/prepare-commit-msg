@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Auto-increment version before commit
+echo "📦 Auto-incrementing version..."
+node scripts/auto-version.js "$1"
+
+# Add version files to commit
+git add package.json src/version.json public/version.json 2>/dev/null || true
+
+# Get new version
+VERSION=$(node -p "require('./package.json').version")
+echo "✅ Version bumped to $VERSION"
