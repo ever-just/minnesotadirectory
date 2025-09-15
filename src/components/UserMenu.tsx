@@ -115,8 +115,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
     setUser(userData);
     setIsAuthenticated(true);
     setShowAuthModal(false);
-    // Refresh saved companies count
-    setSavedCount(optimizedSavedCompaniesService.getSavedCountOptimized());
+    // Refresh saved companies count - this will restore saved companies from localStorage
+    const count = optimizedSavedCompaniesService.getSavedCountOptimized();
+    setSavedCount(count);
+    console.log(`✅ User logged in: ${userData.name} - Restored ${count} saved companies`);
   };
 
   const handleLogout = () => {
@@ -124,8 +126,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ onNavigateToSaved }) => {
     setUser(null);
     setIsAuthenticated(false);
     setShowDropdown(false);
-    setSavedCount(0);
-    optimizedSavedCompaniesService.clearCache();
+    setSavedCount(0); // Reset UI count since user is no longer authenticated
+    // NOTE: We deliberately DON'T clear the savedCompaniesService cache here
+    // This preserves saved companies data for when the user logs back in
+    // The cache will be refreshed when they authenticate again
   };
 
     const handleNavigateToSaved = () => {
