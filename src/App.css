@@ -700,11 +700,26 @@ body {
     flex-direction: column;
     gap: 0.75rem;
     text-align: center;
+    padding: 0 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .header-company-name {
     font-size: 1.5rem;
     min-height: 64px; /* Smaller logo size on mobile */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+  
+  .company-name-line1,
+  .company-name-line2 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
   }
   
   .company-name-line2 {
