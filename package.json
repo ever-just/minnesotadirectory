@@ -1,13 +1,14 @@
 {
   "name": "react_repo",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.77",
   "type": "module",
   "scripts": {
     "dev": "netlify dev",
     "dev:vite": "vite",
     "build": "vite build",
     "build:full": "npm run generate-sitemap && vite build",
+    "increment-version": "node scripts/increment-version.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "convert": "node scripts/csv-to-json.mjs",
