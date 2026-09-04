@@ -1,3 +1,10 @@
+> ## ⛔️ ARCHIVED — not maintained
+>
+> This repository is read-only. It is kept for reference and history.
+> Minnesota company directory (2025). Not maintained; minnesotadirectory.com is a parked domain.
+>
+> Archived 2026-09-04.
+
 # Minnesota Business Directory
 
 A comprehensive React + TypeScript application showcasing 2,700+ Minnesota companies with advanced features including smart chunking, database integration, and professional company logos.
